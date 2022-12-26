@@ -1,27 +1,12 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import About from "../components/About";
+import Demo from "../components/demo";
+import Experience from "../components/experience";
 
-const scrollToRef = (ref: MutableRefObject<HTMLElement>) => {
-  const { top } = ref.current.getBoundingClientRect();
-  window.scroll(top, 0);
-};
-
-/**
- * SHIT TO DO:
- * - home will scroll up, experience will scroll down to experience, video about me will scroll to about me
- * @returns
- */
 const Home: NextPage = () => {
-  
-
   const [activeTab, setActiveTab] = useState(0);
-
-  const section0Ref = useRef<HTMLDivElement | null>(null);
-  const section1Ref = useRef<HTMLDivElement | null>(null);
-  const section2Ref = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {}, [activeTab]);
 
   return (
     <>
@@ -31,53 +16,40 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="2-screen flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        {/* TODO: add record yourself button if we scroll past the main page */}
-        <div className="navbar flex w-full flex-row justify-between bg-base-100">
-          <h1 className="text-xl">Jack Frate</h1>
+        <div className="navbar flex w-full flex-row justify-center bg-base-100">
           {/* TODO: make tabs into a dropdown when in mobile   */}
-          <div className="tabs tabs-boxed">
-            <div className="tab" onClick={() => setActiveTab(0)}>
-              Home
-            </div>
-            <div className="tab" onClick={() => setActiveTab(1)}>
+          <div className="tabs">
+            <div
+              className={`tab tab-bordered ${
+                activeTab === 0 ? "tab-active" : ""
+              }`}
+              onClick={() => setActiveTab(0)}
+            >
               Experience
             </div>
-            <div className="tab" onClick={() => setActiveTab(2)}>
-              About Me
+            <div
+              className={`tab tab-bordered ${
+                activeTab === 1 ? "tab-active" : ""
+              }`}
+              onClick={() => setActiveTab(1)}
+            >
+              About me
             </div>
-          </div>
-          <div className="btn">Screen Recording</div>
-        </div>
-        <div
-          className="hero m-4 w-full rounded-md bg-base-200 p-2 2xl:max-w-[66%] 2xl:self-start"
-          ref={section0Ref}
-        >
-          <div className="hero-content flex-col lg:flex-row-reverse">
-            <img
-              src="https://placeimg.com/260/400/arch"
-              className="max-w-sm rounded-lg shadow-2xl"
-            />
-            <div>
-              {/* TODO: animate this appearing from bottom */}
-              <h1 className="text-5xl font-bold">Welcome to my Portfolio</h1>
-              <p className="py-6">
-                My name is Jack Frate. I'm a fullstack software engineer with
-                specialties in Typescript, Frontend, and Web Video API's.
-              </p>
-              {/* TODO: make this work */}
-              <button className="btn-primary btn">
-                Here's a screen recording demo
-              </button>
-              <p className="py-6">
-                Feel free to record yourself judging my portfolio. The video is
-                local to your machine, nobody but you has it. You can also
-                minimize this if its annoying.
-              </p>
+            <div
+              className={`tab tab-bordered ${
+                activeTab === 2 ? "tab-active" : ""
+              }`}
+              onClick={() => setActiveTab(2)}
+            >
+              Demo
             </div>
           </div>
         </div>
-        <div className="hero" ref={section1Ref}></div>
-        <div className="hero" ref={section2Ref}></div>
+        <div className="flex w-full flex-col">
+          {activeTab === 0 && <Experience></Experience>}
+          {activeTab === 1 && <About></About>}
+          {activeTab === 2 && <Demo></Demo>}
+        </div>
       </main>
     </>
   );
