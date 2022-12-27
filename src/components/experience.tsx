@@ -4,7 +4,7 @@ export type JobItem = {
   endDate: string;
   jobTitle: string;
   jobPoints: string[];
-  // use index to sort by date, date objects might be yikse here
+  // use index to sort by date, date objects might be yikes here
   index: number;
 };
 
@@ -36,17 +36,17 @@ const Experience = () => {
   return (
     <div className="hero h-full w-screen grow bg-base-100">
       <div className="hero-content relative flex h-full w-full flex-col overflow-y-scroll lg:gap-16">
-        <div className="space-between relative flex w-full  flex-col gap-8 px-11">
+        <div className="space-between relative flex w-full flex-col gap-16 lg:max-w-[66%] lg:px-16">
           {jobItems.map((jobItem) => (
-            <>
-              <div className="flex min-w-full flex-row items-end justify-between">
-                <h1 className="text-3xl font-bold">{jobItem.companyName}</h1>
-                <p className="text-2xl">{jobItem.jobTitle}</p>
+            <div key={jobItem.index.toString()}>
+              <div className="mb-3 flex min-w-full flex-col justify-between lg:flex-row lg:items-end">
                 <div className="flex flex-col">
-                  <p>
-                    {jobItem.startDate} - {jobItem.endDate}
-                  </p>
+                  <h1 className="text-3xl font-bold">{jobItem.companyName}</h1>
+                  <p className="text-2xl">{jobItem.jobTitle}</p>
                 </div>
+                <p>
+                  {jobItem.startDate} - {jobItem.endDate}
+                </p>
               </div>
               <ul className="flex flex-col">
                 {jobItem.jobPoints.map((point) => (
@@ -55,7 +55,7 @@ const Experience = () => {
                   </li>
                 ))}
               </ul>
-            </>
+            </div>
           ))}
         </div>
       </div>
