@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <div className="hero m-4 w-full rounded-md bg-base-200 p-2 2xl:max-w-[66%] 2xl:self-start">
+    <div className="hero m-4 w-full rounded-md bg-base-200 p-2 ">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <img
           src="https://placeimg.com/260/400/arch"
