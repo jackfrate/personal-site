@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export type JobItem = {
   companyName: string;
   startDate: string;
@@ -35,45 +33,29 @@ const jobItems: JobItem[] = [
 ];
 
 const Experience = () => {
-  const [activeJobItem, changeActiveJobItem] = useState<JobItem>(
-    jobItems[0] as JobItem
-  );
-
-  const jobItemsUI = jobItems.map((item) => (
-    <li
-      key={item.index.toString()}
-      className={`text-lg font-bold ${
-        activeJobItem.index === item.index ? "bordered" : ""
-      }`}
-    >
-      <p onClick={() => changeActiveJobItem(item)}>{item.companyName}</p>
-    </li>
-  ));
 
   return (
-    <div className="hero mt-4 min-h-full w-screen">
-      <div className="hero-content min-h-full min-w-full flex-col bg-base-100 lg:relative lg:flex-row-reverse">
-        {/* text on right / top */}
-        <div className="space-between relative flex flex-col">
-          <div className="flex min-w-full flex-row items-center justify-between">
-            <h1 className="text-3xl font-bold">{activeJobItem.jobTitle}</h1>
-            <p>
-              {activeJobItem.startDate} - {activeJobItem.endDate}
-            </p>
-          </div>
-          <ul className="flex flex-col">
-            {activeJobItem.jobPoints.map((point) => (
-              <li key={point} className="">
-                {point}
-              </li>
-            ))}
-          </ul>
-        </div>
-        {/* text on left / bottom */}
-        <div className="card w-full max-w-sm  lg:absolute lg:left-0 lg:top-0">
-          <div className="card-body">
-            <ul className="menu w-56 bg-base-100">{jobItemsUI}</ul>
-          </div>
+    <div className="hero h-full w-screen grow bg-base-100">
+      <div className="hero-content relative flex h-full w-full flex-col lg:gap-16">
+        {/* job desc */}
+        <div className="space-between relative flex w-full flex-col">
+          {jobItems.map((jobItem) => (
+            <>
+              <div className="flex min-w-full flex-row items-center justify-between">
+                <h1 className="text-3xl font-bold">{jobItem.jobTitle}</h1>
+                <p>
+                  {jobItem.startDate} - {jobItem.endDate}
+                </p>
+              </div>
+              <ul className="flex flex-col">
+                {jobItem.jobPoints.map((point) => (
+                  <li key={point} className="">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ))}
         </div>
       </div>
     </div>
