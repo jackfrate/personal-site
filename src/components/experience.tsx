@@ -51,24 +51,26 @@ const Experience = () => {
   ));
 
   return (
-    <div className="hero mt-4 h-full w-full">
-      <div className="hero-content flex-col bg-base-100 lg:flex-row-reverse">
+    <div className="hero mt-4 min-h-full w-screen">
+      <div className="hero-content min-h-full min-w-full flex-col bg-base-100 lg:relative lg:flex-row-reverse">
         {/* text on right / top */}
-        <div className="text-center lg:text-left">
-          <div className="flex flex-row items-center justify-between">
+        <div className="space-between relative flex flex-col">
+          <div className="flex min-w-full flex-row items-center justify-between">
             <h1 className="text-3xl font-bold">{activeJobItem.jobTitle}</h1>
             <p>
               {activeJobItem.startDate} - {activeJobItem.endDate}
             </p>
           </div>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
+          <ul className="flex flex-col">
+            {activeJobItem.jobPoints.map((point) => (
+              <li key={point} className="">
+                {point}
+              </li>
+            ))}
+          </ul>
         </div>
         {/* text on left / bottom */}
-        <div className="card w-full max-w-sm flex-shrink-0">
+        <div className="card w-full max-w-sm  lg:absolute lg:left-0 lg:top-0">
           <div className="card-body">
             <ul className="menu w-56 bg-base-100">{jobItemsUI}</ul>
           </div>

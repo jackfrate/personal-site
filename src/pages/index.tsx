@@ -16,7 +16,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="2-screen flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div className="navbar flex w-full flex-row justify-center bg-base-100">
+        <div className="navbar flex w-full grow-0 flex-row justify-center bg-base-100">
           {/* TODO: make tabs into a dropdown when in mobile   */}
           <div className="tabs">
             <div
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-col">
+        <div className="flex h-full w-full grow flex-col">
           {activeTab === 0 && <Experience></Experience>}
           {activeTab === 1 && <About></About>}
           {activeTab === 2 && <Demo></Demo>}
