@@ -6,6 +6,7 @@ type Props = {
   activeTab: "about" | "experience" | "demo";
   children: ReactNode;
 };
+
 const BaseLayout = ({ activeTab, children }: Props) => {
   return (
     <>
