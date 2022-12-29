@@ -76,10 +76,12 @@ const Experience = () => {
               <div key={jobItem.index.toString()}>
                 <div className="mb-3 flex min-w-full flex-col justify-between lg:flex-row lg:items-end">
                   <div className="flex flex-col">
-                    <h1 className="text-3xl font-bold">
+                    <h1 className="text-3xl font-bold text-primary">
                       {jobItem.companyName}
                     </h1>
-                    <p className="text-2xl">{jobItem.jobTitle}</p>
+                    <p className="text-2xl text-secondary">
+                      {jobItem.jobTitle}
+                    </p>
                   </div>
                   <p>
                     {jobItem.startDate} - {jobItem.endDate}

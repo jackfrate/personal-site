@@ -5,13 +5,18 @@ const About = () => {
         {/* <Image src="/images/me.png" alt="Jack Frate" width={400} height={400} /> */}
         <div>
           {/* TODO: animate this appearing from bottom */}
-          <h1 className="text-5xl font-bold">Welcome to my Portfolio</h1>
+          <h1 className="pb-4 text-6xl font-bold text-primary">
+            Hi, I'm Jack Frate
+          </h1>
+          <h1 className="text-6xl font-bold text-secondary">
+            I build stuff for the web
+          </h1>
           <p className="py-6">
             My name is Jack Frate. I'm a fullstack software engineer with
             specialties in Typescript, Frontend, and Web Video API's.
           </p>
           {/* TODO: make this work */}
-          <button className="btn-primary btn">
+          <button className="btn-outline btn-primary btn">
             Here's a screen recording demo
           </button>
           <p className="py-6">
