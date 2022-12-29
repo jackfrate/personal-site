@@ -15,8 +15,9 @@ const About = () => {
           </h1>
           <p className="py-6">
             I'm a fullstack engineer who leans towards frontend. I have
-            experience in both React and Angular, with specialties in Video APIs
-            for the web.
+            experience in both React and Angular, with specialties in media APIs
+            for the web. I'm just happy to be in an industry where I enjoy what
+            I'm doing.
           </p>
           {/* TODO: make this work */}
           <div className="flex flex-col gap-3 lg:flex-row">
@@ -32,8 +33,8 @@ const About = () => {
             </Link>
           </div>
           <p className="py-6">
-            Feel free to record yourself judging my portfolio. The video is
-            local to your machine, nobody but you has it.
+            {/* Feel free to record yourself judging my portfolio. The video is
+            local to your machine, nobody but you has it. */}
           </p>
         </div>
       </div>
