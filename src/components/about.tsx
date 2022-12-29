@@ -16,8 +16,7 @@ const About = () => {
           </button>
           <p className="py-6">
             Feel free to record yourself judging my portfolio. The video is
-            local to your machine, nobody but you has it. You can also minimize
-            this if its annoying.
+            local to your machine, nobody but you has it.
           </p>
         </div>
       </div>
