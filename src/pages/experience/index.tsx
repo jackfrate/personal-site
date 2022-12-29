@@ -24,8 +24,10 @@ const Experience = () => {
                 </div>
                 <ul className="flex flex-col">
                   {jobItem.jobPoints.map((point) => (
-                    <li key={point} className="">
-                      {point}
+                    <li key={point} className="flex flex-row items-center">
+                      <p>
+                        <span className="text-2xl text-primary">•</span> {point}
+                      </p>
                     </li>
                   ))}
                 </ul>

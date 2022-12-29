@@ -11,7 +11,7 @@ const About = () => {
             Hi, I'm Jack Frate
           </h1>
           <h1 className="text-6xl font-bold text-secondary">
-            I build stuff for the web
+            I build things for the web
           </h1>
           <p className="py-6">
             I'm a fullstack engineer who leans towards frontend. I have
