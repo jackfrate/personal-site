@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const About = () => {
   return (
     <div className="hero h-full w-screen grow rounded-md bg-base-200 p-2">
@@ -12,13 +14,23 @@ const About = () => {
             I build stuff for the web
           </h1>
           <p className="py-6">
-            My name is Jack Frate. I'm a fullstack software engineer with
-            specialties in Typescript, Frontend, and Web Video API's.
+            I'm a fullstack engineer who leans towards frontend. I have
+            experience in both React and Angular, with specialties in Video APIs
+            for the web.
           </p>
           {/* TODO: make this work */}
-          <button className="btn-outline btn-primary btn">
-            Here's a screen recording demo
-          </button>
+          <div className="flex flex-col gap-3 lg:flex-row">
+            <Link href="/experience">
+              <button className="btn-outline btn-primary btn">
+                See my experience
+              </button>
+            </Link>
+            <Link href="/demo">
+              <button className="btn-outline btn-primary btn">
+                Cool Tech Demos
+              </button>
+            </Link>
+          </div>
           <p className="py-6">
             Feel free to record yourself judging my portfolio. The video is
             local to your machine, nobody but you has it.
