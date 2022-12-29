@@ -1,11 +1,8 @@
 const About = () => {
   return (
-    <div className="hero m-4 w-full rounded-md bg-base-200 p-2 ">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <img
-          src="https://placeimg.com/260/400/arch"
-          className="max-w-sm rounded-lg shadow-2xl"
-        />
+    <div className="hero h-full w-screen grow rounded-md bg-base-200 p-2">
+      <div className="hero-content h-full w-full flex-col">
+        {/* <Image src="/images/me.png" alt="Jack Frate" width={400} height={400} /> */}
         <div>
           {/* TODO: animate this appearing from bottom */}
           <h1 className="text-5xl font-bold">Welcome to my Portfolio</h1>
