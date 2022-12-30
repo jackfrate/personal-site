@@ -1,13 +1,13 @@
 import Head from "next/head";
-import Link from "next/link";
 import type { ReactNode } from "react";
+import Navbar from "./experience/navbar";
 
 type Props = {
   activeTab: "about" | "experience" | "demo";
   children: ReactNode;
 };
 
-const BaseLayout = ({ activeTab, children }: Props) => {
+const BaseLayout: React.FC<Props> = ({ activeTab, children }: Props) => {
   return (
     <>
       <Head>
@@ -17,32 +17,7 @@ const BaseLayout = ({ activeTab, children }: Props) => {
       </Head>
 
       <main className="2-screen flex min-h-screen flex-col items-center justify-start bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div className="navbar flex w-full grow-0 flex-row justify-center bg-base-300">
-          {/* TODO: make tabs into a dropdown when in mobile   */}
-          <div className="tabs">
-            <div
-              className={`tab tab-bordered ${
-                activeTab === "about" ? "tab-active" : ""
-              }`}
-            >
-              <Link href="/">Home</Link>
-            </div>
-            <div
-              className={`tab tab-bordered ${
-                activeTab === "experience" ? "tab-active" : ""
-              }`}
-            >
-              <Link href="/experience/work">Experience</Link>
-            </div>
-            <div
-              className={`tab tab-bordered ${
-                activeTab === "demo" ? "tab-active" : ""
-              }`}
-            >
-              <Link href="/demo">Demo</Link>
-            </div>
-          </div>
-        </div>
+        <Navbar activeTab={activeTab}></Navbar>
         <div className="flex h-full w-full grow flex-col">{children}</div>
       </main>
     </>
