@@ -2,7 +2,7 @@ import { jobItems } from "../../json-data/experience";
 
 const JobExperience = () => {
   return (
-    <div className="hero h-full w-screen grow bg-base-100">
+    <div className="hero h-full grow bg-base-100">
       <div className="hero-content relative flex h-full w-full flex-col overflow-y-scroll lg:gap-16">
         <div className="space-between relative flex w-full flex-col gap-16 lg:max-w-[66%] lg:px-16">
           {jobItems.map((jobItem) => (

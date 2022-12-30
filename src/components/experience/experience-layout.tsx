@@ -27,14 +27,15 @@ const ExperienceLayout = ({ activeSection, children }: Props) => {
         </ul>
       </div>
       {/* Sidebar menu for desktop */}
-      <div className="sticky hidden max-h-screen grow-0 flex-col items-center justify-center lg:flex">
+      <div className="sticky hidden max-h-screen max-w-sm grow-0 flex-col items-center justify-center lg:inline-flex">
         <ul className="menu w-56 bg-base-100">
           {sections.map((section) => (
             <li key={section}>
-              <a href={`/experience/${section}`}>
-                <p className={`${section === activeSection ? "active" : ""}`}>
-                  {section}
-                </p>
+              <a
+                className={`${section === activeSection ? "active" : ""}`}
+                href={`/experience/${section}`}
+              >
+                <p>{section}</p>
               </a>
             </li>
           ))}
