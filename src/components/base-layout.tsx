@@ -32,7 +32,7 @@ const BaseLayout = ({ activeTab, children }: Props) => {
                 activeTab === "experience" ? "tab-active" : ""
               }`}
             >
-              <Link href="/experience">Experience</Link>
+              <Link href="/experience/work">Experience</Link>
             </div>
             <div
               className={`tab tab-bordered ${
