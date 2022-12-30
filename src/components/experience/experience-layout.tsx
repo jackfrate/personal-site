@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 
 const sections = ["work", "openSource", "projects"] as const;
@@ -10,33 +9,39 @@ type Props = {
 
 const ExperienceLayout = ({ activeSection, children }: Props) => {
   return (
-    <div className="flex grow-0 flex-col lg:flex-row">
+    <div className="relative flex grow-0 flex-col bg-base-100 lg:flex-row">
       {/* Dropdown for mobile */}
-      <div className="dropdown lg:hidden">
+      <div className="dropdown flex flex-row justify-center lg:hidden">
         <label tabIndex={0} className="btn m-1">
           {activeSection}
         </label>
         <ul
           tabIndex={0}
-          className="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow"
-        ></ul>
+          className="dropdown-content menu rounded-box w-52 bg-base-300 p-2 shadow"
+        >
+          {sections.map((section) => (
+            <li key={section}>
+              <a href={`/experience/${section}`}>{section}</a>
+            </li>
+          ))}
+        </ul>
       </div>
       {/* Sidebar menu for desktop */}
-      <div className="hidden grow-0 lg:flex">
+      <div className="sticky hidden max-h-screen grow-0 flex-col items-center justify-center lg:flex">
         <ul className="menu w-56 bg-base-100">
           {sections.map((section) => (
             <li key={section}>
-              <Link href={`/experience/${section}`}>
+              <a href={`/experience/${section}`}>
                 <p className={`${section === activeSection ? "active" : ""}`}>
                   {section}
                 </p>
-              </Link>
+              </a>
             </li>
           ))}
         </ul>
       </div>
       {/* actual content that shows up */}
-      {children}
+      <div className="flex grow flex-col ">{children}</div>
       {/* TODO: delete or use this */}
       {/* <div className="flex grow"> */}
       {/* </div> */}
