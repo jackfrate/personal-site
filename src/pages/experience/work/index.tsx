@@ -2,7 +2,7 @@ import BaseLayout from "../../../components/base-layout";
 import ExperienceLayout from "../../../components/experience/experience-layout";
 import JobExperience from "../../../components/experience/job-experience";
 
-const Experience = () => {
+const WorkExperience = () => {
   return (
     <BaseLayout activeTab="experience">
       <ExperienceLayout activeSection="work">
@@ -12,4 +12,4 @@ const Experience = () => {
   );
 };
 
-export default Experience;
+export default WorkExperience;

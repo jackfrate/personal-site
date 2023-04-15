@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-const sections = ["work", "openSource", "projects"] as const;
+const sections = ["work", "open-source", "projects"] as const;
 
 type Props = {
   activeSection: typeof sections[number];
@@ -9,10 +9,10 @@ type Props = {
 
 const ExperienceLayout = ({ activeSection, children }: Props) => {
   return (
-    <div className="relative flex grow-0 flex-col bg-base-100 lg:flex-row">
+    <div className="relative flex grow-0 flex-col bg-base-100">
       {/* Dropdown for mobile */}
-      <div className="dropdown flex flex-row justify-center lg:hidden">
-        <label tabIndex={0} className="btn m-1">
+      <div className="dropdown flex flex-row justify-center">
+        <label tabIndex={0} className="btn m-1 lg:min-w-[100px]">
           {activeSection}
         </label>
         <ul
@@ -26,8 +26,9 @@ const ExperienceLayout = ({ activeSection, children }: Props) => {
           ))}
         </ul>
       </div>
+      {/* TODO: implement this */}
       {/* Sidebar menu for desktop */}
-      <div className="sticky hidden max-h-screen max-w-sm grow-0 flex-col items-center justify-center lg:inline-flex">
+      {/* <div className="sticky hidden max-h-screen max-w-sm grow-0 flex-col items-center justify-center lg:inline-flex">
         <ul className="menu w-56 bg-base-100">
           {sections.map((section) => (
             <li key={section}>
@@ -40,12 +41,9 @@ const ExperienceLayout = ({ activeSection, children }: Props) => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
       {/* actual content that shows up */}
       <div className="flex grow flex-col ">{children}</div>
-      {/* TODO: delete or use this */}
-      {/* <div className="flex grow"> */}
-      {/* </div> */}
     </div>
   );
 };

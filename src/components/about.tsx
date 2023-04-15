@@ -19,7 +19,6 @@ const About = () => {
             for the web. I'm just happy to be in an industry where I enjoy what
             I'm doing.
           </p>
-          {/* TODO: make this work */}
           <div className="flex flex-col gap-3 lg:flex-row">
             <Link href="/experience">
               <button className="btn-outline btn-primary btn">
