@@ -1,4 +1,8 @@
 "use-client";
+
+import { MdOutlineMic, MdVideocam } from "react-icons/md";
+import { RxChevronDown } from "react-icons/rx";
+
 type RecordingSettingsProps = {
   audioDevices?: MediaDeviceInfo[];
   videoDevices?: MediaDeviceInfo[];
@@ -28,7 +32,13 @@ const RecordingSettings = ({
               tabIndex={0}
               className="btn-outline btn-secondary btn m-1 w-full"
             >
-              <p className="overflow-hidden">{selectedAudioDevice?.label ?? "select video device"} </p>
+              <div className="flex w-full flex-row items-center justify-between ">
+                <MdOutlineMic size="40px" />
+                <p className="overflow-hidden">
+                  {selectedAudioDevice?.label ?? "select video device"}
+                </p>
+                <RxChevronDown size="40px" />
+              </div>
             </label>
             <ul
               tabIndex={0}
@@ -50,7 +60,14 @@ const RecordingSettings = ({
               tabIndex={0}
               className="btn-outline btn-secondary btn m-1 w-full"
             >
-              {selectedVideoDevice?.label ?? "select video device"} ⌄
+              <div className="flex w-full flex-row items-center justify-between">
+                <MdVideocam size="36px" />
+                <p className="overflow-hidden">
+                  {selectedVideoDevice?.label ?? "select video device"}
+                </p>
+                {/* weird icon scaling with this 2nd thing, 28 === 40 in this case */}
+                <RxChevronDown size="28px" />
+              </div>
             </label>
             <ul
               tabIndex={0}
