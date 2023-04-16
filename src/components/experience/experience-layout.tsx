@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
-const sections = ["work", "open-source", "projects"] as const;
+/* const sections = ["work", "open-source", "projects"] as const; */
+const sections = ["work", "open-source"] as const;
 
 type Props = {
   activeSection: typeof sections[number];
