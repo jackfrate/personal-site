@@ -28,7 +28,7 @@ const RecordingSettings = ({
               tabIndex={0}
               className="btn-outline btn-secondary btn m-1 w-full"
             >
-              {selectedAudioDevice?.label ?? "select video device"} ⌄
+              <p className="overflow-hidden">{selectedAudioDevice?.label ?? "select video device"} </p>
             </label>
             <ul
               tabIndex={0}
