@@ -27,7 +27,7 @@ const About = () => {
             </Link>
             <Link href="/demo">
               <button className="btn-outline btn-primary btn">
-                Cool Tech Demos
+                Cool Tech Demo (Record a Video)
               </button>
             </Link>
           </div>

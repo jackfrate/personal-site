@@ -1,14 +1,12 @@
 import BaseLayout from "../../components/base-layout";
-import RecordingControllerContainer from "../../components/tech-demo/recording-controller/RecordingControllerContainer";
+import PrivacyNotice from "../../components/tech-demo/privacy-notice/PrivacyNotice";
 
-const Demo = () => {
-  return (
-    <BaseLayout activeTab="demo">
-      <div className="hero">
-        <RecordingControllerContainer/>
-      </div>
-    </BaseLayout>
-  );
-};
+const Demo = () => (
+  <BaseLayout activeTab="demo">
+    <div className="hero">
+      <PrivacyNotice />
+    </div>
+  </BaseLayout>
+);
 
 export default Demo;

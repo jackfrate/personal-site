@@ -16,7 +16,7 @@ type RecordingControllerProps = {
 const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
   const [recordingMode, setRecordingMode] = useLocalStorage<
     "screen" | "webcam"
-  >("recordingMode", "webcam");
+  >("RECORDING_MODE", "webcam");
 
   const [audioDevices, setAudioDevices] = useState<MediaDeviceInfo[]>();
   const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>();
@@ -34,11 +34,20 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
 
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
 
-  const [requestRecordingStart, setRequestRecordingStart] = useState(false);
+  // const [requestRecordingStart, setRequestRecordingStart] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
 
+  const cleanUpMediaStreams = () => {
+    if (mediaStreamToRecord) {
+      mediaStreamToRecord.getTracks().forEach((track) => track.stop());
+    }
+    if (webcamMediaStream) {
+      webcamMediaStream.getTracks().forEach((track) => track.stop());
+    }
+  };
+
   useEffect(() => {
-    const setupRecording = async () => {
+    const setupDevices = async () => {
       // const permissions: { audio: boolean; video: boolean } =
       await handlePermissions();
       const mics = await getAudioDevices();
@@ -57,7 +66,7 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       }
     };
 
-    setupRecording();
+    setupDevices();
   }, []);
 
   // Sets webcam media stream
@@ -72,6 +81,8 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       ) {
         return;
       }
+
+      cleanUpMediaStreams();
 
       const webcamStream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -88,6 +99,9 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       setWebcamMediaStream(webcamStream);
     };
     setupWebcamStream();
+    // DO NOT add the missing function here, causes infinite loop
+    // Look into using useCallback for it to avoid this
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     facingMode,
     recordingMode,
@@ -100,7 +114,7 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
   useEffect(() => {
     // TODO: two different functions for each other, conditionally call them
     // that will fix the bug of not being able to start
-    const setupRecordingStream = async () => {
+    const setupWebcamStream = async () => {
       // if (!requestRecordingStart || !selectedAudioDevice) {
       if (!selectedAudioDevice) {
         return;
@@ -128,10 +142,9 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       // } else
     };
 
-    setupRecordingStream();
+    setupWebcamStream();
   }, [
     recordingMode,
-    requestRecordingStart,
     selectedAudioDevice,
     webcamEnabledForScreen,
     webcamMediaStream,
@@ -168,15 +181,6 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
     mediaRecorder.stop();
     setIsRecording(false);
     cleanUpMediaStreams();
-  };
-
-  const cleanUpMediaStreams = () => {
-    if (mediaStreamToRecord) {
-      mediaStreamToRecord.getTracks().forEach((track) => track.stop());
-    }
-    if (webcamMediaStream) {
-      webcamMediaStream.getTracks().forEach((track) => track.stop());
-    }
   };
 
   // cleanup
