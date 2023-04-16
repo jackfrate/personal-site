@@ -27,7 +27,7 @@ const Navbar: React.FC<Props> = ({ activeTab }) => {
             activeTab === "demo" ? "tab-active" : ""
           }`}
         >
-          <Link href="/demo">Demo</Link>
+          <Link href="/demo">Video Recorder Demo</Link>
         </div>
       </div>
     </div>

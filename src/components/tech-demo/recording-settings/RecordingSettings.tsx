@@ -26,7 +26,7 @@ const RecordingSettings = ({
         <h2 className="card-title">Recording Settings</h2>
         <h3 className="">Camera Settings</h3>
         {/* camera / mic dropdowns */}
-        <div className="flex flex-row">
+        <div className="flex flex-col md:flex-row">
           <div className="flex flex-col ">
             <div className="dropdown w-full">
               <label
