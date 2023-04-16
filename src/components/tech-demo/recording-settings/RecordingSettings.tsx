@@ -24,7 +24,10 @@ const RecordingSettings = ({
         {/* camera / mic dropdowns */}
         <div className="flex flex-col ">
           <div className="dropdown w-full">
-            <label tabIndex={0} className="btn-secondary btn m-1 w-full">
+            <label
+              tabIndex={0}
+              className="btn-outline btn-secondary btn m-1 w-full"
+            >
               {selectedAudioDevice?.label ?? "select video device"} ⌄
             </label>
             <ul
@@ -43,7 +46,10 @@ const RecordingSettings = ({
             </ul>
           </div>
           <div className="dropdown w-full">
-            <label tabIndex={0} className="btn-secondary btn m-1 w-full">
+            <label
+              tabIndex={0}
+              className="btn-outline btn-secondary btn m-1 w-full"
+            >
               {selectedVideoDevice?.label ?? "select video device"} ⌄
             </label>
             <ul
