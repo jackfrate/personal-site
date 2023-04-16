@@ -1,6 +1,7 @@
 "use-client";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
+import RecordingSettings from "../recording-settings/RecordingSettings";
 import {
   getAudioDevices,
   getVideoDevices,
@@ -188,7 +189,17 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
   }, []);
 
   return (
-    <div>
+    <div className="relative w-screen">
+      <div className="absolute top-4 right-4 z-10">
+        <RecordingSettings
+          audioDevices={audioDevices}
+          videoDevices={videoDevices}
+          selectedAudioDevice={selectedAudioDevice}
+          selectedVideoDevice={selectedVideoDevice}
+          onAudioDeviceChange={setSelectedAudioDevice}
+          onVideoDeviceChange={setSelectedVideoDevice}
+        />
+      </div>
       {recordingMode === "webcam" && (
         <WebcamRecorder
           mediaStream={webcamMediaStream}

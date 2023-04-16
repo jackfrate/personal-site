@@ -37,7 +37,7 @@ const WebcamRecorder = ({
   }, [mediaStream, setReadyToRecord]);
 
   return (
-    <div className="flex h-full w-full flex-col items-center gap-4">
+    <div className="relative flex h-full w-full flex-col items-center gap-4">
       <div>
         <video muted autoPlay controls={false} ref={videoRef}></video>
       </div>
