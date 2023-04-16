@@ -23,8 +23,15 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
 
   const [selectedAudioDevice, setSelectedAudioDevice] =
     useState<MediaDeviceInfo>();
+  const [preferredAudioDevice, setPreferredAudioDevice] = useLocalStorage<
+    string | undefined
+  >("PREFERRED_AUDIO_DEVICE", undefined);
+
   const [selectedVideoDevice, setSelectedVideoDevice] =
     useState<MediaDeviceInfo>();
+  const [preferredVideoDevice, setPreferredVideoDevice] = useLocalStorage<
+    string | undefined
+  >("PREFERRED_VIDEO_DEVICE", undefined);
 
   const [webcamEnabledForScreen, setWebcamEnabledForScreen] = useState(false);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
@@ -59,15 +66,45 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       // just use first item in each list, can change later
       // do the camera first, since we only need a mic to start desktop recording
       if (cams.length > 0) {
-        setSelectedVideoDevice(cams[0]);
+        const prefCam = cams.find(
+          (device) => device.deviceId === preferredVideoDevice
+        );
+        setSelectedVideoDevice(prefCam ?? cams[0]);
       }
+
       if (mics.length > 0) {
-        setSelectedAudioDevice(mics[0]);
+        const prefMic = mics.find(
+          (device) => device.deviceId === preferredAudioDevice
+        );
+        setSelectedAudioDevice(prefMic ?? mics[0]);
       }
     };
 
     setupDevices();
   }, []);
+
+  // handle preferred devices
+  useEffect(() => {
+    if (
+      selectedVideoDevice &&
+      selectedVideoDevice.deviceId !== preferredVideoDevice
+    ) {
+      setPreferredVideoDevice(selectedVideoDevice.deviceId);
+    }
+    if (
+      selectedAudioDevice &&
+      selectedAudioDevice.deviceId !== preferredAudioDevice
+    ) {
+      setPreferredAudioDevice(selectedAudioDevice.deviceId);
+    }
+  }, [
+    preferredAudioDevice,
+    preferredVideoDevice,
+    selectedAudioDevice,
+    selectedVideoDevice,
+    setPreferredAudioDevice,
+    setPreferredVideoDevice,
+  ]);
 
   // Sets webcam media stream
   useEffect(() => {
@@ -193,8 +230,16 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
   }, []);
 
   return (
-    <div className="relative w-screen">
-      <div className="absolute top-4 right-4 z-10">
+    <div className="relative flex w-screen flex-col items-center gap-6">
+      {recordingMode === "webcam" && (
+        <WebcamRecorder
+          mediaStream={webcamMediaStream}
+          isRecording={isRecording}
+          onStart={onStart}
+          onStop={onStop}
+        />
+      )}
+      <div className="">
         <RecordingSettings
           audioDevices={audioDevices}
           videoDevices={videoDevices}
@@ -204,14 +249,6 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
           onVideoDeviceChange={setSelectedVideoDevice}
         />
       </div>
-      {recordingMode === "webcam" && (
-        <WebcamRecorder
-          mediaStream={webcamMediaStream}
-          isRecording={isRecording}
-          onStart={onStart}
-          onStop={onStop}
-        />
-      )}
     </div>
   );
 };
