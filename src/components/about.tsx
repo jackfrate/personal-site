@@ -15,9 +15,16 @@ const About = () => {
           </h1>
           <p className="py-6">
             I'm a fullstack engineer who leans towards frontend. I have
-            experience in both React and Angular, with specialties in media APIs
-            for the web. I'm just happy to be in an industry where I enjoy what
-            I'm doing.
+            experience in both React and Angular, with specialties in modern web
+            API's such as canvas and MediaStream. When coding in my free time,
+            I've been focused on making projects with Next and Vercel.
+          </p>
+          <p className="pb-6">
+            I'm just happy to be in an industry where I enjoy what I'm doing.
+          </p>
+          <p className="pb-6">
+            Go to my demo page if you want to record a video, its quick and
+            easy.
           </p>
           <div className="flex flex-col gap-3 lg:flex-row">
             <Link href="/experience">
@@ -32,8 +39,6 @@ const About = () => {
             </Link>
           </div>
           <p className="py-6">
-            {/* Feel free to record yourself judging my portfolio. The video is
-            local to your machine, nobody but you has it. */}
           </p>
         </div>
       </div>

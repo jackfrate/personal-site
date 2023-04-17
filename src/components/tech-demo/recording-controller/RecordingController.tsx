@@ -112,10 +112,7 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       if (!selectedAudioDevice) {
         return;
       }
-      if (
-        (recordingMode === "webcam" || webcamEnabledForScreen) &&
-        !selectedVideoDevice
-      ) {
+      if (recordingMode === "webcam" && !selectedVideoDevice) {
         return;
       }
 
@@ -165,18 +162,17 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
 
       if (recordingMode === "webcam" && webcamMediaStream) {
         setMediaStreamToRecord(webcamMediaStream);
+      }
+      if (recordingMode === "screen") {
+        const mediaStream = await navigator.mediaDevices.getDisplayMedia({
+          // TODO: investigate the CaptureController option
+          audio: {
+            deviceId: selectedAudioDevice.deviceId,
+          },
+        });
+        setMediaStreamToRecord(mediaStream);
         console.log("set steram");
       }
-      // if (recordingMode === "screen") {
-      //   const mediaStream = await navigator.mediaDevices.getDisplayMedia({
-      //     // TODO: investigate the CaptureController option
-      //     audio: {
-      //       deviceId: selectedAudioDevice.deviceId,
-      //     },
-      //   });
-      //   setMediaStreamToRecord(mediaStream);
-      //   console.log("set steram");
-      // } else
     };
 
     setupWebcamStream();
@@ -240,14 +236,18 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
         />
       )}
       <div className="">
-        <RecordingSettings
-          audioDevices={audioDevices}
-          videoDevices={videoDevices}
-          selectedAudioDevice={selectedAudioDevice}
-          selectedVideoDevice={selectedVideoDevice}
-          onAudioDeviceChange={setSelectedAudioDevice}
-          onVideoDeviceChange={setSelectedVideoDevice}
-        />
+        {mediaStreamToRecord && (
+          <RecordingSettings
+            audioDevices={audioDevices}
+            videoDevices={videoDevices}
+            selectedAudioDevice={selectedAudioDevice}
+            selectedVideoDevice={selectedVideoDevice}
+            recordingMode={recordingMode}
+            onAudioDeviceChange={setSelectedAudioDevice}
+            onVideoDeviceChange={setSelectedVideoDevice}
+            onRecordingModeChange={setRecordingMode}
+          />
+        )}
       </div>
     </div>
   );

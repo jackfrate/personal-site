@@ -27,12 +27,12 @@ const PrivacyNotice = () => {
             using your browser.
           </p>
           <p>
-            <em>Nothing </em>made on here is saved anywhere except locally on
-            your machine (if you download the video).
+            <em>Nothing</em> made on here is saved anywhere except locally on
+            your machine, and only if you click save.
           </p>
           <p>
             You will not see this message again on this machine once you
-            acknowledge
+            acknowledge.
           </p>
         </div>
       </div>

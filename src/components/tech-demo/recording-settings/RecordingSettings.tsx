@@ -8,8 +8,10 @@ type RecordingSettingsProps = {
   videoDevices?: MediaDeviceInfo[];
   selectedAudioDevice?: MediaDeviceInfo;
   selectedVideoDevice?: MediaDeviceInfo;
+  recordingMode: "screen" | "webcam";
   onAudioDeviceChange: (device: MediaDeviceInfo) => void;
   onVideoDeviceChange: (device: MediaDeviceInfo) => void;
+  onRecordingModeChange: (recordingMode: "screen" | "webcam") => void;
 };
 
 const RecordingSettings = ({
@@ -17,28 +19,61 @@ const RecordingSettings = ({
   videoDevices,
   selectedAudioDevice,
   selectedVideoDevice,
+  recordingMode,
   onAudioDeviceChange,
   onVideoDeviceChange,
+  onRecordingModeChange,
 }: RecordingSettingsProps) => {
   return (
-    <div className="card w-[400px] bg-neutral text-neutral-content">
+    <div className="card  bg-neutral text-neutral-content">
       <div className="card-body items-center text-center">
         <h2 className="card-title">Recording Settings</h2>
-        <h3 className="">Camera Settings</h3>
-        {/* camera / mic dropdowns */}
         <div className="flex flex-col md:flex-row">
+          {/* recording mode */}
+
+          {/* <div className="flex flex-col md:min-w-[200px] md:px-6">
+            Recording Mode
+            <div className="form-control">
+              <label
+                className="label cursor-pointer"
+                onClick={() => onRecordingModeChange("screen")}
+              >
+                <span className="label-text">Webcam</span>
+                <input
+                  type="radio"
+                  name="radio-10"
+                  className="radio"
+                  checked={recordingMode === "webcam"}
+                />
+              </label>
+              <label
+                className="label cursor-pointer"
+                onClick={() => onRecordingModeChange("screen")}
+              >
+                <span className="label-text">Screen</span>
+                <input
+                  type="radio"
+                  name="radio-10"
+                  className="radio"
+                  checked={recordingMode === "screen"}
+                />
+              </label>
+            </div>
+          </div> */}
+          {/* camera / mic dropdowns */}
           <div className="flex flex-col ">
+            <h3 className="">Camera Settings</h3>
             <div className="dropdown w-full">
               <label
                 tabIndex={0}
                 className="btn-outline btn-secondary btn m-1 w-full"
               >
                 <div className="flex w-full flex-row items-center justify-between ">
-                  <MdOutlineMic size="40px" />
+                  <MdOutlineMic size="32px" />
                   <p className="overflow-hidden">
                     {selectedAudioDevice?.label ?? "select video device"}
                   </p>
-                  <RxChevronDown size="40px" />
+                  <RxChevronDown size="32px" />
                 </div>
               </label>
               <ul
@@ -62,12 +97,11 @@ const RecordingSettings = ({
                 className="btn-outline btn-secondary btn m-1 w-full"
               >
                 <div className="flex w-full flex-row items-center justify-between">
-                  <MdVideocam size="36px" />
+                  <MdVideocam size="32px" />
                   <p className="overflow-hidden">
                     {selectedVideoDevice?.label ?? "select video device"}
                   </p>
-                  {/* weird icon scaling with this 2nd thing, 28 === 40 in this case */}
-                  <RxChevronDown size="28px" />
+                  <RxChevronDown size="32px" />
                 </div>
               </label>
               <ul
@@ -85,6 +119,11 @@ const RecordingSettings = ({
                 ))}
               </ul>
             </div>
+            {/* TODO: delete this part when camera stuff works */}
+            <p className="pt-4">
+              Screen recording coming soon (as that's the main reason I made
+              this)
+            </p>
           </div>
         </div>
         <div className="card-actions justify-end">
