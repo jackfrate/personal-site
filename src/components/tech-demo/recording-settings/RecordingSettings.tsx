@@ -61,7 +61,7 @@ const RecordingSettings = ({
             </div>
           </div> */}
           {/* camera / mic dropdowns */}
-          <div className="flex flex-col ">
+          <div className="flex max-w-[400px] flex-col">
             <h3 className="">Camera Settings</h3>
             <div className="dropdown w-full">
               <label

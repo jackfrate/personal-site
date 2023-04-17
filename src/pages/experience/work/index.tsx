@@ -1,13 +1,17 @@
 import BaseLayout from "../../../components/base-layout";
-import ExperienceLayout from "../../../components/experience/experience-layout";
-import JobExperience from "../../../components/experience/job-experience";
 
 const WorkExperience = () => {
   return (
     <BaseLayout activeTab="experience">
-      <ExperienceLayout activeSection="work">
+      {/* TODO: gonna change this up */}
+      <div className="flex w-screen flex-col items-center pt-4">
+        <a href="/resume/JackFrateResume.pdf" target="_blank">
+          <button className="btn">See my Resume (opens in new tab)</button>
+        </a>
+      </div>
+      {/* <ExperienceLayout activeSection="work">
         <JobExperience></JobExperience>
-      </ExperienceLayout>
+      </ExperienceLayout> */}
     </BaseLayout>
   );
 };
