@@ -121,7 +121,7 @@ const RecordingSettings = ({
             </div>
             {/* TODO: delete this part when camera stuff works */}
             <p className="pt-4">
-              Screen recording coming soon (as that's the main reason I made
+              Screen recording coming soon (as that&apos;s the main reason I made
               this)
             </p>
           </div>

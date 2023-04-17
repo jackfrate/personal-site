@@ -8,19 +8,19 @@ const About = () => {
         <div>
           {/* TODO: animate this appearing from bottom */}
           <h1 className="pb-4 text-6xl font-bold text-primary">
-            Hi, I'm Jack Frate
+            Hi, I&apos;m Jack Frate
           </h1>
           <h1 className="text-6xl font-bold text-secondary">
             I build things for the web
           </h1>
           <p className="py-6">
-            I'm a fullstack engineer who leans towards frontend. I have
+            I&apos;m a fullstack engineer who leans towards frontend. I have
             experience in both React and Angular, with specialties in modern web
-            API's such as canvas and MediaStream. When coding in my free time,
-            I've been focused on making projects with Next and Vercel.
+            API&apos;s such as canvas and MediaStream. When coding in my free time,
+            I&apos;ve been focused on making projects with Next and Vercel.
           </p>
           <p className="pb-6">
-            I'm just happy to be in an industry where I enjoy what I'm doing.
+            I&apos;m just happy to be in an industry where I enjoy what I&apos;m doing.
           </p>
           <p className="pb-6">
             Go to my demo page if you want to record a video, its quick and
