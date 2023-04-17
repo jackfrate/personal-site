@@ -50,7 +50,11 @@ const RecordingControllerContainer = () => {
       {/* TODO: make the video player its own custom component */}
       {finishedVideo && (
         <div className="flex flex-col items-center gap-4">
-          <video className="max-h-[66%]" controls ref={playbackRef}></video>
+          <video
+            className="max-h-[66%] pt-4"
+            controls
+            ref={playbackRef}
+          ></video>
           <div className="flex flex-row gap-4">
             <a
               className="btn-outline btn inline-flex max-w-[250px]"
