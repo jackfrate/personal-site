@@ -1,5 +1,5 @@
 "use-client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import RecordingSettings from "../recording-settings/RecordingSettings";
 import {
@@ -7,6 +7,7 @@ import {
   getVideoDevices,
   handlePermissions,
 } from "../utils/utils";
+import ScreenRecorder from "./screen-recorder/ScreenRecorder";
 import WebcamRecorder from "./webcam-recorder/WebcamRecorder";
 
 type RecordingControllerProps = {
@@ -52,6 +53,10 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       webcamMediaStream.getTracks().forEach((track) => track.stop());
     }
   };
+
+  // TODO: these useEffects are not great,
+  // ^ I'm going for "just works" until I finish PiP
+  // to avoid 2 big re-factors
 
   useEffect(() => {
     const setupDevices = async () => {
@@ -123,11 +128,7 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
           deviceId: selectedVideoDevice?.deviceId,
           facingMode: facingMode,
         },
-        audio:
-          // Don't re-use audio stream if we're screen recording
-          recordingMode === "webcam"
-            ? { deviceId: selectedAudioDevice.deviceId }
-            : false,
+        audio: { deviceId: selectedAudioDevice.deviceId },
       });
 
       setWebcamMediaStream(webcamStream);
@@ -163,16 +164,6 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       if (recordingMode === "webcam" && webcamMediaStream) {
         setMediaStreamToRecord(webcamMediaStream);
       }
-      if (recordingMode === "screen") {
-        const mediaStream = await navigator.mediaDevices.getDisplayMedia({
-          // TODO: investigate the CaptureController option
-          audio: {
-            deviceId: selectedAudioDevice.deviceId,
-          },
-        });
-        setMediaStreamToRecord(mediaStream);
-        console.log("set steram");
-      }
     };
 
     setupWebcamStream();
@@ -188,6 +179,9 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
     if (!mediaStreamToRecord) {
       return;
     }
+    if (isRecording) {
+      return;
+    }
 
     const recorder = new MediaRecorder(mediaStreamToRecord);
     const recorderChunks: BlobPart[] = [];
@@ -196,8 +190,7 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
     recorder.onstop = () => onRecordingEnd(new Blob(recorderChunks));
 
     setMediaRecorder(recorder);
-    console.log("ready to record");
-  }, [mediaStreamToRecord, onRecordingEnd]);
+  }, [mediaStreamToRecord, onRecordingEnd, isRecording]);
 
   const onStart = () => {
     if (!mediaRecorder) {
@@ -206,6 +199,30 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
     mediaRecorder.start();
     setIsRecording(true);
   };
+
+  const onScreenRecordingStart = useCallback(async () => {
+    // This is ratchet, but it works, will have to refactor
+    // this with a strategy pattern or something
+    const mediaStream = await navigator.mediaDevices.getDisplayMedia();
+
+    // need to get audio from the mic
+    const micTrack = webcamMediaStream?.getAudioTracks()[0];
+    if (micTrack) {
+      mediaStream.addTrack(micTrack);
+    }
+
+    setMediaStreamToRecord(mediaStream);
+    const recorder = new MediaRecorder(mediaStream);
+    const recorderChunks: BlobPart[] = [];
+
+    recorder.ondataavailable = (e) => recorderChunks.push(e.data);
+    recorder.onstop = () => onRecordingEnd(new Blob(recorderChunks));
+
+    recorder.start();
+
+    setMediaRecorder(recorder);
+    setIsRecording(true);
+  }, [onRecordingEnd, webcamMediaStream]);
 
   const onStop = () => {
     if (!mediaRecorder) {
@@ -235,19 +252,25 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
           onStop={onStop}
         />
       )}
+      {recordingMode === "screen" && (
+        <ScreenRecorder
+          mediaStream={mediaStreamToRecord}
+          isRecording={isRecording}
+          onStart={onScreenRecordingStart}
+          onStop={onStop}
+        />
+      )}
       <div className="">
-        {mediaStreamToRecord && (
-          <RecordingSettings
-            audioDevices={audioDevices}
-            videoDevices={videoDevices}
-            selectedAudioDevice={selectedAudioDevice}
-            selectedVideoDevice={selectedVideoDevice}
-            recordingMode={recordingMode}
-            onAudioDeviceChange={setSelectedAudioDevice}
-            onVideoDeviceChange={setSelectedVideoDevice}
-            onRecordingModeChange={setRecordingMode}
-          />
-        )}
+        <RecordingSettings
+          audioDevices={audioDevices}
+          videoDevices={videoDevices}
+          selectedAudioDevice={selectedAudioDevice}
+          selectedVideoDevice={selectedVideoDevice}
+          recordingMode={recordingMode}
+          onAudioDeviceChange={setSelectedAudioDevice}
+          onVideoDeviceChange={setSelectedVideoDevice}
+          onRecordingModeChange={setRecordingMode}
+        />
       </div>
     </div>
   );

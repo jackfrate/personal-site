@@ -51,12 +51,28 @@ const RecordingControllerContainer = () => {
       {finishedVideo && (
         <div className="flex flex-col items-center gap-4">
           <video controls ref={playbackRef}></video>
-          <a
-            className="btn-outline btn inline-flex max-w-[250px]"
-            ref={linkRef}
-          >
-            Download Video
-          </a>
+          <div className="flex flex-row gap-4">
+            <a
+              className="btn-outline btn inline-flex max-w-[250px]"
+              ref={linkRef}
+            >
+              Download Video
+            </a>
+            <button
+              className="btn-outline btn"
+              onClick={() => {
+                if (videoSrcUrl) {
+                  URL.revokeObjectURL(videoSrcUrl);
+                  setVideoSrcUrl(undefined);
+                }
+                if (finishedVideo) {
+                  setFinishedVideo(undefined);
+                }
+              }}
+            >
+              Record Another Video
+            </button>
+          </div>
         </div>
       )}
     </div>

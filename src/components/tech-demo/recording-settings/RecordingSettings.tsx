@@ -30,10 +30,9 @@ const RecordingSettings = ({
         <h2 className="card-title">Recording Settings</h2>
         <div className="flex flex-col md:flex-row">
           {/* recording mode */}
-
           <div className="flex flex-col md:min-w-[200px] md:px-6">
             Recording Mode
-            <div className="form-control">
+            <div className="form-control pt-4">
               <label
                 className="label cursor-pointer"
                 onClick={() => onRecordingModeChange("webcam")}
@@ -43,7 +42,7 @@ const RecordingSettings = ({
                   type="radio"
                   name="radio-10"
                   className="radio"
-                  checked={recordingMode === "webcam"}
+                  defaultChecked={recordingMode === "webcam"}
                 />
               </label>
               <label
@@ -55,14 +54,14 @@ const RecordingSettings = ({
                   type="radio"
                   name="radio-10"
                   className="radio"
-                  checked={recordingMode === "screen"}
+                  defaultChecked={recordingMode === "screen"}
                 />
               </label>
             </div>
           </div>
           {/* camera / mic dropdowns */}
           <div className="flex max-w-[400px] flex-col">
-            <h3 className="">Camera Settings</h3>
+            <h3 className="pb-4">Camera Settings</h3>
             <div className="dropdown w-full">
               <label
                 tabIndex={0}
@@ -120,10 +119,6 @@ const RecordingSettings = ({
               </ul>
             </div>
             {/* TODO: delete this part when camera stuff works */}
-            <p className="pt-4">
-              Screen recording coming soon (as that&apos;s the main reason I
-              made this)
-            </p>
           </div>
         </div>
         <div className="card-actions justify-end">
