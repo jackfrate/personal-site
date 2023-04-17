@@ -51,7 +51,7 @@ const RecordingControllerContainer = () => {
       {finishedVideo && (
         <div className="flex flex-col items-center gap-4">
           <video
-            className="max-h-[66%] pt-4"
+            className="max-h-[66vh] pt-4"
             controls
             ref={playbackRef}
           ></video>
