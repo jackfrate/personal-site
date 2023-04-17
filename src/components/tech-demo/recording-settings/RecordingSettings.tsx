@@ -31,12 +31,12 @@ const RecordingSettings = ({
         <div className="flex flex-col md:flex-row">
           {/* recording mode */}
 
-          {/* <div className="flex flex-col md:min-w-[200px] md:px-6">
+          <div className="flex flex-col md:min-w-[200px] md:px-6">
             Recording Mode
             <div className="form-control">
               <label
                 className="label cursor-pointer"
-                onClick={() => onRecordingModeChange("screen")}
+                onClick={() => onRecordingModeChange("webcam")}
               >
                 <span className="label-text">Webcam</span>
                 <input
@@ -59,7 +59,7 @@ const RecordingSettings = ({
                 />
               </label>
             </div>
-          </div> */}
+          </div>
           {/* camera / mic dropdowns */}
           <div className="flex max-w-[400px] flex-col">
             <h3 className="">Camera Settings</h3>
@@ -121,8 +121,8 @@ const RecordingSettings = ({
             </div>
             {/* TODO: delete this part when camera stuff works */}
             <p className="pt-4">
-              Screen recording coming soon (as that&apos;s the main reason I made
-              this)
+              Screen recording coming soon (as that&apos;s the main reason I
+              made this)
             </p>
           </div>
         </div>
