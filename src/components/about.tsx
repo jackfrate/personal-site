@@ -16,11 +16,13 @@ const About = () => {
           <p className="py-6">
             I&apos;m a fullstack engineer who leans towards frontend. I have
             experience in both React and Angular, with specialties in modern web
-            API&apos;s such as canvas and MediaStream. When coding in my free time,
-            I&apos;ve been focused on making projects with Next and Vercel.
+            API&apos;s such as canvas and MediaStream. When coding in my free
+            time, I&apos;ve been focused on making projects with Next and
+            Vercel.
           </p>
           <p className="pb-6">
-            I&apos;m just happy to be in an industry where I enjoy what I&apos;m doing.
+            I&apos;m just happy to be in an industry where I enjoy what I&apos;m
+            doing.
           </p>
           <p className="pb-6">
             Go to my demo page if you want to record a video, its quick and
@@ -37,9 +39,16 @@ const About = () => {
                 Cool Tech Demo (Record a Video)
               </button>
             </Link>
+            <Link
+              href="https://github.com/jackfrate/personal-site"
+              target="_blank"
+            >
+              <button className="btn-outline btn-primary btn">
+                Source code for this site
+              </button>
+            </Link>
           </div>
-          <p className="py-6">
-          </p>
+          <p className="py-6"></p>
         </div>
       </div>
     </div>
