@@ -29,7 +29,6 @@ const WebcamRecordingContainer = ({
         audio: true,
       });
 
-      // console.log(JSON.stringify(mediaStream));
       const _mediaRecorder = new MediaRecorder(_mediaStream);
 
       setMediaStream(_mediaStream);
@@ -41,21 +40,21 @@ const WebcamRecordingContainer = ({
 
   useEffect(() => {
     // initialize media stream
-    console.log("inside use effect");
+    // console.log("inside use effect");
     if (!mediaStream) {
-      console.log("setting up media stream inside of effect ");
+      // console.log("setting up media stream inside of effect ");
       startMediaStream();
     }
 
     return () => {
-      console.log("running cleanup effects");
+      // console.log("running cleanup effects");
       if (!mediaStream) {
         return;
       }
 
       mediaStream.getTracks().forEach((track) => {
         track.stop();
-        console.log("stopping a track");
+        // console.log("stopping a track");
       });
     };
   }, [mediaStream]);
@@ -72,7 +71,7 @@ const WebcamRecordingContainer = ({
       }
     </div>
   ) : (
-    <p>I should go away eventually</p>
+    <p>Loading...</p>
   );
 };
 

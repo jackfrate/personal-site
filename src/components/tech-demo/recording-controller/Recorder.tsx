@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import WebcamRecordingContainer from "./RecordingContainer/WebcamRecordingContainer";
+import Playback from "./playback/Playback";
+import WebcamRecordingContainer from "./recording-container/WebcamRecordingContainer";
 
 export const DemoContainer = () => {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
@@ -49,6 +50,6 @@ export const DemoContainer = () => {
       />
     </div>
   ) : (
-    <p>YOU REACHED THE END</p>
+    <Playback finishedVideo={finishedRecording} recordAnotherVideo={resetRecorder}/>
   );
 };
