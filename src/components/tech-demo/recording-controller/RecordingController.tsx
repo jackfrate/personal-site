@@ -1,4 +1,6 @@
 "use-client";
+
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import RecordingSettings from "../recording-settings/RecordingSettings";
@@ -15,6 +17,13 @@ type RecordingControllerProps = {
 };
 
 const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
+  // TODO: this component is not the cleanest
+  // ^ I'm going for "just works" until I finish PiP and webcam facing selection
+  // to avoid 2 big re-factors
+  // Current potential plan is to put the media streams into a context
+
+  const router = useRouter();
+
   const [recordingMode, setRecordingMode] = useLocalStorage<
     "screen" | "webcam"
   >("RECORDING_MODE", "webcam");
@@ -42,21 +51,19 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
 
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
 
-  // const [requestRecordingStart, setRequestRecordingStart] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
 
-  const cleanUpMediaStreams = () => {
+  const cleanUpMediaStreams = useCallback(() => {
+    console.log("cleaning up media streams");
     if (mediaStreamToRecord) {
+      console.log("stopping tracks 1");
       mediaStreamToRecord.getTracks().forEach((track) => track.stop());
     }
     if (webcamMediaStream) {
+      console.log("stopping tracks 2");
       webcamMediaStream.getTracks().forEach((track) => track.stop());
     }
-  };
-
-  // TODO: these useEffects are not great,
-  // ^ I'm going for "just works" until I finish PiP
-  // to avoid 2 big re-factors
+  }, [mediaStreamToRecord, webcamMediaStream]);
 
   useEffect(() => {
     const setupDevices = async () => {
@@ -148,9 +155,8 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
   // handle recording start
   useEffect(() => {
     // TODO: two different functions for each other, conditionally call them
-    // that will fix the bug of not being able to start
     const setupWebcamStream = async () => {
-      // if (!requestRecordingStart || !selectedAudioDevice) {
+      console.log("setting up webcam stream");
       if (!selectedAudioDevice) {
         return;
       }
@@ -165,8 +171,9 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
         setMediaStreamToRecord(webcamMediaStream);
       }
     };
-
-    setupWebcamStream();
+    if (!webcamMediaStream) {
+      setupWebcamStream();
+    }
   }, [
     recordingMode,
     selectedAudioDevice,
@@ -241,6 +248,23 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
       };
     };
   }, []);
+
+  // cleanup on navigation away (next doesn't unmount component on navigate away)
+  useEffect(() => {
+    router.beforePopState(({ as }) => {
+      // if (as !== router.asPath) {
+      // Will run when leaving the current page; on back/forward actions
+      // Add your logic here, like toggling the modal state
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      cleanUpMediaStreams();
+      // }
+      return true;
+    });
+
+    return () => {
+      router.beforePopState(() => true);
+    };
+  }, [cleanUpMediaStreams, router]); // Add any state variables to dependencies array if needed.
 
   return (
     <div className="relative flex w-screen flex-col items-center gap-6">
