@@ -2,14 +2,7 @@
 
 import { useEffect, useState } from "react";
 import WebcamRecorder from "../webcam-recorder/WebcamRecorder";
-
-export type RecordingContainerProps = {
-  isRecording: boolean;
-  webcamConstraints: MediaStreamConstraints;
-  setMediaRecorder: (mediaRecorder: MediaRecorder) => void;
-  startRecording: () => void;
-  stopRecording: () => void;
-};
+import type { RecordingContainerProps } from "./recording-container-props";
 
 const WebcamRecordingContainer = ({
   isRecording,

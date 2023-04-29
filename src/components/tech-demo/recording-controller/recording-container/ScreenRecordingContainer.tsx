@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import ScreenRecorder from "../screen-recorder/ScreenRecorder";
-import type { RecordingContainerProps } from "./WebcamRecordingContainer";
+import type { RecordingContainerProps } from "./recording-container-props";
 
 export const ScreenRecordingContainer = ({
   isRecording,
