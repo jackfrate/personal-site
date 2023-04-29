@@ -1,3 +1,5 @@
+"use-client";
+
 import { useEffect, useRef, useState } from "react";
 
 type PlaybackProps = {
@@ -45,7 +47,7 @@ const Playback = ({ finishedVideo, recordAnotherVideo }: PlaybackProps) => {
     }
 
     linkRef.current.href = videoSrcUrl as string;
-    
+
     // TODO: make better titles
     const date = new Date();
     linkRef.current.download = `${date.toLocaleDateString(
