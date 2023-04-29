@@ -49,12 +49,16 @@ const WebcamRecorder = ({
       </div>
       <div className="inline-flex flex-row ">
         {!isRecording && (
-          <button className="btn" onClick={onStart} disabled={!readyToRecord}>
+          <button
+            className="btn-error btn"
+            onClick={onStart}
+            disabled={!readyToRecord}
+          >
             Start Recording
           </button>
         )}
         {isRecording && (
-          <button className="btn" onClick={onStop}>
+          <button className="btn-error btn" onClick={onStop}>
             Stop
           </button>
         )}

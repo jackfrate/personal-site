@@ -11,18 +11,12 @@ import {
 } from "../utils/utils";
 
 type RecordingSettingsProps = {
-  // audioDevices?: MediaDeviceInfo[];
-  // videoDevices?: MediaDeviceInfo[];
-  // selectedAudioDevice?: MediaDeviceInfo;
-  // selectedVideoDevice?: MediaDeviceInfo;
-  // recordingMode: "screen" | "webcam";
-  // onAudioDeviceChange: (device: MediaDeviceInfo) => void;
-  // onVideoDeviceChange: (device: MediaDeviceInfo) => void;
-  // onRecordingModeChange: (recordingMode: "screen" | "webcam") => void;
-  onSettingsChange: (constraints: MediaStreamConstraints | undefined) => void;
+  onConstraintsChange: (
+    constraints: MediaStreamConstraints | undefined
+  ) => void;
 };
 
-const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
+const RecordingSettings = ({ onConstraintsChange }: RecordingSettingsProps) => {
   const [recordingMode, setRecordingMode] = useLocalStorage<
     "screen" | "webcam"
   >("RECORDING_MODE", "webcam");
@@ -42,20 +36,8 @@ const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
     string | undefined
   >("PREFERRED_VIDEO_DEVICE", undefined);
 
-  // const yeet = () => {
-  //   if (!selectedAudioDevice || !selectedVideoDevice) {
-  //     return;
-  //   }
-  //
-  //   onSettingsChange({
-  //     video: { deviceId: selectedVideoDevice.deviceId },
-  //     audio: { deviceId: selectedAudioDevice.deviceId },
-  //   });
-  // };
-
   useEffect(() => {
     const setupDevices = async () => {
-      // const permissions: { audio: boolean; video: boolean } =
       await handlePermissions();
       const mics = await getAudioDevices();
       const cams = await getVideoDevices();
@@ -81,6 +63,7 @@ const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
     };
 
     setupDevices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -88,10 +71,11 @@ const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
       return;
     }
 
-    onSettingsChange({
+    onConstraintsChange({
       video: { deviceId: selectedVideoDevice.deviceId },
       audio: { deviceId: selectedAudioDevice.deviceId },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAudioDevice?.deviceId, selectedVideoDevice?.deviceId]);
 
   return (
@@ -131,7 +115,7 @@ const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
           </div>
           {/* camera / mic dropdowns */}
           <div className="flex max-w-[400px] flex-col">
-            <h3 className="pb-4">Camera Settings</h3>
+            {/* <h3 className="pb-4"></h3> */}
             <div className="dropdown w-full">
               <label
                 tabIndex={0}
@@ -163,7 +147,8 @@ const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
                 ))}
               </ul>
             </div>
-            <div className="dropdown w-full">
+            {/* TODO: remove this check when  */}
+            {recordingMode === 'webcam' && <div className="dropdown w-full">
               <label
                 tabIndex={0}
                 className="btn-outline btn-secondary btn m-1 w-full"
@@ -193,13 +178,8 @@ const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
                   </button>
                 ))}
               </ul>
-            </div>
-            {/* TODO: delete this part when camera stuff works */}
+            </div>}
           </div>
-        </div>
-        <div className="card-actions justify-end">
-          {/* <button className="btn-primary btn">Accept</button> */}
-          {/* <button className="btn-ghost btn">Deny</button> */}
         </div>
       </div>
     </div>

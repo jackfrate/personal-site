@@ -5,7 +5,7 @@ import WebcamRecorder from "../webcam-recorder/WebcamRecorder";
 
 export type RecordingContainerProps = {
   isRecording: boolean;
-  constraints: MediaStreamConstraints;
+  webcamConstraints: MediaStreamConstraints;
   setMediaRecorder: (mediaRecorder: MediaRecorder) => void;
   startRecording: () => void;
   stopRecording: () => void;
@@ -13,31 +13,32 @@ export type RecordingContainerProps = {
 
 const WebcamRecordingContainer = ({
   isRecording,
-  constraints,
+  webcamConstraints,
   setMediaRecorder,
   startRecording,
   stopRecording,
 }: RecordingContainerProps) => {
   const [mediaStream, setMediaStream] = useState<MediaStream>();
 
-  const yeet = async (_constraints: MediaStreamConstraints) => {
+  const setupMediaStream = async (_constraints: MediaStreamConstraints) => {
     try {
-      const _mediaStream = await navigator.mediaDevices.getUserMedia(
+      const webcamMediaStream = await navigator.mediaDevices.getUserMedia(
         _constraints
       );
 
-      const _mediaRecorder = new MediaRecorder(_mediaStream);
+      const mediaRecorder = new MediaRecorder(webcamMediaStream);
 
-      setMediaStream(_mediaStream);
-      setMediaRecorder(_mediaRecorder);
+      setMediaStream(webcamMediaStream);
+      setMediaRecorder(mediaRecorder);
     } catch (e) {
       console.error(e, "could not set media stream");
     }
   };
 
   useEffect(() => {
-    yeet(constraints);
-  }, [constraints]);
+    setupMediaStream(webcamConstraints);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [webcamConstraints]);
 
   useEffect(() => {
     return () => {
@@ -49,7 +50,7 @@ const WebcamRecordingContainer = ({
         track.stop();
       });
     };
-  }, []);
+  }, [mediaStream]);
 
   return mediaStream !== undefined ? (
     <div>

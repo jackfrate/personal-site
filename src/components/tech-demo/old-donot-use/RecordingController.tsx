@@ -9,8 +9,8 @@ import {
   getVideoDevices,
   handlePermissions,
 } from "../utils/utils";
-import ScreenRecorder from "./screen-recorder/ScreenRecorder";
-import WebcamRecorder from "./webcam-recorder/WebcamRecorder";
+import ScreenRecorder from "../recording-controller/screen-recorder/ScreenRecorder";
+import WebcamRecorder from "../recording-controller/webcam-recorder/WebcamRecorder";
 
 type RecordingControllerProps = {
   onRecordingEnd: (finishedRecording: Blob) => void;

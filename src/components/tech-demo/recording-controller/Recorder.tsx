@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import RecordingSettings from "../recording-settings/RecordingSettings";
 import Playback from "./playback/Playback";
+import { ScreenRecordingContainer } from "./recording-container/ScreenRecordingContainer";
 import WebcamRecordingContainer from "./recording-container/WebcamRecordingContainer";
 
 export const DemoContainer = () => {
@@ -9,6 +11,10 @@ export const DemoContainer = () => {
 
   const [finishedRecording, setFinishedRecording] = useState<Blob>();
   const [constraints, setConstraints] = useState<MediaStreamConstraints>();
+
+  const [recordingMode, setRecordingMode] = useLocalStorage<
+    "screen" | "webcam"
+  >("RECORDING_MODE", "webcam");
 
   useEffect(() => {
     if (mediaRecorder) {
@@ -57,17 +63,26 @@ export const DemoContainer = () => {
 
   return !finishedRecording ? (
     <div className="flex flex-col gap-4">
-      {constraints && (
+      {constraints && recordingMode === "webcam" && (
         <WebcamRecordingContainer
           setMediaRecorder={(mediaRecorder) => setMediaRecorder(mediaRecorder)}
           isRecording={isRecording}
           startRecording={startRecording}
           stopRecording={stopRecording}
-          constraints={constraints}
+          webcamConstraints={constraints}
+        />
+      )}
+      {constraints && recordingMode === "screen" && (
+        <ScreenRecordingContainer
+          setMediaRecorder={(mediaRecorder) => setMediaRecorder(mediaRecorder)}
+          isRecording={isRecording}
+          startRecording={startRecording}
+          stopRecording={stopRecording}
+          webcamConstraints={constraints}
         />
       )}
       {!isRecording && (
-        <RecordingSettings onSettingsChange={onConstraintsChange} />
+        <RecordingSettings onConstraintsChange={onConstraintsChange} />
       )}
     </div>
   ) : (

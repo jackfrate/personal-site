@@ -49,12 +49,12 @@ const ScreenRecorder = ({
       </div>
       <div className="inline-flex flex-row ">
         {!isRecording && (
-          <button className="btn" onClick={onStart}>
+          <button className="btn-error btn" onClick={onStart}>
             Start Recording
           </button>
         )}
         {isRecording && (
-          <button className="btn" onClick={onStop}>
+          <button className="btn-error btn" onClick={onStop}>
             Stop
           </button>
         )}
