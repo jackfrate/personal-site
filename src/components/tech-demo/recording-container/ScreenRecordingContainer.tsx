@@ -1,4 +1,3 @@
-// TODO: move these props to their own file
 "use-client";
 
 import { useEffect, useState } from "react";

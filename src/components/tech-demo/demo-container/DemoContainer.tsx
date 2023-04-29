@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
+import Playback from "../playback/Playback";
+import { ScreenRecordingContainer } from "../recording-container/ScreenRecordingContainer";
+import WebcamRecordingContainer from "../recording-container/WebcamRecordingContainer";
 import RecordingSettings from "../recording-settings/RecordingSettings";
-import Playback from "./playback/Playback";
-import { ScreenRecordingContainer } from "./recording-container/ScreenRecordingContainer";
-import WebcamRecordingContainer from "./recording-container/WebcamRecordingContainer";
 
 export const DemoContainer = () => {
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();

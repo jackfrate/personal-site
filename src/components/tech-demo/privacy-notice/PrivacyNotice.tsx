@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { DemoContainer } from "../recording-controller/Recorder";
+import { DemoContainer } from "../demo-container/DemoContainer";
 
 const PrivacyNotice = () => {
   // local storage is weird with next and can cause hydration errors,

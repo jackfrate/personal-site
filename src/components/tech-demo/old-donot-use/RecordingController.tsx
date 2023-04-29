@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import RecordingSettings from "../recording-settings/RecordingSettings";
+import ScreenRecorder from "../screen-recorder/ScreenRecorder";
 import {
   getAudioDevices,
   getVideoDevices,
   handlePermissions,
 } from "../utils/utils";
-import ScreenRecorder from "../recording-controller/screen-recorder/ScreenRecorder";
-import WebcamRecorder from "../recording-controller/webcam-recorder/WebcamRecorder";
+import WebcamRecorder from "../webcam-recorder/WebcamRecorder";
 
 type RecordingControllerProps = {
   onRecordingEnd: (finishedRecording: Blob) => void;
