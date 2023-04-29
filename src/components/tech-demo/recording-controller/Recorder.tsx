@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import RecordingSettings from "../recording-settings/RecordingSettings";
 import Playback from "./playback/Playback";
 import WebcamRecordingContainer from "./recording-container/WebcamRecordingContainer";
 
@@ -7,8 +8,7 @@ export const DemoContainer = () => {
   const [isRecording, setIsRecording] = useState(false);
 
   const [finishedRecording, setFinishedRecording] = useState<Blob>();
-
-  // TODO: create a playback component that handles the srcUrl bullshit
+  const [constraints, setConstraints] = useState<MediaStreamConstraints>();
 
   useEffect(() => {
     if (mediaRecorder) {
@@ -40,16 +40,40 @@ export const DemoContainer = () => {
 
   const resetRecorder = () => setFinishedRecording(undefined);
 
+  const onConstraintsChange = (
+    _constraints: MediaStreamConstraints | undefined
+  ) => {
+    if (!_constraints) {
+      console.log("SETTING CONSTRAINTS");
+      setConstraints(_constraints);
+      // return;
+    }
+
+    if (JSON.stringify(_constraints) !== JSON.stringify(constraints)) {
+      console.log("SETTING CONSTRAINTS");
+      setConstraints(_constraints);
+    }
+  };
+
   return !finishedRecording ? (
-    <div>
-      <WebcamRecordingContainer
-        setMediaRecorder={(mediaRecorder) => setMediaRecorder(mediaRecorder)}
-        isRecording={isRecording}
-        startRecording={startRecording}
-        stopRecording={stopRecording}
-      />
+    <div className="flex flex-col gap-4">
+      {constraints && (
+        <WebcamRecordingContainer
+          setMediaRecorder={(mediaRecorder) => setMediaRecorder(mediaRecorder)}
+          isRecording={isRecording}
+          startRecording={startRecording}
+          stopRecording={stopRecording}
+          constraints={constraints}
+        />
+      )}
+      {!isRecording && (
+        <RecordingSettings onSettingsChange={onConstraintsChange} />
+      )}
     </div>
   ) : (
-    <Playback finishedVideo={finishedRecording} recordAnotherVideo={resetRecorder}/>
+    <Playback
+      finishedVideo={finishedRecording}
+      recordAnotherVideo={resetRecorder}
+    />
   );
 };

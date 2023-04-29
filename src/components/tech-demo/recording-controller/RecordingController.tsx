@@ -93,7 +93,7 @@ const RecordingController = ({ onRecordingEnd }: RecordingControllerProps) => {
     };
 
     setupDevices();
-  }, []);
+  }, [preferredAudioDevice, preferredVideoDevice]);
 
   // handle preferred devices
   useEffect(() => {

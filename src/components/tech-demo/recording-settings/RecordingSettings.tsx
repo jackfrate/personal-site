@@ -1,29 +1,99 @@
 "use-client";
 
+import { useEffect, useState } from "react";
 import { MdOutlineMic, MdVideocam } from "react-icons/md";
 import { RxChevronDown } from "react-icons/rx";
+import { useLocalStorage } from "usehooks-ts";
+import {
+  getAudioDevices,
+  getVideoDevices,
+  handlePermissions,
+} from "../utils/utils";
 
 type RecordingSettingsProps = {
-  audioDevices?: MediaDeviceInfo[];
-  videoDevices?: MediaDeviceInfo[];
-  selectedAudioDevice?: MediaDeviceInfo;
-  selectedVideoDevice?: MediaDeviceInfo;
-  recordingMode: "screen" | "webcam";
-  onAudioDeviceChange: (device: MediaDeviceInfo) => void;
-  onVideoDeviceChange: (device: MediaDeviceInfo) => void;
-  onRecordingModeChange: (recordingMode: "screen" | "webcam") => void;
+  // audioDevices?: MediaDeviceInfo[];
+  // videoDevices?: MediaDeviceInfo[];
+  // selectedAudioDevice?: MediaDeviceInfo;
+  // selectedVideoDevice?: MediaDeviceInfo;
+  // recordingMode: "screen" | "webcam";
+  // onAudioDeviceChange: (device: MediaDeviceInfo) => void;
+  // onVideoDeviceChange: (device: MediaDeviceInfo) => void;
+  // onRecordingModeChange: (recordingMode: "screen" | "webcam") => void;
+  onSettingsChange: (constraints: MediaStreamConstraints | undefined) => void;
 };
 
-const RecordingSettings = ({
-  audioDevices,
-  videoDevices,
-  selectedAudioDevice,
-  selectedVideoDevice,
-  recordingMode,
-  onAudioDeviceChange,
-  onVideoDeviceChange,
-  onRecordingModeChange,
-}: RecordingSettingsProps) => {
+const RecordingSettings = ({ onSettingsChange }: RecordingSettingsProps) => {
+  const [recordingMode, setRecordingMode] = useLocalStorage<
+    "screen" | "webcam"
+  >("RECORDING_MODE", "webcam");
+
+  const [audioDevices, setAudioDevices] = useState<MediaDeviceInfo[]>();
+  const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>();
+
+  const [selectedAudioDevice, setSelectedAudioDevice] =
+    useState<MediaDeviceInfo>();
+  const [preferredAudioDevice, setPreferredAudioDevice] = useLocalStorage<
+    string | undefined
+  >("PREFERRED_AUDIO_DEVICE", undefined);
+
+  const [selectedVideoDevice, setSelectedVideoDevice] =
+    useState<MediaDeviceInfo>();
+  const [preferredVideoDevice, setPreferredVideoDevice] = useLocalStorage<
+    string | undefined
+  >("PREFERRED_VIDEO_DEVICE", undefined);
+
+  // const yeet = () => {
+  //   if (!selectedAudioDevice || !selectedVideoDevice) {
+  //     return;
+  //   }
+  //
+  //   onSettingsChange({
+  //     video: { deviceId: selectedVideoDevice.deviceId },
+  //     audio: { deviceId: selectedAudioDevice.deviceId },
+  //   });
+  // };
+
+  useEffect(() => {
+    const setupDevices = async () => {
+      // const permissions: { audio: boolean; video: boolean } =
+      await handlePermissions();
+      const mics = await getAudioDevices();
+      const cams = await getVideoDevices();
+
+      setAudioDevices(mics);
+      setVideoDevices(cams);
+
+      // just use first item in each list, can change later
+      // do the camera first, since we only need a mic to start desktop recording
+      if (cams.length > 0) {
+        const prefCam = cams.find(
+          (device) => device.deviceId === preferredVideoDevice
+        );
+        setSelectedVideoDevice(prefCam ?? cams[0]);
+      }
+
+      if (mics.length > 0) {
+        const prefMic = mics.find(
+          (device) => device.deviceId === preferredAudioDevice
+        );
+        setSelectedAudioDevice(prefMic ?? mics[0]);
+      }
+    };
+
+    setupDevices();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedAudioDevice || !selectedVideoDevice) {
+      return;
+    }
+
+    onSettingsChange({
+      video: { deviceId: selectedVideoDevice.deviceId },
+      audio: { deviceId: selectedAudioDevice.deviceId },
+    });
+  }, [selectedAudioDevice?.deviceId, selectedVideoDevice?.deviceId]);
+
   return (
     <div className="card  bg-neutral text-neutral-content">
       <div className="card-body items-center text-center">
@@ -35,7 +105,7 @@ const RecordingSettings = ({
             <div className="form-control pt-4">
               <label
                 className="label cursor-pointer"
-                onClick={() => onRecordingModeChange("webcam")}
+                onClick={() => setRecordingMode("webcam")}
               >
                 <span className="label-text">Webcam</span>
                 <input
@@ -47,7 +117,7 @@ const RecordingSettings = ({
               </label>
               <label
                 className="label cursor-pointer"
-                onClick={() => onRecordingModeChange("screen")}
+                onClick={() => setRecordingMode("screen")}
               >
                 <span className="label-text">Screen</span>
                 <input
@@ -83,7 +153,10 @@ const RecordingSettings = ({
                   <button
                     className="btn"
                     key={device.deviceId}
-                    onClick={() => onAudioDeviceChange(device)}
+                    onClick={() => {
+                      setSelectedAudioDevice(device);
+                      setPreferredAudioDevice(device.deviceId);
+                    }}
                   >
                     {device.label}
                   </button>
@@ -111,7 +184,10 @@ const RecordingSettings = ({
                   <button
                     className="btn"
                     key={device.deviceId}
-                    onClick={() => onVideoDeviceChange(device)}
+                    onClick={() => {
+                      setSelectedVideoDevice(device);
+                      setPreferredVideoDevice(device.deviceId);
+                    }}
                   >
                     {device.label}
                   </button>
