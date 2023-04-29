@@ -1,3 +1,5 @@
+"use-client";
+
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import RecordingSettings from "../recording-settings/RecordingSettings";
@@ -52,7 +54,7 @@ export const DemoContainer = () => {
     if (!_constraints) {
       console.log("SETTING CONSTRAINTS");
       setConstraints(_constraints);
-      // return;
+      return;
     }
 
     if (JSON.stringify(_constraints) !== JSON.stringify(constraints)) {

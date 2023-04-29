@@ -1,4 +1,6 @@
 // TODO: move these props to their own file
+"use-client";
+
 import { useEffect, useState } from "react";
 import ScreenRecorder from "../screen-recorder/ScreenRecorder";
 import type { RecordingContainerProps } from "./WebcamRecordingContainer";

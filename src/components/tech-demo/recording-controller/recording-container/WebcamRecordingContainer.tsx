@@ -52,19 +52,23 @@ const WebcamRecordingContainer = ({
     };
   }, [mediaStream]);
 
-  return mediaStream !== undefined ? (
-    <div>
-      {
-        <WebcamRecorder
-          mediaStream={mediaStream}
-          isRecording={isRecording}
-          onStart={startRecording}
-          onStop={stopRecording}
-        />
-      }
+  return (
+    <div className="flex flex-col items-center">
+      {mediaStream !== undefined ? (
+        <div>
+          {
+            <WebcamRecorder
+              mediaStream={mediaStream}
+              isRecording={isRecording}
+              onStart={startRecording}
+              onStop={stopRecording}
+            />
+          }
+        </div>
+      ) : (
+        <p>Loading Webcam...</p>
+      )}
     </div>
-  ) : (
-    <p>Loading...</p>
   );
 };
 

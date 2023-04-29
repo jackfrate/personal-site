@@ -115,7 +115,7 @@ const RecordingSettings = ({ onConstraintsChange }: RecordingSettingsProps) => {
           </div>
           {/* camera / mic dropdowns */}
           <div className="flex max-w-[400px] flex-col">
-            {/* <h3 className="pb-4"></h3> */}
+            <h3 className="pb-4">Device Settings</h3>
             <div className="dropdown w-full">
               <label
                 tabIndex={0}
@@ -148,37 +148,39 @@ const RecordingSettings = ({ onConstraintsChange }: RecordingSettingsProps) => {
               </ul>
             </div>
             {/* TODO: remove this check when  */}
-            {recordingMode === 'webcam' && <div className="dropdown w-full">
-              <label
-                tabIndex={0}
-                className="btn-outline btn-secondary btn m-1 w-full"
-              >
-                <div className="flex w-full flex-row items-center justify-between">
-                  <MdVideocam size="32px" />
-                  <p className="overflow-hidden">
-                    {selectedVideoDevice?.label ?? "select video device"}
-                  </p>
-                  <RxChevronDown size="32px" />
-                </div>
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu rounded-box flex flex-col gap-2 bg-base-100 p-2 shadow"
-              >
-                {(videoDevices ?? []).map((device) => (
-                  <button
-                    className="btn"
-                    key={device.deviceId}
-                    onClick={() => {
-                      setSelectedVideoDevice(device);
-                      setPreferredVideoDevice(device.deviceId);
-                    }}
-                  >
-                    {device.label}
-                  </button>
-                ))}
-              </ul>
-            </div>}
+            {recordingMode === "webcam" && (
+              <div className="dropdown w-full">
+                <label
+                  tabIndex={0}
+                  className="btn-outline btn-secondary btn m-1 w-full"
+                >
+                  <div className="flex w-full flex-row items-center justify-between">
+                    <MdVideocam size="32px" />
+                    <p className="overflow-hidden">
+                      {selectedVideoDevice?.label ?? "select video device"}
+                    </p>
+                    <RxChevronDown size="32px" />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu rounded-box flex flex-col gap-2 bg-base-100 p-2 shadow"
+                >
+                  {(videoDevices ?? []).map((device) => (
+                    <button
+                      className="btn"
+                      key={device.deviceId}
+                      onClick={() => {
+                        setSelectedVideoDevice(device);
+                        setPreferredVideoDevice(device.deviceId);
+                      }}
+                    >
+                      {device.label}
+                    </button>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
