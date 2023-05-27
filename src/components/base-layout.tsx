@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import Navbar from "./experience/navbar";
 
 type Props = {
-  activeTab: "about" | "experience" | "demo";
+  activeTab: "about" | "experience" | "demo" | "audio-demo";
   children: ReactNode;
 };
 
