@@ -6,8 +6,11 @@ import { useRef, useState } from "react";
  * @returns
  */
 const AudioDemoContainer = () => {
+  // TODO: allow custom source
+  // video element is used because it can play audio and video :)
+  const mediaElement = useRef<HTMLVideoElement>(null);
+
   const [audioCTXAllowed, setAudioCTXAllowed] = useState(false);
-  const audioElement = useRef<HTMLMediaElement>(null);
   const [audioContext, setAudioContext] = useState<AudioContext>();
 
   // audio graph stuff
@@ -20,12 +23,12 @@ const AudioDemoContainer = () => {
   };
 
   const setUpAudioGraph = (event: SyntheticEvent<HTMLAudioElement, Event>) => {
-    if (!audioContext || !audioElement.current) {
+    if (!audioContext || !mediaElement.current) {
       return;
     }
 
     const _audioTrack = audioContext.createMediaElementSource(
-      audioElement.current
+      mediaElement.current
     );
 
     _audioTrack.connect(audioContext.destination);
@@ -46,12 +49,12 @@ const AudioDemoContainer = () => {
       )}
       {audioCTXAllowed && (
         <div className="flex flex-col">
-          <audio
+          <video
             controls
-            ref={audioElement}
+            ref={mediaElement}
             src="/audio/my-universe.mp3"
             onLoadedMetadata={setUpAudioGraph}
-          ></audio>
+          ></video>
         </div>
       )}
     </div>
