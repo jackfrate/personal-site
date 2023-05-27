@@ -2,14 +2,18 @@
 
 import type { SyntheticEvent } from "react";
 import { useRef, useState } from "react";
-import PannerControls from "../panner-controls/PannerControls";
+import PannerControls, {
+  CANVAS_HEIGHT,
+  CANVAS_WIDTH,
+  CENTER_OF_CANVAS,
+} from "../panner-controls/PannerControls";
 
-export const CANVAS_HEIGHT = 500;
-export const CANVAS_WIDTH = 500;
-// export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
-//   Math.max(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
-// );
-export const MAX_DISTANCE_FROM_SOURCE = 10;
+export type Coordinate = { x: number; y: number };
+
+export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
+  Math.max(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
+);
+
 /**
  * audio borrowed from https://pixabay.com/music/search/?order=ec
  * @returns
@@ -22,15 +26,8 @@ const AudioDemoContainer = () => {
   const [audioCTXAllowed, setAudioCTXAllowed] = useState(false);
   const [audioContext, setAudioContext] = useState<AudioContext>();
 
-  // TODO: once we know how stereo panner works, go to normal 3d panner node
-  // const [pannerOptions, setPannerOptions] = useState<StereoPannerOptions>({
-  //   pan: 0,
-  // });
-  // TODO: useRef here?
+  // TODO: might not need this
   const [pannerNode, setPannerNode] = useState<PannerNode>();
-
-  // audio graph stuff
-  // const [audioTrack, setAudioTrack] = useState();
 
   const allowAudioContext = () => {
     setAudioCTXAllowed(true);
@@ -56,29 +53,37 @@ const AudioDemoContainer = () => {
       // This is what stops it from completely
       // cutting one ear off when moving on the x axis
       panningModel: "HRTF",
-      // rolloffFactor: 2,
+      positionX: CENTER_OF_CANVAS.x,
+      positionY: CENTER_OF_CANVAS.y,
     });
     setPannerNode(_pannerNode);
+
+    audioContext.listener.positionX.setValueAtTime(
+      CENTER_OF_CANVAS.x,
+      audioContext.currentTime
+    );
+    audioContext.listener.positionY.setValueAtTime(
+      CENTER_OF_CANVAS.y,
+      audioContext.currentTime
+    );
 
     _audioTrack.connect(_pannerNode);
     _pannerNode.connect(audioContext.destination);
   };
 
-  const setPannerOptions = ({ x, y }: { x?: number; y?: number }) => {
+  const changeListenerPosition = ({ x, y }: Partial<Coordinate>) => {
     if (!audioContext) {
       return;
     }
-    // console.log(`sertring value as ${options.pan}`);
-    // pannerNode.pan.setValueAtTime(options.pan ?? 0, audioContext.currentTime);
+
     if (x !== undefined) {
-      // pannerNode.positionX.setValueAtTime(x, audioContext.currentTime);
       audioContext.listener.positionX.setValueAtTime(
         x,
         audioContext.currentTime
       );
     }
+
     if (y !== undefined) {
-      // pannerNode.positionY.setValueAtTime(y, audioContext.currentTime);
       audioContext.listener.positionY.setValueAtTime(
         y,
         audioContext.currentTime
@@ -104,7 +109,7 @@ const AudioDemoContainer = () => {
             src="/audio/my-universe.mp3"
             onLoadedMetadata={setUpAudioGraph}
           ></video>
-          <PannerControls changePannerValue={setPannerOptions} />
+          <PannerControls changePannerValue={changeListenerPosition} />
         </div>
       )}
     </div>
