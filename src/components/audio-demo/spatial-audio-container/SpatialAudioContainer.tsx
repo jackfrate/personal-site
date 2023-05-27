@@ -18,7 +18,7 @@ export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
  * audio borrowed from https://pixabay.com/music/search/?order=ec
  * @returns
  */
-const AudioDemoContainer = () => {
+const SpatialAudioContainer = () => {
   // TODO: allow custom source
   // video element is used because it can play audio and video :)
   const mediaElement = useRef<HTMLVideoElement>(null);
@@ -116,4 +116,4 @@ const AudioDemoContainer = () => {
   );
 };
 
-export default AudioDemoContainer;
+export default SpatialAudioContainer;

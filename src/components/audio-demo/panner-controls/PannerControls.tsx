@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import type { Coordinate } from "../audio-demo-container/AudioDemoContainer";
+import type { Coordinate } from "../spatial-audio-container/SpatialAudioContainer";
 
-export const CANVAS_HEIGHT = 500 as const;
-export const CANVAS_WIDTH = 500 as const;
+export const CANVAS_HEIGHT = 450 as const;
+export const CANVAS_WIDTH = 800 as const;
 
 export const CENTER_OF_CANVAS: Coordinate = {
   x: Math.floor(CANVAS_WIDTH / 2),

@@ -1,10 +1,10 @@
-import AudioDemoContainer from "../../components/audio-demo/audio-demo-container/AudioDemoContainer";
+import SpatialAudioContainer from "../../components/audio-demo/spatial-audio-container/SpatialAudioContainer";
 import BaseLayout from "../../components/base-layout";
 
 const AudioDemo = () => (
   <BaseLayout activeTab="audio-demo">
     <div className="hero">
-      <AudioDemoContainer />
+      <SpatialAudioContainer />
     </div>
   </BaseLayout>
 );
