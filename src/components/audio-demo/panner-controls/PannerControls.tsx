@@ -1,28 +1,47 @@
 import type { SyntheticEvent } from "react";
 
 type PannerControlsProps = {
-  changePannerValue: (options: StereoPannerOptions) => void;
+  changePannerValue: (options: { x?: number; y?: number }) => void;
 };
 
 const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
-  const onSliderChange = (event: SyntheticEvent<HTMLInputElement, Event>) => {
+  const onXSliderChange = (event: SyntheticEvent<HTMLInputElement, Event>) => {
     // console.log(event.nativeEvent.target.value);
     // changePannerValue({ pan: event.nativeEvent.target.value });
-    changePannerValue({ pan: Number(event.currentTarget.value) });
+    changePannerValue({ x: Number(event.currentTarget.value) });
+  };
+
+  const onYSliderChange = (event: SyntheticEvent<HTMLInputElement, Event>) => {
+    // console.log(event.nativeEvent.target.value);
+    // changePannerValue({ pan: event.nativeEvent.target.value });
+    changePannerValue({ y: Number(event.currentTarget.value) });
   };
   return (
     <div>
+      <p>x</p>
       <input
         className="range-primary"
-        type="range"
-        id="panner"
-        min="-1"
-        max="1"
-        step="0.01"
+        type="number"
+        min="-11"
+        max="11"
+        step="1"
         placeholder="0"
-        onChange={onSliderChange}
+        onChange={onXSliderChange}
       />
-      <button className="btn" onClick={() => changePannerValue({ pan: 0 })}>
+      <button className="btn" onClick={() => changePannerValue({ x: 0 })}>
+        reset
+      </button>
+      <p>y</p>
+      <input
+        className="range-primary"
+        type="number"
+        min="-11"
+        max="11"
+        step="1"
+        placeholder="0"
+        onChange={onYSliderChange}
+      />
+      <button className="btn" onClick={() => changePannerValue({ y: 0 })}>
         reset
       </button>
     </div>

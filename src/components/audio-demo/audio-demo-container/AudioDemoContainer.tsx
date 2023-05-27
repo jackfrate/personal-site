@@ -1,7 +1,15 @@
+"use-client";
+
 import type { SyntheticEvent } from "react";
 import { useRef, useState } from "react";
 import PannerControls from "../panner-controls/PannerControls";
 
+export const CANVAS_HEIGHT = 500;
+export const CANVAS_WIDTH = 500;
+// export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
+//   Math.max(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
+// );
+export const MAX_DISTANCE_FROM_SOURCE = 10;
 /**
  * audio borrowed from https://pixabay.com/music/search/?order=ec
  * @returns
@@ -19,7 +27,7 @@ const AudioDemoContainer = () => {
   //   pan: 0,
   // });
   // TODO: useRef here?
-  const [pannerNode, setPannerNode] = useState<StereoPannerNode>();
+  const [pannerNode, setPannerNode] = useState<PannerNode>();
 
   // audio graph stuff
   // const [audioTrack, setAudioTrack] = useState();
@@ -39,24 +47,43 @@ const AudioDemoContainer = () => {
       mediaElement.current
     );
 
-    const _pannerNode = new StereoPannerNode(audioContext, { pan: 0 });
+    // TODO: change to actual panner node now
+    const _pannerNode = new PannerNode(audioContext, {
+      maxDistance: MAX_DISTANCE_FROM_SOURCE,
+      distanceModel: "linear",
+      coneOuterGain: 1,
+      refDistance: 1,
+      // This is what stops it from completely
+      // cutting one ear off when moving on the x axis
+      panningModel: "HRTF",
+      // rolloffFactor: 2,
+    });
     setPannerNode(_pannerNode);
-    // _audioTrack.connect(audioContext.destination);
-
-    // test
-    // audioElement.current.play();
-    //
 
     _audioTrack.connect(_pannerNode);
     _pannerNode.connect(audioContext.destination);
   };
 
-  const setPannerOptions = (options: StereoPannerOptions) => {
-    if (!pannerNode || !audioContext) {
+  const setPannerOptions = ({ x, y }: { x?: number; y?: number }) => {
+    if (!audioContext) {
       return;
     }
-    console.log(`sertring value as ${options.pan}`);
-    pannerNode.pan.setValueAtTime(options.pan ?? 0, audioContext.currentTime);
+    // console.log(`sertring value as ${options.pan}`);
+    // pannerNode.pan.setValueAtTime(options.pan ?? 0, audioContext.currentTime);
+    if (x !== undefined) {
+      // pannerNode.positionX.setValueAtTime(x, audioContext.currentTime);
+      audioContext.listener.positionX.setValueAtTime(
+        x,
+        audioContext.currentTime
+      );
+    }
+    if (y !== undefined) {
+      // pannerNode.positionY.setValueAtTime(y, audioContext.currentTime);
+      audioContext.listener.positionY.setValueAtTime(
+        y,
+        audioContext.currentTime
+      );
+    }
   };
 
   return (
