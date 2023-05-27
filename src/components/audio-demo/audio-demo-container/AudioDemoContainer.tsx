@@ -1,5 +1,6 @@
 import type { SyntheticEvent } from "react";
 import { useRef, useState } from "react";
+import PannerControls from "../panner-controls/PannerControls";
 
 /**
  * audio borrowed from https://pixabay.com/music/search/?order=ec
@@ -12,6 +13,13 @@ const AudioDemoContainer = () => {
 
   const [audioCTXAllowed, setAudioCTXAllowed] = useState(false);
   const [audioContext, setAudioContext] = useState<AudioContext>();
+
+  // TODO: once we know how stereo panner works, go to normal 3d panner node
+  // const [pannerOptions, setPannerOptions] = useState<StereoPannerOptions>({
+  //   pan: 0,
+  // });
+  // TODO: useRef here?
+  const [pannerNode, setPannerNode] = useState<StereoPannerNode>();
 
   // audio graph stuff
   // const [audioTrack, setAudioTrack] = useState();
@@ -31,10 +39,24 @@ const AudioDemoContainer = () => {
       mediaElement.current
     );
 
-    _audioTrack.connect(audioContext.destination);
+    const _pannerNode = new StereoPannerNode(audioContext, { pan: 0 });
+    setPannerNode(_pannerNode);
+    // _audioTrack.connect(audioContext.destination);
 
     // test
     // audioElement.current.play();
+    //
+
+    _audioTrack.connect(_pannerNode);
+    _pannerNode.connect(audioContext.destination);
+  };
+
+  const setPannerOptions = (options: StereoPannerOptions) => {
+    if (!pannerNode || !audioContext) {
+      return;
+    }
+    console.log(`sertring value as ${options.pan}`);
+    pannerNode.pan.setValueAtTime(options.pan ?? 0, audioContext.currentTime);
   };
 
   return (
@@ -55,6 +77,7 @@ const AudioDemoContainer = () => {
             src="/audio/my-universe.mp3"
             onLoadedMetadata={setUpAudioGraph}
           ></video>
+          <PannerControls changePannerValue={setPannerOptions} />
         </div>
       )}
     </div>
