@@ -14,7 +14,7 @@ const About = () => {
             I build things for the web
           </h1>
           <div className="flex flex-col gap-4 self-start pt-4">
-            <p className="pb-6">Check out some cool projects I've made</p>
+            <p className="pb-6">Check out some cool projects I&apos;ve made</p>
             <div className="flex flex-row gap-4">
               <Link href="/demo/video-recorder">
                 <button className="btn-outline btn-primary btn">
