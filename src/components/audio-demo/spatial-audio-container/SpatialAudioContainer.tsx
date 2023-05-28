@@ -1,6 +1,5 @@
 "use-client";
 
-import type { SyntheticEvent } from "react";
 import { useRef, useState } from "react";
 import PannerControls, {
   CANVAS_HEIGHT,
@@ -41,10 +40,14 @@ const SpatialAudioContainer = ({
    * @param event
    * @returns
    */
-  const setUpAudioGraph = (event: SyntheticEvent<HTMLAudioElement, Event>) => {
+  const setUpAudioGraph = () => {
     if (!mediaElement.current) {
       return;
     }
+
+    // If a media element is already connected to a context,
+    // it won't let you connect it to a new one, so just
+    // leave the graph as is, it'll work fine.
     if (audioContext) {
       return;
     }
@@ -55,7 +58,7 @@ const SpatialAudioContainer = ({
     const _audioTrack = _audioContext.createMediaElementSource(
       mediaElement.current
     );
-    // TODO: change to actual panner node now
+
     const _pannerNode = new PannerNode(_audioContext, {
       maxDistance: MAX_DISTANCE_FROM_SOURCE,
       distanceModel: "linear",
