@@ -94,7 +94,7 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
     context.font = "12px serif";
 
     context.fillStyle = "black";
-    context.fillText("You", _listenerPosition.x, _listenerPosition.y);
+    context.fillText("You", _listenerPosition.x, _listenerPosition.y + 3);
   };
 
   const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
