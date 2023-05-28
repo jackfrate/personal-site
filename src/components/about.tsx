@@ -13,6 +13,21 @@ const About = () => {
           <h1 className="text-6xl font-bold text-secondary">
             I build things for the web
           </h1>
+          <div className="flex flex-col gap-4 self-start pt-4">
+            <p className="pb-6">Check out some cool projects I've made</p>
+            <div className="flex flex-row gap-4">
+              <Link href="/demo">
+                <button className="btn-outline btn-primary btn">
+                  Record a video
+                </button>
+              </Link>
+              <Link href="/audio-demo">
+                <button className="btn-outline btn-primary btn">
+                  Spatial audio
+                </button>
+              </Link>
+            </div>
+          </div>
           <p className="py-6">
             I&apos;m a fullstack engineer who leans towards frontend. I have
             experience in both React and Angular, with specialties in modern web
@@ -24,19 +39,11 @@ const About = () => {
             I&apos;m just happy to be in an industry where I enjoy what I&apos;m
             doing.
           </p>
-          <p className="pb-6">
-            Go to my demo page if you want to record a video, its quick and
-            easy.
-          </p>
+
           <div className="flex flex-col gap-3 lg:flex-row">
             <Link href="/experience">
               <button className="btn-outline btn-primary btn">
                 See my experience
-              </button>
-            </Link>
-            <Link href="/demo">
-              <button className="btn-outline btn-primary btn">
-                Cool Tech Demo (Record a Video)
               </button>
             </Link>
             <Link

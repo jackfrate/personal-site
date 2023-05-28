@@ -1,6 +1,5 @@
 "use-client";
 
-import Link from "next/link";
 import type { SyntheticEvent } from "react";
 import { useRef, useState } from "react";
 import PannerControls, {
@@ -12,14 +11,13 @@ import PannerControls, {
 export type Coordinate = { x: number; y: number };
 
 export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
-  Math.max(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
+  Math.max(CANVAS_HEIGHT, CANVAS_WIDTH)
 );
 
 type SpatialAudioContainerProps = {
   sourceUrl: string;
   isAudioOnly: boolean;
-  useDefaultClicked: () => void;
-  uploadFileClicked: () => void;
+  audioContextAllowed: boolean;
 };
 
 /**
@@ -29,24 +27,14 @@ type SpatialAudioContainerProps = {
 const SpatialAudioContainer = ({
   sourceUrl,
   isAudioOnly,
-  useDefaultClicked,
-  uploadFileClicked,
+  audioContextAllowed,
 }: SpatialAudioContainerProps) => {
-  // TODO: allow custom source
-  // video element is used because it can play audio and video :)
   const mediaElement = useRef<HTMLVideoElement>(null);
 
-  const [audioCTXAllowed, setAudioCTXAllowed] = useState(false);
   const [audioContext, setAudioContext] = useState<AudioContext>();
 
   // TODO: this will be used when we want to adjust panner on the fly
   const [pannerNode, setPannerNode] = useState<PannerNode>();
-
-  const allowAudioContext = () => {
-    setAudioCTXAllowed(true);
-    const _audioContext = new AudioContext();
-    setAudioContext(_audioContext);
-  };
 
   /**
    * this should only ever run after the 'loadedmetadata' event
@@ -54,18 +42,21 @@ const SpatialAudioContainer = ({
    * @returns
    */
   const setUpAudioGraph = (event: SyntheticEvent<HTMLAudioElement, Event>) => {
-    if (!audioContext || !mediaElement.current) {
+    if (!mediaElement.current) {
       return;
     }
+    if (audioContext) {
+      return;
+    }
+    const _audioContext = new AudioContext();
 
-    // const mimeType = mediaElement.current
+    setAudioContext(_audioContext);
 
-    const _audioTrack = audioContext.createMediaElementSource(
+    const _audioTrack = _audioContext.createMediaElementSource(
       mediaElement.current
     );
-
     // TODO: change to actual panner node now
-    const _pannerNode = new PannerNode(audioContext, {
+    const _pannerNode = new PannerNode(_audioContext, {
       maxDistance: MAX_DISTANCE_FROM_SOURCE,
       distanceModel: "linear",
       coneOuterGain: 1,
@@ -78,17 +69,19 @@ const SpatialAudioContainer = ({
     });
     setPannerNode(_pannerNode);
 
-    audioContext.listener.positionX.setValueAtTime(
+    _audioContext.listener.positionX.setValueAtTime(
       CENTER_OF_CANVAS.x,
-      audioContext.currentTime
+      _audioContext.currentTime
     );
-    audioContext.listener.positionY.setValueAtTime(
+    _audioContext.listener.positionY.setValueAtTime(
       CENTER_OF_CANVAS.y,
-      audioContext.currentTime
+      _audioContext.currentTime
     );
 
     _audioTrack.connect(_pannerNode);
-    _pannerNode.connect(audioContext.destination);
+    _pannerNode.connect(_audioContext.destination);
+
+    setPannerNode(_pannerNode);
   };
 
   const changeListenerPosition = ({ x, y }: Partial<Coordinate>) => {
@@ -111,22 +104,18 @@ const SpatialAudioContainer = ({
     }
   };
 
+  // TODO: this is causing errors? revisit it
+  // clean up audio graph on de-render
+  // useEffect(() => {
+  //   return () => {
+  //     pannerNode?.disconnect();
+  //     audioContext?.close();
+  //   };
+  // }, [audioContext, pannerNode]);
+
   return (
     <div className="flex flex-col items-center">
-      {!audioCTXAllowed && (
-        <div className="flex flex-col items-center">
-          <button className="btn" onClick={allowAudioContext}>
-            Allow audio context
-          </button>
-          <p>
-            Default song provided royalty free from:{" "}
-            <Link href="https://pixabay.com/music/search/?order=ec">
-              https://pixabay.com/music/search/?order=ec
-            </Link>
-          </p>
-        </div>
-      )}
-      {audioCTXAllowed && (
+      {audioContextAllowed && (
         <div className="flex">
           <div className="flex flex-col gap-4">
             {!isAudioOnly && (
@@ -148,14 +137,6 @@ const SpatialAudioContainer = ({
                 className="w-full"
               ></audio>
             )}
-            <div className="flex w-full flex-row justify-center gap-4">
-              <button className="btn" onClick={uploadFileClicked}>
-                Upload File
-              </button>
-              <button className="btn" onClick={useDefaultClicked}>
-                Use Default Song
-              </button>
-            </div>
           </div>
         </div>
       )}
