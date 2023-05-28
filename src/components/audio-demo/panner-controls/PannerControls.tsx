@@ -1,3 +1,5 @@
+"use-client";
+
 import { useEffect, useRef, useState } from "react";
 import type { Coordinate } from "../spatial-audio-container/SpatialAudioContainer";
 
@@ -44,12 +46,22 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
       2 * Math.PI,
       false
     );
-    context.fillStyle = "red";
+    context.fillStyle = "#f471b5";
     context.fill();
 
     context.lineWidth = 4;
     context.strokeStyle = "black";
     context.stroke();
+
+    context.textAlign = "center";
+    context.font = "12px serif";
+
+    context.fillStyle = "white";
+    context.fillText(
+      "Audio Source",
+      CENTER_OF_CANVAS.x,
+      CENTER_OF_CANVAS.y - AUDIO_SOURCE_RADIUS - 10
+    );
   };
 
   const drawListenerPosition = (_listenerPosition: Coordinate) => {
@@ -71,12 +83,18 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
       2 * Math.PI,
       false
     );
-    context.fillStyle = "blue";
+    context.fillStyle = "#38bdf8";
     context.fill();
 
     context.lineWidth = 4;
     context.strokeStyle = "black";
     context.stroke();
+
+    context.textAlign = "center";
+    context.font = "12px serif";
+
+    context.fillStyle = "black";
+    context.fillText("You", _listenerPosition.x, _listenerPosition.y);
   };
 
   const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -116,7 +134,7 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
     }
 
     context?.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    context.fillStyle = "white";
+    context.fillStyle = "#1e293b";
     context?.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     drawAudioSource();
@@ -145,12 +163,17 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
           className="absolute top-0 bottom-0 left-0 right-0"
         ></canvas>
       </div>
-      <button
-        className="btn-primary btn max-w-md"
-        onClick={() => setListenerPosition(CENTER_OF_CANVAS)}
-      >
-        Reset
-      </button>
+      <div className="flex flex-row gap-5">
+        <p className="">
+          The blue dot is you, move it around to experience spatial audio
+        </p>
+        <button
+          className="btn-primary btn max-w-md"
+          onClick={() => setListenerPosition(CENTER_OF_CANVAS)}
+        >
+          Reset Position
+        </button>
+      </div>
     </div>
   );
 };

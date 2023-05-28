@@ -14,11 +14,19 @@ export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
   Math.max(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
 );
 
+type SpatialAudioContainerProps = {
+  sourceUrl: string;
+  isAudioOnly: boolean;
+};
+
 /**
  * audio borrowed from https://pixabay.com/music/search/?order=ec
  * @returns
  */
-const SpatialAudioContainer = () => {
+const SpatialAudioContainer = ({
+  sourceUrl,
+  isAudioOnly,
+}: SpatialAudioContainerProps) => {
   // TODO: allow custom source
   // video element is used because it can play audio and video :)
   const mediaElement = useRef<HTMLVideoElement>(null);
@@ -26,7 +34,7 @@ const SpatialAudioContainer = () => {
   const [audioCTXAllowed, setAudioCTXAllowed] = useState(false);
   const [audioContext, setAudioContext] = useState<AudioContext>();
 
-  // TODO: might not need this
+  // TODO: this will be used when we want to adjust panner on the fly
   const [pannerNode, setPannerNode] = useState<PannerNode>();
 
   const allowAudioContext = () => {
@@ -35,10 +43,17 @@ const SpatialAudioContainer = () => {
     setAudioContext(_audioContext);
   };
 
+  /**
+   * this should only ever run after the 'loadedmetadata' event
+   * @param event
+   * @returns
+   */
   const setUpAudioGraph = (event: SyntheticEvent<HTMLAudioElement, Event>) => {
     if (!audioContext || !mediaElement.current) {
       return;
     }
+
+    // const mimeType = mediaElement.current
 
     const _audioTrack = audioContext.createMediaElementSource(
       mediaElement.current
@@ -49,12 +64,12 @@ const SpatialAudioContainer = () => {
       maxDistance: MAX_DISTANCE_FROM_SOURCE,
       distanceModel: "linear",
       coneOuterGain: 1,
-      refDistance: 1,
+      refDistance: 10, // good enough value
+      positionX: CENTER_OF_CANVAS.x,
+      positionY: CENTER_OF_CANVAS.y,
       // This is what stops it from completely
       // cutting one ear off when moving on the x axis
       panningModel: "HRTF",
-      positionX: CENTER_OF_CANVAS.x,
-      positionY: CENTER_OF_CANVAS.y,
     });
     setPannerNode(_pannerNode);
 
@@ -92,7 +107,7 @@ const SpatialAudioContainer = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center">
       <p>Audio Demo</p>
       {!audioCTXAllowed && (
         <div>
@@ -102,14 +117,26 @@ const SpatialAudioContainer = () => {
         </div>
       )}
       {audioCTXAllowed && (
-        <div className="flex flex-col">
-          <video
-            controls
-            ref={mediaElement}
-            src="/audio/my-universe.mp3"
-            onLoadedMetadata={setUpAudioGraph}
-          ></video>
+        <div className="flex flex-col gap-4">
+          {!isAudioOnly && (
+            <video
+              controls
+              ref={mediaElement}
+              src={sourceUrl}
+              onLoadedMetadata={setUpAudioGraph}
+            ></video>
+          )}
           <PannerControls changePannerValue={changeListenerPosition} />
+          {/* Audio only looks better below the canvas */}
+          {isAudioOnly && (
+            <audio
+              controls
+              ref={mediaElement}
+              src={sourceUrl}
+              onLoadedMetadata={setUpAudioGraph}
+              className="w-full"
+            ></audio>
+          )}
         </div>
       )}
     </div>
