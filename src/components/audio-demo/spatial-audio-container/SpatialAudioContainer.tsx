@@ -1,5 +1,6 @@
 "use-client";
 
+import Link from "next/link";
 import type { SyntheticEvent } from "react";
 import { useRef, useState } from "react";
 import PannerControls, {
@@ -17,6 +18,8 @@ export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
 type SpatialAudioContainerProps = {
   sourceUrl: string;
   isAudioOnly: boolean;
+  useDefaultClicked: () => void;
+  uploadFileClicked: () => void;
 };
 
 /**
@@ -26,6 +29,8 @@ type SpatialAudioContainerProps = {
 const SpatialAudioContainer = ({
   sourceUrl,
   isAudioOnly,
+  useDefaultClicked,
+  uploadFileClicked,
 }: SpatialAudioContainerProps) => {
   // TODO: allow custom source
   // video element is used because it can play audio and video :)
@@ -108,35 +113,50 @@ const SpatialAudioContainer = ({
 
   return (
     <div className="flex flex-col items-center">
-      <p>Audio Demo</p>
       {!audioCTXAllowed && (
-        <div>
+        <div className="flex flex-col items-center">
           <button className="btn" onClick={allowAudioContext}>
             Allow audio context
           </button>
+          <p>
+            Default song provided royalty free from:{" "}
+            <Link href="https://pixabay.com/music/search/?order=ec">
+              https://pixabay.com/music/search/?order=ec
+            </Link>
+          </p>
         </div>
       )}
       {audioCTXAllowed && (
-        <div className="flex flex-col gap-4">
-          {!isAudioOnly && (
-            <video
-              controls
-              ref={mediaElement}
-              src={sourceUrl}
-              onLoadedMetadata={setUpAudioGraph}
-            ></video>
-          )}
-          <PannerControls changePannerValue={changeListenerPosition} />
-          {/* Audio only looks better below the canvas */}
-          {isAudioOnly && (
-            <audio
-              controls
-              ref={mediaElement}
-              src={sourceUrl}
-              onLoadedMetadata={setUpAudioGraph}
-              className="w-full"
-            ></audio>
-          )}
+        <div className="flex">
+          <div className="flex flex-col gap-4">
+            {!isAudioOnly && (
+              <video
+                controls
+                ref={mediaElement}
+                src={sourceUrl}
+                onLoadedMetadata={setUpAudioGraph}
+              ></video>
+            )}
+            <PannerControls changePannerValue={changeListenerPosition} />
+            {/* Audio only looks better below the canvas */}
+            {isAudioOnly && (
+              <audio
+                controls
+                ref={mediaElement}
+                src={sourceUrl}
+                onLoadedMetadata={setUpAudioGraph}
+                className="w-full"
+              ></audio>
+            )}
+            <div className="flex w-full flex-row justify-center gap-4">
+              <button className="btn" onClick={uploadFileClicked}>
+                Upload File
+              </button>
+              <button className="btn" onClick={useDefaultClicked}>
+                Use Default Song
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

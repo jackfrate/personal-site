@@ -3,14 +3,27 @@
 import { useState } from "react";
 import SpatialAudioContainer from "../spatial-audio-container/SpatialAudioContainer";
 
+const DEFAULT_SONG_SRC = "/audio/my-universe.mp3";
+
 const AudioDemoContainer = () => {
-  const [mediaSrcUrl, setMediaSrcUrl] = useState<string>(
-    "/audio/my-universe.mp3"
-  );
+  const [mediaSrcUrl, setMediaSrcUrl] = useState<string>(DEFAULT_SONG_SRC);
   const [isAudioOnly, setIsAudioOnly] = useState(true);
+
+  const useDefaultSong = () => {
+    if (mediaSrcUrl === DEFAULT_SONG_SRC) {
+      return;
+    }
+    setMediaSrcUrl(DEFAULT_SONG_SRC);
+  };
   // TODO: create file upload setup
   return (
-    <SpatialAudioContainer sourceUrl={mediaSrcUrl} isAudioOnly={isAudioOnly} />
+    <div className="flex flex-col gap-4">
+      <SpatialAudioContainer
+        sourceUrl={mediaSrcUrl}
+        isAudioOnly={isAudioOnly}
+        useDefaultClicked={useDefaultSong}
+      />
+    </div>
   );
 };
 

@@ -165,7 +165,8 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
       </div>
       <div className="flex flex-row items-center gap-5">
         <p className="">
-          The blue dot is you, move it around to experience spatial audio
+          Best used with headphones, move the blue dot around to experience
+          spatial audio.
         </p>
         <button
           className="btn-primary btn max-w-md"
