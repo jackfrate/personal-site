@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type Props = {
-  activeTab: "about" | "experience" | "demo" | "audio-demo";
+  activeTab: "about" | "experience" | "demo";
 };
 
 const Navbar: React.FC<Props> = ({ activeTab }) => {
@@ -27,14 +27,7 @@ const Navbar: React.FC<Props> = ({ activeTab }) => {
             activeTab === "demo" ? "tab-active" : ""
           }`}
         >
-          <Link href="/demo">Video Recorder</Link>
-        </div>
-        <div
-          className={`tab tab-bordered ${
-            activeTab === "audio-demo" ? "tab-active" : ""
-          }`}
-        >
-          <Link href="/audio-demo">Spatial Audio</Link>
+          <Link href="/demo">Tech Demos</Link>
         </div>
       </div>
     </div>

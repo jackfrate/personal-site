@@ -16,12 +16,12 @@ const About = () => {
           <div className="flex flex-col gap-4 self-start pt-4">
             <p className="pb-6">Check out some cool projects I've made</p>
             <div className="flex flex-row gap-4">
-              <Link href="/demo">
+              <Link href="/demo/video-recorder">
                 <button className="btn-outline btn-primary btn">
                   Record a video
                 </button>
               </Link>
-              <Link href="/audio-demo">
+              <Link href="/demo/spatial-audio">
                 <button className="btn-outline btn-primary btn">
                   Spatial audio
                 </button>
