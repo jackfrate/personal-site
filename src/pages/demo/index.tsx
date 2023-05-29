@@ -10,7 +10,7 @@ const DemoIndex = () => {
           <button className="btn-primary btn">Video Recorder</button>
         </Link>
 
-        <p>Experience Spatial Audio (not very mobile optimized right now)</p>
+        <p>Experience Spatial Audio</p>
         <Link href="demo/spatial-audio">
           <button className="btn-primary btn">Spatial Audio</button>
         </Link>

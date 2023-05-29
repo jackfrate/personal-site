@@ -1,15 +1,9 @@
 "use-client";
 
 import { useEffect, useRef, useState } from "react";
+import { useEventListener } from "usehooks-ts";
+import { useCanvasSize } from "../hooks/useCanvasSize";
 import type { Coordinate } from "../spatial-audio-container/SpatialAudioContainer";
-
-export const CANVAS_HEIGHT = 450 as const;
-export const CANVAS_WIDTH = 800 as const;
-
-export const CENTER_OF_CANVAS: Coordinate = {
-  x: Math.floor(CANVAS_WIDTH / 2),
-  y: Math.floor(CANVAS_HEIGHT / 2),
-};
 
 const AUDIO_SOURCE_RADIUS = 30;
 const LISTENER_RADIUS = 20;
@@ -19,16 +13,16 @@ type PannerControlsProps = {
 };
 
 const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
+  const { canvasDimensions, centerOfCanvas } = useCanvasSize();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [listenerPosition, setListenerPosition] =
-    useState<Coordinate>(CENTER_OF_CANVAS);
+  const [listenerPosition, setListenerPosition] = useState<Coordinate>();
 
   const [mouseIsDown, setMouseIsDown] = useState(false);
 
-  const drawAudioSource = () => {
-    if (!canvasRef.current || !canvasRef.current) {
+  const drawAudioSource = (_centerOfCanvas: Coordinate) => {
+    if (!canvasRef.current) {
       return;
     }
 
@@ -39,8 +33,8 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
 
     context.beginPath();
     context.arc(
-      CENTER_OF_CANVAS.x,
-      CENTER_OF_CANVAS.y,
+      _centerOfCanvas.x,
+      _centerOfCanvas.y,
       AUDIO_SOURCE_RADIUS,
       0,
       2 * Math.PI,
@@ -59,8 +53,8 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
     context.fillStyle = "white";
     context.fillText(
       "Audio Source",
-      CENTER_OF_CANVAS.x,
-      CENTER_OF_CANVAS.y - AUDIO_SOURCE_RADIUS - 10
+      _centerOfCanvas.x,
+      _centerOfCanvas.y - AUDIO_SOURCE_RADIUS - 10
     );
   };
 
@@ -133,21 +127,23 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
       return;
     }
 
-    context?.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    context?.clearRect(0, 0, canvasDimensions.x, canvasDimensions.y);
     context.fillStyle = "#1e293b";
-    context?.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    context?.fillRect(0, 0, canvasDimensions.x, canvasDimensions.y);
 
-    drawAudioSource();
-    drawListenerPosition(listenerPosition);
-    changePannerValue(listenerPosition);
-  }, [changePannerValue, listenerPosition]);
+    drawAudioSource(centerOfCanvas);
+    drawListenerPosition(listenerPosition ?? centerOfCanvas);
+    changePannerValue(listenerPosition ?? centerOfCanvas);
+  }, [canvasDimensions, centerOfCanvas, changePannerValue, listenerPosition]);
+
+  useEventListener("resize", () => setListenerPosition(centerOfCanvas));
 
   return (
     <div className="flex flex-col items-center gap-4">
       <div
         ref={containerRef}
         className="relative"
-        style={{ height: CANVAS_HEIGHT, width: CANVAS_WIDTH }}
+        style={{ height: canvasDimensions.y, width: canvasDimensions.x }}
         onMouseDown={(event) => {
           setMouseIsDown(true);
           clickHandler(event);
@@ -158,19 +154,19 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
       >
         <canvas
           ref={canvasRef}
-          width={CANVAS_WIDTH}
-          height={CANVAS_HEIGHT}
+          width={canvasDimensions.x}
+          height={canvasDimensions.y}
           className="absolute top-0 bottom-0 left-0 right-0"
         ></canvas>
       </div>
       <div className="flex flex-row items-center gap-5">
         <p className="">
           Best used with headphones, move the blue dot around to experience
-          spatial audio.
+          spatial audio. Resizing the window will reset your position
         </p>
         <button
           className="btn-primary btn max-w-md"
-          onClick={() => setListenerPosition(CENTER_OF_CANVAS)}
+          onClick={() => setListenerPosition(centerOfCanvas)}
         >
           Reset Position
         </button>

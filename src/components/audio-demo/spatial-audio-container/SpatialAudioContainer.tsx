@@ -1,17 +1,10 @@
 "use-client";
 
 import { useRef, useState } from "react";
-import PannerControls, {
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
-  CENTER_OF_CANVAS,
-} from "../panner-controls/PannerControls";
+import { useCanvasSize } from "../hooks/useCanvasSize";
+import PannerControls from "../panner-controls/PannerControls";
 
 export type Coordinate = { x: number; y: number };
-
-export const MAX_DISTANCE_FROM_SOURCE = Math.ceil(
-  Math.max(CANVAS_HEIGHT, CANVAS_WIDTH)
-);
 
 type SpatialAudioContainerProps = {
   sourceUrl: string;
@@ -28,6 +21,8 @@ const SpatialAudioContainer = ({
   isAudioOnly,
   audioContextAllowed,
 }: SpatialAudioContainerProps) => {
+  const { centerOfCanvas, maxDistanceFromAudioSource } = useCanvasSize();
+
   const mediaElement = useRef<HTMLVideoElement>(null);
 
   const [audioContext, setAudioContext] = useState<AudioContext>();
@@ -53,37 +48,26 @@ const SpatialAudioContainer = ({
     }
     const _audioContext = new AudioContext();
 
-    setAudioContext(_audioContext);
-
     const _audioTrack = _audioContext.createMediaElementSource(
       mediaElement.current
     );
 
     const _pannerNode = new PannerNode(_audioContext, {
-      maxDistance: MAX_DISTANCE_FROM_SOURCE,
+      maxDistance: maxDistanceFromAudioSource,
       distanceModel: "linear",
       coneOuterGain: 1,
       refDistance: 10, // good enough value
-      positionX: CENTER_OF_CANVAS.x,
-      positionY: CENTER_OF_CANVAS.y,
+      positionX: centerOfCanvas.x,
+      positionY: centerOfCanvas.y,
       // This is what stops it from completely
       // cutting one ear off when moving on the x axis
       panningModel: "HRTF",
     });
-    setPannerNode(_pannerNode);
-
-    _audioContext.listener.positionX.setValueAtTime(
-      CENTER_OF_CANVAS.x,
-      _audioContext.currentTime
-    );
-    _audioContext.listener.positionY.setValueAtTime(
-      CENTER_OF_CANVAS.y,
-      _audioContext.currentTime
-    );
 
     _audioTrack.connect(_pannerNode);
     _pannerNode.connect(_audioContext.destination);
 
+    setAudioContext(_audioContext);
     setPannerNode(_pannerNode);
   };
 
@@ -115,6 +99,7 @@ const SpatialAudioContainer = ({
   //     audioContext?.close();
   //   };
   // }, [audioContext, pannerNode]);
+  //
 
   return (
     <div className="flex flex-col items-center">
