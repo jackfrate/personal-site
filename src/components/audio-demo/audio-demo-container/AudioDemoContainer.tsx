@@ -1,7 +1,7 @@
 "use-client";
 
 import Link from "next/link";
-import type { ChangeEvent} from "react";
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 import SpatialAudioContainer from "../spatial-audio-container/SpatialAudioContainer";
 
@@ -79,7 +79,7 @@ const AudioDemoContainer = () => {
             isAudioOnly={isAudioOnly}
             audioContextAllowed={audioContextAllowed}
           />
-          <div className="flex w-full flex-row justify-center gap-4">
+          <div className="flex w-full flex-row justify-center gap-4 p-1">
             <input
               type="file"
               className="file-input max-w-xs"
@@ -92,7 +92,7 @@ const AudioDemoContainer = () => {
         </>
       )}
       {incorrectFile && (
-        <div className="alert alert-error flex flex-row justify-start shadow-lg">
+        <div className="-1 alert alert-error flex flex-row items-center justify-start shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 flex-shrink-0 stroke-current"

@@ -159,7 +159,7 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
           className="absolute top-0 bottom-0 left-0 right-0"
         ></canvas>
       </div>
-      <div className="flex flex-row items-center gap-5">
+      <div className="flex flex-row items-center gap-5 p-1">
         <p className="">
           Best used with headphones, move the blue dot around to experience
           spatial audio. Resizing the window will reset your position.
