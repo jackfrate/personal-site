@@ -40,6 +40,8 @@ const SpatialAudioContainer = ({
       return;
     }
 
+    mediaElement.current.volume = 0.33;
+
     // If a media element is already connected to a context,
     // it won't let you connect it to a new one, so just
     // leave the graph as is, it'll work fine.
@@ -65,9 +67,8 @@ const SpatialAudioContainer = ({
     });
 
     // Reduce the volume of the audio graph and the media element
-    // because this royalty free music will give you fucking tinnitus.
-    mediaElement.current.volume = mediaElement.current.volume / 4;
-    const _gainNode = new GainNode(_audioContext, { gain: 0.33 });
+    // because this royalty free music will give you tinnitus.
+    const _gainNode = new GainNode(_audioContext, { gain: 0.5 });
 
     _audioTrack.connect(_gainNode);
     _gainNode.connect(_pannerNode);
@@ -87,6 +88,8 @@ const SpatialAudioContainer = ({
         x,
         audioContext.currentTime
       );
+
+      console.log(`setting x value: ${x} at time ${audioContext.currentTime}`);
     }
 
     if (y !== undefined) {
@@ -94,6 +97,8 @@ const SpatialAudioContainer = ({
         y,
         audioContext.currentTime
       );
+
+      console.log(`setting y value: ${y}`);
     }
   };
 
@@ -111,26 +116,16 @@ const SpatialAudioContainer = ({
     <div className="flex flex-col items-center">
       {audioContextAllowed && (
         <div className="flex">
-          <div className="flex flex-col gap-4">
-            {!isAudioOnly && (
-              <video
-                controls
-                ref={mediaElement}
-                src={sourceUrl}
-                onLoadedMetadata={setUpAudioGraph}
-              ></video>
-            )}
+          <div className="flex max-w-xl flex-col items-center gap-4">
+            {/* We use a video element here because it can play both kinds of media  */}
+            <video
+              style={isAudioOnly ? { maxHeight: 76, minWidth: "100%" } : {}}
+              controls
+              ref={mediaElement}
+              src={sourceUrl}
+              onLoadedMetadata={setUpAudioGraph}
+            ></video>
             <PannerControls changePannerValue={changeListenerPosition} />
-            {/* Audio only looks better below the canvas */}
-            {isAudioOnly && (
-              <audio
-                controls
-                ref={mediaElement}
-                src={sourceUrl}
-                onLoadedMetadata={setUpAudioGraph}
-                className="w-full"
-              ></audio>
-            )}
           </div>
         </div>
       )}

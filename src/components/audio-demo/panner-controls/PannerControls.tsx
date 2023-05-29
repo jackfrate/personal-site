@@ -162,7 +162,7 @@ const PannerControls = ({ changePannerValue }: PannerControlsProps) => {
       <div className="flex flex-row items-center gap-5">
         <p className="">
           Best used with headphones, move the blue dot around to experience
-          spatial audio. Resizing the window will reset your position
+          spatial audio. Resizing the window will reset your position.
         </p>
         <button
           className="btn-primary btn max-w-md"
