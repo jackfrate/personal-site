@@ -64,7 +64,13 @@ const SpatialAudioContainer = ({
       panningModel: "HRTF",
     });
 
-    _audioTrack.connect(_pannerNode);
+    // Reduce the volume of the audio graph and the media element
+    // because this royalty free music will give you fucking tinnitus.
+    mediaElement.current.volume = mediaElement.current.volume / 4;
+    const _gainNode = new GainNode(_audioContext, { gain: 0.33 });
+
+    _audioTrack.connect(_gainNode);
+    _gainNode.connect(_pannerNode);
     _pannerNode.connect(_audioContext.destination);
 
     setAudioContext(_audioContext);
