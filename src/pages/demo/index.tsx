@@ -15,9 +15,9 @@ const DemoIndex = () => {
           <button className="btn-primary btn">Spatial Audio</button>
         </Link>
 
-        <p>
-          (You can record a video, then experience it in spatial audio if you
-          want)
+        <p className="p-4 text-center">
+          To use both demos, you can record a video, then watch it with spatial
+          audio.
         </p>
       </div>
     </BaseLayout>
