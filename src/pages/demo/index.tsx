@@ -14,6 +14,11 @@ const DemoIndex = () => {
         <Link href="demo/spatial-audio">
           <button className="btn-primary btn">Spatial Audio</button>
         </Link>
+
+        <p>
+          (You can record a video, then experience it in spatial audio if you
+          want)
+        </p>
       </div>
     </BaseLayout>
   );
