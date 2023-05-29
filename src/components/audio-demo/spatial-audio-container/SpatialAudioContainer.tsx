@@ -89,7 +89,6 @@ const SpatialAudioContainer = ({
         audioContext.currentTime
       );
 
-      console.log(`setting x value: ${x} at time ${audioContext.currentTime}`);
     }
 
     if (y !== undefined) {
@@ -98,7 +97,6 @@ const SpatialAudioContainer = ({
         audioContext.currentTime
       );
 
-      console.log(`setting y value: ${y}`);
     }
   };
 

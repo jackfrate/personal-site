@@ -30,8 +30,6 @@ export const ScreenRecordingContainer = ({
       // TODO: get the webcam stream when adding webcam interpolation
       const audioConstraints = constraints.audio;
 
-      console.log(JSON.stringify(audioConstraints));
-
       const displayStreamOptions = {
         video: true,
         systemAudio: "include",

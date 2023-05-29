@@ -17,7 +17,6 @@ const Playback = ({ finishedVideo, recordAnotherVideo }: PlaybackProps) => {
   useEffect(() => {
     return () => {
       if (videoSrcUrl) {
-        console.log("cleanup");
         URL.revokeObjectURL(videoSrcUrl);
         setVideoSrcUrl(undefined);
       }
@@ -33,7 +32,6 @@ const Playback = ({ finishedVideo, recordAnotherVideo }: PlaybackProps) => {
     if (playbackRef.current.src) {
       return;
     }
-    console.log("setting SRC URL");
 
     const _videoSrcUrl = URL.createObjectURL(finishedVideo);
     playbackRef.current.src = _videoSrcUrl;
@@ -75,7 +73,6 @@ const Playback = ({ finishedVideo, recordAnotherVideo }: PlaybackProps) => {
               className="btn-outline btn"
               onClick={() => {
                 if (videoSrcUrl) {
-                  console.log("revoking");
                   URL.revokeObjectURL(videoSrcUrl);
                 }
                 recordAnotherVideo();

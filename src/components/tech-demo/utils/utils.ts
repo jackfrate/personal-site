@@ -14,7 +14,7 @@ export const handlePermissions = async (): Promise<{
     // stop memory leaks n stuff
     defaultStream.getTracks().forEach((track) => track.stop());
   } catch (e) {
-    console.log("camera disabled at system level");
+    console.error("camera disabled at system level");
   }
 
   try {

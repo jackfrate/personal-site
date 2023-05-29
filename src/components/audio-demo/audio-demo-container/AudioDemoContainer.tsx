@@ -41,7 +41,6 @@ const AudioDemoContainer = () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const file = e.target.files[0]!;
     const mimeType = file.type;
-    console.log(mimeType);
 
     if (mimeType.includes("video/")) {
       setIsAudioOnly(false);

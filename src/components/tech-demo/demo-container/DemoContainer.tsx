@@ -52,13 +52,11 @@ export const DemoContainer = () => {
     _constraints: MediaStreamConstraints | undefined
   ) => {
     if (!_constraints) {
-      console.log("SETTING CONSTRAINTS");
       setConstraints(_constraints);
       return;
     }
 
     if (JSON.stringify(_constraints) !== JSON.stringify(constraints)) {
-      console.log("SETTING CONSTRAINTS");
       setConstraints(_constraints);
     }
   };
