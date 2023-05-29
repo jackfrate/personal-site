@@ -91,7 +91,6 @@ const SpatialAudioContainer = ({
       !audioContext.listener?.positionX ||
       !audioContext.listener?.positionY
     ) {
-      console.log("YEET");
       audioContext.listener.setPosition(x ?? 0, y ?? 0, 0);
       return;
     }
