@@ -83,6 +83,19 @@ const SpatialAudioContainer = ({
       return;
     }
 
+    // Fix for Firefox
+    // yes I know its a deprecated method but there's nothing else
+    // I want to love FF / Mozilla so bad, but they don't
+    // support the randomest API's its really annoying
+    if (
+      !audioContext.listener?.positionX ||
+      !audioContext.listener?.positionY
+    ) {
+      console.log("YEET");
+      audioContext.listener.setPosition(x ?? 0, y ?? 0, 0);
+      return;
+    }
+
     if (x !== undefined) {
       audioContext.listener.positionX.setValueAtTime(
         x,
