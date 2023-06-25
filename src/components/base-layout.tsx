@@ -1,9 +1,10 @@
 import Head from "next/head";
 import type { ReactNode } from "react";
+import type { NavbarLinks } from "./experience/navbar";
 import Navbar from "./experience/navbar";
 
 type Props = {
-  activeTab: "about" | "experience" | "demo";
+  activeTab: NavbarLinks;
   children: ReactNode;
 };
 

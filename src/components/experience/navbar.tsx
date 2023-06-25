@@ -1,7 +1,9 @@
 import Link from "next/link";
 
+export type NavbarLinks = "about" | "experience" | "demo" | "articles";
+
 type Props = {
-  activeTab: "about" | "experience" | "demo";
+  activeTab: NavbarLinks;
 };
 
 const Navbar: React.FC<Props> = ({ activeTab }) => {
@@ -28,6 +30,13 @@ const Navbar: React.FC<Props> = ({ activeTab }) => {
           }`}
         >
           <Link href="/demo">Tech Demos</Link>
+        </div>
+        <div
+          className={`tab tab-bordered ${
+            activeTab === "articles" ? "tab-active" : ""
+          }`}
+        >
+          <Link href="/articles">Articles</Link>
         </div>
       </div>
     </div>
