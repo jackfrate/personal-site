@@ -1,7 +1,20 @@
 import Image from "next/image";
 import BaseLayout from "../../components/base-layout";
 
-const articleLinkNames = ["vscode-vim"];
+export type Article = {
+  name: string;
+  description: string;
+  articleTitle: string;
+  tags: string[];
+};
+const articles: Article[] = [
+  {
+    name: "vscode-vim",
+    articleTitle: "Using real neo-vim inside of vscode",
+    description: "Go beyond the standard vim emulation",
+    tags: ["Editor", "Tutorial"],
+  },
+];
 
 const Articles = () => {
   return (
@@ -9,20 +22,27 @@ const Articles = () => {
       <div className="mt-4 flex h-full w-full flex-col items-center gap-4">
         <h1>I really enjoy coding, so I&#39;ll be keeping my thoughts here.</h1>
         <div className="flex flex-col gap-4">
-          {articleLinkNames.map((name) => (
-            <div className="card w-96 bg-base-100 shadow-xl" key={name}>
+          {articles.map(({ name, description, articleTitle, tags }) => (
+            <div className="card w-96 bg-base-300 shadow-xl" key={name}>
               <figure>
-                <Image src=""></Image>
+                <Image
+                  src={`/images/articles/${name}/card.jpg`}
+                  alt="vscode + vim"
+                  width={386}
+                  height={386}
+                ></Image>
               </figure>
               <div className="card-body">
                 <h2 className="card-title">
-                  Shoes!
-                  <div className="badge-secondary badge">NEW</div>
+                  {articleTitle}
                 </h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <p>{description}</p>
                 <div className="card-actions justify-end">
-                  <div className="badge-outline badge">Fashion</div>
-                  <div className="badge-outline badge">Products</div>
+                  {tags.map((tag) => (
+                    <div className="badge-outline badge" key={tag}>
+                      {tag}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

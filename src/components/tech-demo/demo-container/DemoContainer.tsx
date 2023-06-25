@@ -1,4 +1,4 @@
-"use-client";
+
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
@@ -38,14 +38,7 @@ export const DemoContainer = () => {
     setIsRecording(true);
   };
 
-  const stopRecording = () => {
-    if (!mediaRecorder) {
-      return;
-    }
-    mediaRecorder.stop();
-    setIsRecording(false);
-  };
-
+  const stopRecording = () => { if (!mediaRecorder) { return; } mediaRecorder.stop(); setIsRecording(false); };
   const resetRecorder = () => setFinishedRecording(undefined);
 
   const onConstraintsChange = (
@@ -53,9 +46,7 @@ export const DemoContainer = () => {
   ) => {
     if (!_constraints) {
       setConstraints(_constraints);
-      return;
-    }
-
+      return; }
     if (JSON.stringify(_constraints) !== JSON.stringify(constraints)) {
       setConstraints(_constraints);
     }
