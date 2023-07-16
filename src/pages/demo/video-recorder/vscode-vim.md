@@ -1,0 +1,122 @@
+# How to get some of the best of NeoVim in VsCode
+I really like Neovim. The motions and keyboard navigation add a level of fun to programming that I've never had before, and really don't want to give up. But getting to the point where I'm as efficient with it as VSCode has proven difficult. I also really like some features of VSCode that have been difficult to replicate in NeoVim. Some of these include: 
+- ease of plugin management
+- intellisense and LSP's 'Just work'
+- multi cursors
+
+I've also  been using VSCode since 2017, and am very comfortable / productive in it. The ideal situation for me would be a mix of both. 
+
+## What's wrong with the VSCode Vim extension?
+
+While I initially tried this extension out and liked it at first, there were some major issues with it that I couldn't ignore.
+
+- LAG. Every keystroke within this extension felt like it had a 30-50ms input delay. This was driving me insane.
+- It broke VSCode keybinds like multi cursor, even in Insert mode. This slowed me down quite a bit. 
+- Vim operations were slow. Things like macros had a noticeable lag. 
+- Many vim operations were not customizable to my liking. 
+- I wasn't learning Vim, I was learning VSCode's plugin. Getting my actual NeoVim to behave that way was very difficult, and not even what I wanted. 
+
+## Enter the VSCode Neovim extension
+[This extension](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim) allows the best of both worlds. It uses a real instance of NeoVim under the hood by piping inputs to neovim for anything that isn't insert mode. In insert mode, it lets VSCode take over. This extension has addressed many of my complaints. 
+
+- No input lag that I can feel. 
+- VSCode keybinds still work like normal in insert mode (there are some tradeoffs that need to be taken on windows / linux, but on mac the command key stays dedicated to VSCode's keybinds). 
+- Vim operations are much faster, usually no delay can be noticed at all. 
+- I can customize the underlying NeoVim any way I choose.
+- I'm learning the NeoVim config that I choose, so when I enter NeoVim, my keybinds are mostly the same. If they're different, its because I configured them that way. 
+
+If you check `./nvim/init.lua` in [my dotfiles](https://github.com/jackfrate/.dotfiles), you can see how everything works. 
+
+```lua
+if vim.g.vscode then
+  -- lightweight vscode setup
+  require("config.vscode.keymaps")
+  require("config.vscode.autocommands")
+  require("config.vscode.plugins")
+else
+  -- bootstrap lazy.nvim, LazyVim and your plugins
+  require("config.lazy")
+  require("config.keymaps")
+  require("config.autocmds")
+  require("config.options")
+end
+```
+
+The VSCode Neovim plugin allows this split config, so you can have your normal vim config be different from what runs underneath VSCode. If you want something that will work out of the box, just copy my dotfiels and change up what you want. 
+
+## Step 1. Install VSCode Neovim
+Use [this link](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim) to install the extension. Follow the experimental affinity instructions. If you just want to paste something in that works immediately, use the following. 
+
+```json
+"extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+```
+This lets the VSCode Neovim extension run in its own thread, so it doesn't block VSCode's main thread. 
+
+## Step 2. Change the settings to point to your NeoVim. 
+In the VSCode NeoVim settings page, look for the path to NeoVim for your OS. If you have `nvim` in your path already, you can simply input `nvim`.
+
+#### Note for WSL Users: 
+> If you want to use WSL, there is a checkbox that you need to select. In addition, if NeoVim 0.9x doesn't work for you, downgrade to 0.8. I've had to do this, but your mileage may vary. 
+
+## Step 3. Enter NeoVim and ensure that your plugins are installed. 
+This step will vary depending on your package manager. If your VSCode plugins are a subset of the plugins you use for NeoVim, this will be easy. If there's VSCode specific plugins, you'll need to install them separately somehow. 
+
+## Step 4 Relative / Traditional line numbers (optional)
+This was a tricky one for me, since VSCode doesn't have a direct way for changing this from the NeoVim bindings. This extension has a system for calling VSCode commands, which [can be seen here.](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim#invoking-vscode-actions-from-neovim). This is very important for customizing your setup.
+
+I'm using a combination of these with an extension called [Settings Cycler](https://marketplace.visualstudio.com/items?itemName=hoovercj.vscode-settings-cycler) to make it work. It's pretty hacky, but I've had no issues with it so far. It acts as an intermediary layer, calling commands that NeoVim can't call directly.
+
+In VSCode's `settings.json`
+```json
+"settings.cycle": [
+        {
+            "id": "lineNumbersOn",
+            "values": [
+                {
+                    "editor.lineNumbers": "on"
+                },
+                {
+                    "editor.lineNumbers": "on"
+                }
+            ]
+        },
+        {
+            "id": "lineNumbersRelative",
+            "values": [
+                {
+                    "editor.lineNumbers": "relative"
+                },
+                {
+                    "editor.lineNumbers": "relative"
+                }
+            ]
+        }
+    ],
+"editor.lineNumbers": "on",
+```
+
+In `nvim/lua/config/vscode/autocommands.lua` (or whatever you use to setup auto commands for VSCode)
+
+```lua
+vim.api.nvim_command([[
+augroup LineNumberManagementVscode
+  autocmd InsertEnter * call VSCodeNotify('settings.cycle.lineNumbersOn')
+  autocmd InsertLeave * call VSCodeNotify('settings.cycle.lineNumbersRelative')
+augroup END
+]])
+```
+
+Now you have Neovim's line number toggle behavior in VSCode. 
+
+## Some caveats
+- Highlighting is weird. Read the VSCode Neovim docs for more info. The quick version is that Vim highlight operations don't allow `Command + C` or `Command + V` to work, only the vim yank / paste commands. One work around is to use `Copy` and `Paste` from the command palette.
+- Buffer / Tab navigation works differently. `Shift + HJKL` keys can sometimes open hidden buffers that you should not see or interact with. While I haven't tested it, there's probably a solution that involves custom keybinds which invoke VSCode commands.
+- Sometimes the vim `undo` command can send you to the top of the file. I'm not sure why this happens, or what is causing it. 
+
+## Uninstall
+Simply remove the VSCode Neovim extension, and delete the settings from your `settings.json`.
+
+## Conclusion
+I hope this helps people in the same weird niche as me. This is a great way to experience the fun of NeoVim in the comfort of my editor. This is the best way I've found to do this so far, and I hope it helps you too. If you find improvements to this process, feel free to create a PR or contact me through github. 
