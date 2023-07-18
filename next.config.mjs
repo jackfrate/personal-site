@@ -8,7 +8,7 @@ import nextMdx from "@next/mdx";
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
 
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   i18n: {
@@ -23,6 +23,7 @@ const config = {
       permanent: true,
     },
   ],
+  rules: [],
 };
 
 // next.config.js
@@ -30,23 +31,24 @@ const withMDX = nextMdx({
   extension: /\.(md|mdx)$/,
 });
 
-export default withMDX({
-  webpack(config, options) {
-    config.module.rules.push({
-      test: /\.mdx?$/,
-      use: [
-        options.defaultLoaders.babel,
-        {
-          loader: "@mdx-js/loader",
-          options: {
-            providerImportSource: "@mdx-js/react",
-          },
-        },
-      ],
-    });
-
-    return config;
-  },
-});
+// export default withMDX({
+//   webpack(config, options) {
+//     config.module.rules.push({
+//       test: /\.mdx?$/,
+//       use: [
+//         options.defaultLoaders.babel,
+//         {
+//           loader: "@mdx-js/loader",
+//           options: {
+//             providerImportSource: "@mdx-js/react",
+//           },
+//         },
+//       ],
+//     });
+//
+//     return config;
+//   },
+// });
+export default withMDX(nextConfig);
 
 // export default config;

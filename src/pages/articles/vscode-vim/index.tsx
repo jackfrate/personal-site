@@ -1,7 +1,12 @@
-import Article from "./vscode-vim.mdx";
+import { MDXProvider } from "@mdx-js/react";
+import Article from "./yeet.mdx";
 
 const VscodeVimArticle = () => {
-  return <Article />;
+  return (
+    <MDXProvider>
+      <Article />;
+    </MDXProvider>
+  );
 };
 
 export default VscodeVimArticle;
