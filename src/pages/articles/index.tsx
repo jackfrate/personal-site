@@ -23,7 +23,10 @@ const Articles = () => {
         <h1>I really enjoy coding, so I&#39;ll be keeping my thoughts here.</h1>
         <div className="flex flex-col gap-4">
           {articles.map(({ name, description, articleTitle, tags }) => (
-            <div className="card w-96 bg-base-300 shadow-xl" key={name}>
+            <div
+              className="card w-96 cursor-pointer bg-base-300 shadow-xl transition duration-500 hover:scale-105"
+              key={name}
+            >
               <figure>
                 <Image
                   src={`/images/articles/${name}/card.jpg`}
@@ -33,9 +36,7 @@ const Articles = () => {
                 ></Image>
               </figure>
               <div className="card-body">
-                <h2 className="card-title">
-                  {articleTitle}
-                </h2>
+                <h2 className="card-title">{articleTitle}</h2>
                 <p>{description}</p>
                 <div className="card-actions justify-end">
                   {tags.map((tag) => (

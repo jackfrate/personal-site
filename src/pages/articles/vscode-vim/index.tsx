@@ -1,9 +1,7 @@
-import React from 'react'
+import Article from "./vscode-vim.mdx";
 
-const ArticleVscodeVim = () => {
-  return (
-    <div>ArticleVscodeVim</div>
-  )
-}
+const VscodeVimArticle = () => {
+  return <Article />;
+};
 
-export default ArticleVscodeVim;
+export default VscodeVimArticle;
