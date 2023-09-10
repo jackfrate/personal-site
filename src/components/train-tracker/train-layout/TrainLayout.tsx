@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import type { CTATrainTimes, TrainEta } from "../../../types/train-time.type";
 import TrainListing from "../train-listing/TrainListing";
 
-const TRAIN_QUERY_TIME = 10000;
+const TRAIN_QUERY_TIME = 20000;
 
 const TrainLayout = () => {
   // TODO: this will eventually countdown times
@@ -17,18 +17,8 @@ const TrainLayout = () => {
   const { isLoading, data } = useQuery({
     queryKey: "train-times",
     queryFn: async (): Promise<CTATrainTimes> => {
-      console.log(url);
-      const response = await fetch(url, {
-        method: "GET",
-        // redirect: "follow",
-        mode: "no-cors",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
-      console.log(JSON.stringify(response, null, 2));
+      const response = await fetch(url);
       const loadedData = await response.json();
-      console.table("data+ ", loadedData);
       return loadedData as CTATrainTimes;
     },
     enabled: !!selectedStation,
@@ -36,7 +26,7 @@ const TrainLayout = () => {
   });
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-3">
       {isLoading && <div>Loading...</div>}
       {data &&
         data.etaList.map((trainEta: TrainEta, index) => (
@@ -46,6 +36,12 @@ const TrainLayout = () => {
             secondsSineLastUpdate={secondsSinceUpdate}
           />
         ))}
+      <div>
+        <p>
+          Data is provided via CTA api, and updates every{" "}
+          {TRAIN_QUERY_TIME / 1000} seconds.
+        </p>
+      </div>
     </div>
   );
 };

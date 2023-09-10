@@ -22,7 +22,7 @@ export interface TrainEta {
   arrivalTime: string;
   /**  if train is approaching or "Due" */
   isApproaching: boolean;
-  /**  if this is using */
+  /**  if this is using the schedule or a train tracker */
   isBasedOnSchedule: boolean;
   /**  if the train is considered delayed */
   isDelayed: boolean;
