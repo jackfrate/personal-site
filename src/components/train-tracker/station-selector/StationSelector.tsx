@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+export type Station = {
+  name:string;
+  id: string;
+}
 
 type StationSelectorProps = {
-  selectStation: (station: string) => void;
+  activeStation: Station,
+  setActiveStation: (station: Station) => void;
 };
 
-const StationSelector = ({ selectStation }: StationSelectorProps) => {
-  // TODO: make this use the dropdown and not a static station
-  const [selectedStation, setSelectedStation] = useState("40320");
-
-  useEffect(() => {
-    selectStation(selectedStation);
-  }, [selectStation, selectedStation]);
+const StationSelector = ({ activeStation, setActiveStation }: StationSelectorProps) => {
 
   return <div>StationSelector</div>;
 };

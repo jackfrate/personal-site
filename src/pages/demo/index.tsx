@@ -16,7 +16,7 @@ const DemoIndex = () => {
         </Link>
 
         <p>See Train Times for CTA stops</p>
-        <Link href="demo/train-times">
+        <Link href="demo/train-tracker">
           <button className="btn-primary btn">Train Times</button>
         </Link>
       </div>
