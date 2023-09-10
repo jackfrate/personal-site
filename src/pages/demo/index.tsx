@@ -15,10 +15,10 @@ const DemoIndex = () => {
           <button className="btn-primary btn">Spatial Audio</button>
         </Link>
 
-        <p className="p-4 text-center">
-          To use both demos, you can record a video, then watch it with spatial
-          audio.
-        </p>
+        <p>See Train Times for CTA stops</p>
+        <Link href="demo/train-times">
+          <button className="btn-primary btn">Train Times</button>
+        </Link>
       </div>
     </BaseLayout>
   );
