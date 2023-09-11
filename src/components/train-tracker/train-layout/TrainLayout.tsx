@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { env } from "../../../env/client.mjs";
 import type { CTATrainTimes, TrainEta } from "../../../types/train-time.type";
 import TrainListing from "../train-listing/TrainListing";
 
@@ -12,7 +13,7 @@ const TrainLayout = () => {
   const [secondsSinceUpdate, setMsSinceTimeUpdate] = useState(0);
   const [selectedStation, setSelectedStation] = useState<string>("40320");
 
-  const url = `${`http://localhost:8080`}/timesAtStop/${selectedStation}`;
+  const url = `${env.NEXT_PUBLIC_TRAIN_API_BASE_URL}/timesAtStop/${selectedStation}`;
 
   const { isLoading, data } = useQuery({
     queryKey: "train-times",
@@ -23,6 +24,7 @@ const TrainLayout = () => {
     },
     enabled: !!selectedStation,
     refetchInterval: TRAIN_QUERY_TIME,
+    refetchIntervalInBackground: false,
   });
 
   return (

@@ -1,7 +1,6 @@
 "use-client";
 import { AiFillClockCircle } from "react-icons/ai";
 import { MdGpsFixed } from "react-icons/md";
-import { twMerge } from "tailwind-merge";
 import type { TrainEta } from "../../../types/train-time.type";
 import { ctaColorMap } from "../util/cta-color-map";
 
@@ -38,11 +37,11 @@ const getTimeUntilArrival = (trainEta: TrainEta, msSinceLastUpdate: number) => {
 
 const getTextColor = (ctaRouteName: string | undefined) => {
   if (ctaRouteName === undefined) {
-    return "";
+    return "white";
   } else if (ctaRouteName === "Yellow") {
-    return "text-black";
+    return "black";
   } else {
-    return "text-white";
+    return "white";
   }
 };
 
@@ -52,34 +51,40 @@ const TrainListing = ({
 }: TrainListingProps) => {
   const timeUntilArrival = getTimeUntilArrival(trainEta, msSinceLastUpdate);
 
-  const backgroundColor =
-    `[${ctaColorMap[trainEta.abbreviatedRouteName]}]` ?? "base-300";
-
+  const backgroundColorStyle =
+    ctaColorMap[trainEta.abbreviatedRouteName] ?? "#565b5d";
   const textColorStyle = getTextColor(trainEta.abbreviatedRouteName);
 
-  const cardClasses = twMerge(`
-    card-body
-    rounded-lg
-    bg-${backgroundColor}
-    ${textColorStyle}
-  `);
-
-  const textStyle = twMerge(`
-    card-title
-    flex
-    justify-between
-    ${textColorStyle}
-  `);
+  const etaBasedOnSchedule = trainEta.isBasedOnSchedule;
 
   return (
-    <div className={cardClasses}>
-      <div className={textStyle}>
-        <div>
+    <div
+      className="card-body rounded-lg"
+      style={{
+        backgroundColor: backgroundColorStyle,
+        color: textColorStyle,
+      }}
+    >
+      <div className="card-title flex justify-between">
+        <div className="flex flex-col">
+          <p className="text-sm">Train towards</p>
           <h2>{trainEta.destinationStationName}</h2>
         </div>
-        <div className="flex flex-row items-center gap-4">
-          <h2>{timeUntilArrival}</h2>
-          {trainEta.isBasedOnSchedule ? <AiFillClockCircle /> : <MdGpsFixed />}
+        <div className="flex flex-col">
+          <div>
+            <p className="text-sm">Arrives in</p>
+          </div>
+          <div className="flex flex-row items-center gap-4">
+            <h2>{timeUntilArrival}</h2>
+            <div
+              className="tooltip"
+              data-tip={`ETA based on ${
+                etaBasedOnSchedule ? "schedule" : "real time tracking"
+              }`}
+            >
+              {etaBasedOnSchedule ? <AiFillClockCircle /> : <MdGpsFixed />}
+            </div>
+          </div>
         </div>
       </div>
     </div>
