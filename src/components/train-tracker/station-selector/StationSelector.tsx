@@ -41,13 +41,13 @@ const StationSelector = ({
     <div className="flex flex-row items-center justify-between gap-4">
       {isSuccess && <div>Showing trains at {activeStation.station_name}</div>}
       {isLoading && <div>Loading Stations...</div>}
-      <div className="dropdown">
+      <div className="dropdown ">
         <label tabIndex={0} className="btn m-1">
           Select Station
         </label>
         <ul
           tabIndex={0}
-          className="dropdown-content menu rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
+          className="dropdown-content menu rounded-box z-[1] w-52 bg-base-300 p-2 shadow"
         >
           {data &&
             data.map((station, index) => (
