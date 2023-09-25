@@ -14,21 +14,21 @@ export const demos: ProjectCardProps[] = [
       "Experience music from different directions (bring headphones).",
     href: "demo/spatial-audio",
   },
-  {
-    title: "Train Times",
-    description:
-      "See Train Times for CTA stops. (It updates aggressively fast)",
-    href: "demo/train-tracker",
-  },
+  // put back in when train times works
+  // {
+  //   title: "Train Times",
+  //   description:
+  //     "See Train Times for CTA stops. (It updates aggressively fast)",
+  //   href: "demo/train-tracker",
+  // },
 ];
 
 const DemoIndex = () => {
   return (
     <BaseLayout activeTab="demo">
       <div className="mt-4 flex  flex-col items-center gap-4">
-        {/* <Link href></Link> */}
         {demos.map((demo) => (
-          <ProjectCard {...demo} />
+          <ProjectCard {...demo} key={demo.href} />
         ))}
       </div>
     </BaseLayout>
