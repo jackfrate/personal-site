@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CoolTitle from "./cool-title/CoolTitle";
 
 const About = () => {
   return (
@@ -6,23 +7,19 @@ const About = () => {
       <div className="hero-content h-full w-full flex-col">
         {/* <Image src="/images/me.png" alt="Jack Frate" width={400} height={400} /> */}
         <div>
-          {/* TODO: animate this appearing from bottom */}
-          <h1 className="pb-4 text-6xl font-bold text-primary">
-            Hi, I&apos;m Jack Frate
-          </h1>
-          <h1 className="text-6xl font-bold text-secondary">
-            I build things for the web
-          </h1>
+          <div className="title-container flex flex-col md:flex-row">
+            <CoolTitle />
+          </div>
           <div className="flex flex-col gap-4 self-start pt-4">
             <p className="pb-6">Check out some cool projects I&apos;ve made</p>
             <div className="flex flex-row gap-4">
               <Link href="/demo/video-recorder">
-                <button className="btn-outline btn-primary btn">
+                <button className="btn btn-outline btn-primary">
                   Record a video
                 </button>
               </Link>
               <Link href="/demo/spatial-audio">
-                <button className="btn-outline btn-primary btn">
+                <button className="btn btn-outline btn-primary">
                   Spatial audio
                 </button>
               </Link>
@@ -42,7 +39,7 @@ const About = () => {
 
           <div className="flex flex-col gap-3 lg:flex-row">
             <Link href="/experience">
-              <button className="btn-outline btn-primary btn">
+              <button className="btn btn-outline btn-primary">
                 See my experience
               </button>
             </Link>
@@ -50,7 +47,7 @@ const About = () => {
               href="https://github.com/jackfrate/personal-site"
               target="_blank"
             >
-              <button className="btn-outline btn-primary btn">
+              <button className="btn btn-outline btn-primary">
                 Source code for this site
               </button>
             </Link>
