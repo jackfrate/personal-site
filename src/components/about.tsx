@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { demos } from "../pages/demo";
 import CoolTitle from "./cool-title/CoolTitle";
 
 const About = () => {
@@ -13,16 +14,13 @@ const About = () => {
           <div className="flex flex-col gap-4 self-start pt-4">
             <p className="pb-6">Check out some cool projects I&apos;ve made</p>
             <div className="flex flex-row gap-4">
-              <Link href="/demo/video-recorder">
-                <button className="btn btn-outline btn-primary">
-                  Record a video
-                </button>
-              </Link>
-              <Link href="/demo/spatial-audio">
-                <button className="btn btn-outline btn-primary">
-                  Spatial audio
-                </button>
-              </Link>
+              {demos.map((demo) => (
+                <Link href={demo.href} key={demo.title}>
+                  <button className="btn btn-outline btn-primary">
+                    {demo.title}
+                  </button>
+                </Link>
+              ))}
             </div>
           </div>
           <p className="py-6">
