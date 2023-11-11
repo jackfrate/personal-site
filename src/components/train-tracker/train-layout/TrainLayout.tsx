@@ -38,7 +38,7 @@ const TrainLayout = () => {
   const selectStation = (station: Station) => {
     setSelectedStation(station);
     queryClient.invalidateQueries({
-      queryKey: [`train-times-${selectedStation.id}`],
+      queryKey: [`train-times`, selectedStation.id],
     });
   };
 
@@ -50,6 +50,7 @@ const TrainLayout = () => {
       />
       {isLoading && <div>Loading...</div>}
       {data &&
+        data.etaList.length > 0 &&
         data.etaList.map((trainEta: TrainEta, index) => (
           <TrainListing
             key={index}
@@ -57,6 +58,7 @@ const TrainLayout = () => {
             secondsSineLastUpdate={secondsSinceUpdate}
           />
         ))}
+      {data && data.etaList.length === 0 && <div>No Trains At This Time</div>}
       <div>
         <p>
           Data is provided via CTA api, and updates every{" "}
