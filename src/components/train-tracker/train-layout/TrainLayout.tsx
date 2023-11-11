@@ -8,7 +8,7 @@ import type { Station } from "../station-selector/StationSelector";
 import StationSelector from "../station-selector/StationSelector";
 import TrainListing from "../train-listing/TrainListing";
 
-const TRAIN_QUERY_TIME = 20000;
+const TRAIN_QUERY_TIME = 10000;
 
 const TrainLayout = () => {
   // TODO: this will eventually countdown times
@@ -43,7 +43,7 @@ const TrainLayout = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex w-full max-w-screen-md flex-col gap-3">
       <StationSelector
         activeStation={selectedStation}
         setActiveStation={selectStation}

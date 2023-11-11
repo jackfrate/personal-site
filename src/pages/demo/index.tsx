@@ -14,13 +14,12 @@ export const demos: ProjectCardProps[] = [
       "Experience music from different directions (bring headphones).",
     href: "demo/spatial-audio",
   },
-  // put back in when train times works
-  // {
-  //   title: "Train Times",
-  //   description:
-  //     "See Train Times for CTA stops. (It updates aggressively fast)",
-  //   href: "demo/train-tracker",
-  // },
+  {
+    title: "Train Times",
+    description:
+      "See Train Times for CTA stops. (It updates aggressively fast)",
+    href: "demo/train-tracker",
+  },
 ];
 
 const DemoIndex = () => {
