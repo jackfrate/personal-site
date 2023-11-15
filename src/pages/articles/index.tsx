@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import BaseLayout from "../../components/base-layout";
 
 export type Article = {
@@ -7,6 +8,7 @@ export type Article = {
   articleTitle: string;
   tags: string[];
 };
+
 const articles: Article[] = [
   {
     name: "vscode-vim",
@@ -17,6 +19,12 @@ const articles: Article[] = [
 ];
 
 const Articles = () => {
+  const router = useRouter();
+
+  const onArticleClick = (articleName: string) => {
+    router.push(`/articles/${articleName}`);
+  };
+
   return (
     <BaseLayout activeTab="articles">
       <div className="mt-4 flex h-full w-full flex-col items-center gap-4">
@@ -26,6 +34,7 @@ const Articles = () => {
             <div
               className="card w-96 cursor-pointer bg-base-300 shadow-xl transition duration-500 hover:scale-105"
               key={name}
+              onClick={() => onArticleClick(name)}
             >
               <figure>
                 <Image
