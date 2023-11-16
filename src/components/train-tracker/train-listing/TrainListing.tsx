@@ -69,7 +69,7 @@ const TrainListing = ({ trainEta }: TrainListingProps) => {
         <div className="flex flex-col">
           <p className="text-sm">Train towards</p>
           <h2>{trainEta.destinationStationName}</h2>
-          <p className="text-xs">train id: {trainEta.trainRunNumber}</p>
+          <p className="text-xs">Train ID: {trainEta.trainRunNumber}</p>
         </div>
         <div className="flex flex-col">
           <div>
