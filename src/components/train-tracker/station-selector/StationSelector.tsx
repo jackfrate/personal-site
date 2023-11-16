@@ -1,3 +1,5 @@
+"use-client";
+
 import { useQuery } from "react-query";
 import { env } from "../../../env/client.mjs";
 
@@ -15,12 +17,16 @@ const StationSelector = ({
   activeStation,
   setActiveStation,
 }: StationSelectorProps) => {
+  // TODO: fix hacky solution
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : env.NEXT_PUBLIC_TRAIN_API_BASE_URL;
+
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["train-stations"],
     queryFn: async (): Promise<Station[]> => {
-      const response = await fetch(
-        `${env.NEXT_PUBLIC_TRAIN_API_BASE_URL}/trainTimes/stations`
-      );
+      const response = await fetch(`${baseUrl}/api/trainTimes/stations`);
       const loadedData = await response.json();
       const sortedData = loadedData.sort((a: Station, b: Station) => {
         if (a.station_name < b.station_name) {

@@ -8,7 +8,6 @@ export default async function handler(
 ) {
   let db: Client | undefined = undefined;
 
-  const { stopID } = req.query;
   try {
     const dbUrl = process.env.DB_URL;
     const dbAuthToken = process.env.DB_TOKEN;

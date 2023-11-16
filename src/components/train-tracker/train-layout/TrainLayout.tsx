@@ -11,6 +11,12 @@ import TrainListing from "../train-listing/TrainListing";
 const TRAIN_QUERY_TIME = 10000;
 
 const TrainLayout = () => {
+  // TODO: fix this hack
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : env.NEXT_PUBLIC_TRAIN_API_BASE_URL;
+
   const queryClient = useQueryClient();
 
   const [selectedStation, setSelectedStation] = useState<Station>({
@@ -18,7 +24,8 @@ const TrainLayout = () => {
     station_name: "Division",
   });
 
-  const url = `${env.NEXT_PUBLIC_TRAIN_API_BASE_URL}/trainTimes/timesAtStop/${selectedStation.id}`;
+  // TODO: this is bad lol, fix it
+  const url = `${baseUrl}/api/trainTimes/timesAtStop/${selectedStation.id}`;
 
   const { isLoading, isError, isSuccess, data } = useQuery({
     queryKey: [`train-times-${selectedStation.id}`],
