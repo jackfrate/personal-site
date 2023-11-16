@@ -6,7 +6,6 @@ import { ctaColorMap } from "../util/cta-color-map";
 
 type TrainListingProps = {
   trainEta: TrainEta;
-  secondsSineLastUpdate: number;
 };
 
 function padTo2Digits(num: number) {
@@ -30,7 +29,7 @@ function convertMsToTime(milliseconds: number) {
   )}`;
 }
 
-const getTimeUntilArrival = (trainEta: TrainEta, msSinceLastUpdate: number) => {
+const getTimeUntilArrival = (trainEta: TrainEta) => {
   const currentTimeMs = Date.now();
   const arrivalTimeMs = Date.parse(trainEta.arrivalTime);
 
@@ -49,11 +48,8 @@ const getTextColor = (ctaRouteName: string | undefined) => {
   }
 };
 
-const TrainListing = ({
-  trainEta,
-  secondsSineLastUpdate: msSinceLastUpdate,
-}: TrainListingProps) => {
-  const timeUntilArrival = getTimeUntilArrival(trainEta, msSinceLastUpdate);
+const TrainListing = ({ trainEta }: TrainListingProps) => {
+  const timeUntilArrival = getTimeUntilArrival(trainEta);
 
   const backgroundColorStyle =
     ctaColorMap[trainEta.abbreviatedRouteName] ?? "#565b5d";

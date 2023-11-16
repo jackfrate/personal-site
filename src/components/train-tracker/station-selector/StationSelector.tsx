@@ -19,7 +19,7 @@ const StationSelector = ({
     queryKey: ["train-stations"],
     queryFn: async (): Promise<Station[]> => {
       const response = await fetch(
-        `${env.NEXT_PUBLIC_TRAIN_API_BASE_URL}/stations`
+        `${env.NEXT_PUBLIC_TRAIN_API_BASE_URL}/trainTimes/stations`
       );
       const loadedData = await response.json();
       const sortedData = loadedData.sort((a: Station, b: Station) => {

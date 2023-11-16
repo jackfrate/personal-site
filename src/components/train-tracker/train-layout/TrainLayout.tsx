@@ -11,18 +11,16 @@ import TrainListing from "../train-listing/TrainListing";
 const TRAIN_QUERY_TIME = 10000;
 
 const TrainLayout = () => {
-  // TODO: this will eventually countdown times
-  const [secondsSinceUpdate, setMsSinceTimeUpdate] = useState(0);
+  const queryClient = useQueryClient();
+
   const [selectedStation, setSelectedStation] = useState<Station>({
     id: "40320",
     station_name: "Division",
   });
 
-  const url = `${env.NEXT_PUBLIC_TRAIN_API_BASE_URL}/timesAtStop/${selectedStation.id}`;
+  const url = `${env.NEXT_PUBLIC_TRAIN_API_BASE_URL}/trainTimes/timesAtStop/${selectedStation.id}`;
 
-  const queryClient = useQueryClient();
-
-  const { isLoading, data } = useQuery({
+  const { isLoading, isError, isSuccess, data } = useQuery({
     queryKey: [`train-times-${selectedStation.id}`],
     queryFn: async (): Promise<CTATrainTimes> => {
       const response = await fetch(url);
@@ -49,16 +47,15 @@ const TrainLayout = () => {
         setActiveStation={selectStation}
       />
       {isLoading && <div>Loading...</div>}
-      {data &&
-        data.etaList.length > 0 &&
+      {isError && <div>Error getting trains 😢</div>}
+      {isSuccess &&
+        data?.etaList?.length > 0 &&
         data.etaList.map((trainEta: TrainEta, index) => (
-          <TrainListing
-            key={index}
-            trainEta={trainEta}
-            secondsSineLastUpdate={secondsSinceUpdate}
-          />
+          <TrainListing key={index} trainEta={trainEta} />
         ))}
-      {data && data.etaList.length === 0 && <div>No Trains At This Time</div>}
+      {isSuccess && data?.etaList?.length === 0 && (
+        <div>No Trains At This Time</div>
+      )}
       <div>
         <p>
           Data is provided via CTA api, and updates every{" "}
