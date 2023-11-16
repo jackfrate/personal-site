@@ -39,9 +39,7 @@ const StationSelector = ({
 
   return (
     <div className="flex flex-row items-center justify-between gap-4">
-      {isSuccess && <div>Showing trains at {activeStation.station_name}</div>}
-      {isLoading && <div>Loading Stations...</div>}
-      <div className="dropdown dropdown-end">
+      <div className="dropdown-end dropdown">
         <label tabIndex={0} className="btn m-1">
           Select Station
         </label>
@@ -57,6 +55,8 @@ const StationSelector = ({
             ))}
         </ul>
       </div>
+      {isSuccess && <div>Showing trains at {activeStation.station_name}</div>}
+      {isLoading && <div>Loading Stations...</div>}
     </div>
   );
 };
