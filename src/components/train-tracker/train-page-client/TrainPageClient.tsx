@@ -19,7 +19,7 @@ const TrainPageClient = () => {
           setActiveStation={setActiveStation}
         />
         <TrainCardList activeStationId={activeStation.id} />
-        <div>
+        <div className="flex justify-center">
           <p className="text-sm">
             Train times update every 10 seconds. Data provided from the CTA API.
           </p>
