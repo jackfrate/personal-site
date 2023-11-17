@@ -27,7 +27,7 @@ const StationPicker = ({
     });
   };
 
-  const { isLoading, isSuccess, data } = useQuery({
+  const { isLoading, isSuccess, isError, data } = useQuery({
     queryKey: ["train-stations"],
     queryFn: async (): Promise<Station[]> => {
       const response = await fetch(`${baseUrl}/api/trainTimes/stations`);
@@ -47,19 +47,32 @@ const StationPicker = ({
     cacheTime: 1000 * 60 * 60 * 24,
   });
 
+  const dropdownLabel = isLoading
+    ? "Loading Stations..."
+    : isError
+    ? "Error loading stations 😢"
+    : activeStation.station_name;
+
   return (
     <div className="flex w-full justify-center">
-      <details className="dropdown">
-        <summary className="btn m-1">open or close</summary>
-        <ul className="dropdown-content menu rounded-box z-[1] w-52 bg-base-100 p-2 shadow">
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li>
-            <a>Item 2</a>
-          </li>
-        </ul>
-      </details>
+      <div className="flex flex-row items-center justify-between gap-4">
+        <div className="dropdown-end dropdown">
+          <label tabIndex={0} className="btn m-1">
+            Selected Stop: {dropdownLabel}
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu rounded-box z-[1] flex h-96 flex-col flex-nowrap overflow-y-auto bg-base-300 p-1 shadow"
+          >
+            {isSuccess &&
+              data.map((station, index) => (
+                <li key={index} onClick={() => setActiveStation(station)}>
+                  <p>{station.station_name}</p>
+                </li>
+              ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

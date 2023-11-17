@@ -23,7 +23,6 @@ const TrainCardList = ({
     queryFn: async (): Promise<CTATrainTimes> => {
       const response = await fetch(url);
       const loadedData = await response.json();
-      console.table(loadedData);
       return loadedData as CTATrainTimes;
     },
     enabled: !!activeStation,
@@ -39,6 +38,9 @@ const TrainCardList = ({
         data?.etaList?.map((trainEta, index) => (
           <TrainCard key={index} trainEta={trainEta} />
         ))}
+      {isSuccess && data?.etaList?.length === 0 && (
+        <div>No trains available at this time</div>
+      )}
     </div>
   );
 };
