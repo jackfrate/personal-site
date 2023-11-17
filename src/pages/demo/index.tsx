@@ -25,7 +25,7 @@ export const demos: ProjectCardProps[] = [
 const DemoIndex = () => {
   return (
     <BaseLayout activeTab="demo">
-      <div className="mt-4 flex  flex-col items-center gap-4">
+      <div className="mt-4 flex flex-col items-center gap-4 ">
         {demos.map((demo) => (
           <ProjectCard {...demo} key={demo.href} />
         ))}

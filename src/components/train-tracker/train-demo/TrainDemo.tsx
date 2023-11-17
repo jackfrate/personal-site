@@ -10,7 +10,7 @@ import TrainListing from "../train-listing/TrainListing";
 
 const TRAIN_QUERY_TIME = 10000;
 
-const TrainLayout = () => {
+const TrainDemo = () => {
   // TODO: fix this hack
   const baseUrl =
     typeof window !== "undefined"
@@ -73,4 +73,4 @@ const TrainLayout = () => {
   );
 };
 
-export default TrainLayout;
+export default TrainDemo;

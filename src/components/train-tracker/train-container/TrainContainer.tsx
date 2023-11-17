@@ -6,10 +6,10 @@ const queryClient = new QueryClient();
 
 type TrainPageProps = { children: React.ReactNode };
 
-const TrainPage = ({ children }: TrainPageProps) => {
+const TrainContainer = ({ children }: TrainPageProps) => {
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 };
 
-export default TrainPage;
+export default TrainContainer;

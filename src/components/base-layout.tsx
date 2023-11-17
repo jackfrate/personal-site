@@ -16,7 +16,7 @@ const BaseLayout: React.FC<Props> = ({ activeTab, children }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="2-screen flex min-h-screen flex-col items-center justify-start bg-base-100">
+      <main className="2-screen min-w-screen flex min-h-screen flex-col items-center justify-start bg-base-100">
         <Navbar activeTab={activeTab}></Navbar>
         <div className="flex h-full w-full grow flex-col">{children}</div>
       </main>
