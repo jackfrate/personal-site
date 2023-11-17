@@ -13,10 +13,6 @@ function padTo2Digits(num: number) {
 }
 
 function convertMsToTime(milliseconds: number) {
-  if (milliseconds < 1000) {
-    return "Arriving now";
-  }
-
   let seconds = Math.floor(milliseconds / 1000);
   let minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
@@ -29,13 +25,21 @@ function convertMsToTime(milliseconds: number) {
   )}`;
 }
 
-const getTimeUntilArrival = (trainEta: TrainEta) => {
+/**
+ * Returns timestamp for when train will arrive and whether it is arriving now.
+ * @param trainEta
+ * @returns [train timestamp, isArrivingNow]
+ */
+const getTimeUntilArrival = (trainEta: TrainEta): [string, boolean] => {
   const currentTimeMs = Date.now();
   const arrivalTimeMs = Date.parse(trainEta.arrivalTime);
 
   const timeUntilArrivalMs = arrivalTimeMs - currentTimeMs;
 
-  return convertMsToTime(timeUntilArrivalMs);
+  return [
+    convertMsToTime(timeUntilArrivalMs),
+    Boolean(timeUntilArrivalMs < 60_000),
+  ];
 };
 
 const getTextColor = (ctaRouteName: string | undefined) => {
@@ -49,7 +53,7 @@ const getTextColor = (ctaRouteName: string | undefined) => {
 };
 
 const TrainCard = ({ trainEta }: TrainCardProps) => {
-  const timeUntilArrival = getTimeUntilArrival(trainEta);
+  const [timeUntilArrival, isArrivingNow] = getTimeUntilArrival(trainEta);
 
   const backgroundColorStyle =
     ctaColorMap[trainEta.abbreviatedRouteName] ?? "#565b5d";
@@ -58,7 +62,7 @@ const TrainCard = ({ trainEta }: TrainCardProps) => {
   const etaBasedOnSchedule = trainEta.isBasedOnSchedule;
 
   return (
-    <div className="card card-compact w-full">
+    <div className="card-compact card w-full">
       <div
         className="card-body rounded-lg"
         style={{
@@ -74,7 +78,8 @@ const TrainCard = ({ trainEta }: TrainCardProps) => {
           </div>
           <div className="inline-flex flex-col">
             <div>
-              <p className="text-sm">Arrives in</p>
+              {isArrivingNow && <p className="font-bold">Arriving Now</p>}
+              {!isArrivingNow && <p className="text-sm">Arrives in</p>}
             </div>
             <div className="flex flex-row items-center gap-4">
               <h2>{timeUntilArrival}</h2>
