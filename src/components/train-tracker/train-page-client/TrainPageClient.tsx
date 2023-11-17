@@ -18,7 +18,7 @@ const TrainPageClient = () => {
           activeStation={activeStation}
           setActiveStation={setActiveStation}
         />
-        <TrainCardList activeStation={activeStation} />
+        <TrainCardList activeStationId={activeStation.id} />
       </div>
     </div>
   );

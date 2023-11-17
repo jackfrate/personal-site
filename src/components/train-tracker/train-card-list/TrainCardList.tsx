@@ -1,31 +1,27 @@
 import { useQuery } from "react-query";
 import type { CTATrainTimes } from "../../../types/train-time.type";
 import useGetBaseUrl from "../hooks/useGetBaseUrl";
-import type { Station } from "../station-picker/StationPicker";
 import TrainCard from "../train-card/TrainCard";
 
 const TRAIN_QUERY_TIME_MS = 10000;
 
 type TrainCardListProps = {
-  activeStation: Station;
-  // setSelectedStation: (station: Station) => void;
+  activeStationId: string;
 };
 
-const TrainCardList = ({
-  activeStation, // setSelectedStation,
-}: TrainCardListProps) => {
+const TrainCardList = ({ activeStationId }: TrainCardListProps) => {
   const baseUrl = useGetBaseUrl();
 
-  const url = `${baseUrl}/api/trainTimes/timesAtStop/${activeStation.id}`;
+  const url = `${baseUrl}/api/trainTimes/timesAtStop/${activeStationId}`;
 
   const { isLoading, isError, isSuccess, data } = useQuery({
-    queryKey: [`train-times-${activeStation.id}`],
+    queryKey: [`train-times-${activeStationId}`],
     queryFn: async (): Promise<CTATrainTimes> => {
       const response = await fetch(url);
       const loadedData = await response.json();
       return loadedData as CTATrainTimes;
     },
-    enabled: !!activeStation,
+    enabled: !!activeStationId,
     refetchInterval: TRAIN_QUERY_TIME_MS,
     cacheTime: 0,
   });
