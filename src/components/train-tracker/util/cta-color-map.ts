@@ -9,4 +9,5 @@ export const ctaColorMap: Record<string, string> = {
   Purple: "#522398",
   P: "#522398",
   Yellow: "#f9e300",
+  Y: "#f9e300",
 } as const;
