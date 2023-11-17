@@ -6,8 +6,14 @@
   background: #0a6569;
 }
 
+/* This is required for preventing that overflow bullshit */
+html,
+body {
+  overflow-x: hidden;
+}
+
 @layer components {
-  .title-component {
+  .cool-title-component {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -16,49 +22,49 @@
     align-items: center;
   }
   @media (min-width: 768px) {
-    .title-component {
+    .cool-title-component {
       flex-direction: row;
       align-items: flex-start;
       justify-content: flex-start;
     }
   }
 
-  .title-container {
+  .cool-title-container {
     text-transform: uppercase;
     overflow: hidden;
   }
 
-  .title-animation {
+  .cool-title-animation {
     height: 50px;
   }
 
-  .title-animation > div > div {
+  .cool-title-animation > div > div {
     padding: 0 1rem;
   }
 
-  .title-animation {
+  .cool-title-animation {
     animation: text-animation 8s infinite;
   }
 
-  title-animation div div {
+  cool-title-animation div div {
     min-height: 50px;
     padding: 0;
     display: inline-flex;
   }
 
-  title-animation div {
+  cool-title-animation div {
     display: inline-flex;
   }
 
-  .title-first div {
+  .cool-title-first div {
     background-color: hsl(var(--p));
     color: aliceblue;
   }
-  .title-second div {
+  .cool-title-second div {
     background-color: #cd921e;
     color: aliceblue;
   }
-  .title-third div {
+  .cool-title-third div {
     background-color: hsl(var(--af));
     color: aliceblue;
   }

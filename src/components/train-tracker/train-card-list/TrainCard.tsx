@@ -1,4 +1,6 @@
 "use-client";
+import { AiFillClockCircle } from "react-icons/ai";
+import { MdGpsFixed } from "react-icons/md";
 import type { TrainEta } from "../../../types/train-time.type";
 import { ctaColorMap } from "../util/cta-color-map";
 
@@ -53,11 +55,32 @@ const TrainCard = ({ trainEta }: TrainCardProps) => {
   const etaBasedOnSchedule = trainEta.isBasedOnSchedule;
 
   return (
-    <div className="card card-compact w-full flex-wrap bg-base-300">
-      <div className="card-body">
-        <div>{trainEta.abbreviatedRouteName}</div>
-        <div>{trainEta.arrivalTime}</div>
-        <div>{trainEta.isBasedOnSchedule ? "Scheduled" : "GPS"}</div>
+    <div className="flex w-full rounded-md bg-base-300 ">
+      <div className="flex w-full">
+        <div className="flex flex-col">
+          <p className="text-sm">Train Towards</p>
+          <h2>{trainEta.destinationStationName}</h2>
+          <p className="text-xs">Train ID: {trainEta.trainRunNumber}</p>
+        </div>
+
+        <div className="flex flex-grow"></div>
+
+        <div className="flex flex-col">
+          <div>
+            <p className="text-sm">Arrives in</p>
+          </div>
+          <div className="flex flex-row items-center gap-4">
+            <h2>{timeUntilArrival}</h2>
+            <div
+              className="tooltip"
+              data-tip={`ETA based on ${
+                etaBasedOnSchedule ? "schedule" : "real time tracking"
+              }`}
+            >
+              {etaBasedOnSchedule ? <AiFillClockCircle /> : <MdGpsFixed />}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,16 +1,16 @@
 const CoolTitle = () => {
   return (
-    <div className="title-component ">
+    <div className="cool-title-component ">
       <div>Hi, I&apos;m</div>
-      <div className="title-container">
-        <div className="title-animation">
-          <div className="title-first">
+      <div className="cool-title-container">
+        <div className="cool-title-animation">
+          <div className="cool-title-first">
             <div>Jack Frate</div>
           </div>
-          <div className="title-second">
+          <div className="cool-title-second">
             <div>Fullstack</div>
           </div>
-          <div className="title-third">
+          <div className="cool-title-third">
             <div>A Web Dev</div>
           </div>
         </div>

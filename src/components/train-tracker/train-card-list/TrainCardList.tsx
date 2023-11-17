@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "react-query";
 import type { CTATrainTimes } from "../../../types/train-time.type";
 import useGetBaseUrl from "../hooks/useGetBaseUrl";
 import type { Station } from "../old/station-selector/StationSelector";
-import TrainCard from "./TrainCard";
+import TrainCard from "../old/train-card/TrainCard";
 
 const TRAIN_QUERY_TIME_MS = 10000;
 
@@ -41,7 +41,7 @@ const TrainCardList = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center gap-2">
+    <div className="flex w-full flex-col items-center gap-2 px-4">
       {isLoading && <div>Loading...</div>}
       {isError && <div>Error getting trains 😢</div>}
       {isSuccess &&

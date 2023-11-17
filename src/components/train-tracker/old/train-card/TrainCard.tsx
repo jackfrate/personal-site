@@ -67,12 +67,12 @@ const TrainCard = ({ trainEta }: TrainCardProps) => {
         }}
       >
         <div className="card-title flex justify-between">
-          <div className="flex flex-col">
+          <div className="inline-flex flex-col">
             <p className="text-sm">Train towards</p>
             <h2>{trainEta.destinationStationName}</h2>
             <p className="text-xs">Train ID: {trainEta.trainRunNumber}</p>
           </div>
-          <div className="flex flex-col">
+          <div className="inline-flex flex-col">
             <div>
               <p className="text-sm">Arrives in</p>
             </div>

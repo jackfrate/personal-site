@@ -8,7 +8,7 @@ const About = () => {
       <div className="hero-content h-full w-full flex-col">
         {/* <Image src="/images/me.png" alt="Jack Frate" width={400} height={400} /> */}
         <div className="flex flex-col items-center gap-4">
-          <div className="title-container flex flex-col md:flex-row">
+          <div className="cool-title-container flex flex-col md:flex-row">
             <CoolTitle />
           </div>
           <div className="flex flex-col items-center gap-4 self-start">
@@ -21,7 +21,7 @@ const About = () => {
               <div className="flex flex-col items-center gap-4 md:flex-row">
                 {demos.map((demo) => (
                   <Link href={demo.href} key={demo.title}>
-                    <button className="btn btn-outline btn-primary">
+                    <button className="btn-outline btn-primary btn">
                       {demo.title}
                     </button>
                   </Link>
@@ -35,7 +35,7 @@ const About = () => {
             <div className="card-actions">
               <div className="flex flex-col items-center gap-3 md:flex-row">
                 <Link href="/experience">
-                  <button className="btn btn-outline btn-primary">
+                  <button className="btn-outline btn-primary btn">
                     See my experience
                   </button>
                 </Link>
@@ -43,7 +43,7 @@ const About = () => {
                   href="https://github.com/jackfrate/personal-site"
                   target="_blank"
                 >
-                  <button className="btn btn-outline btn-primary">
+                  <button className="btn-outline btn-primary btn">
                     Website Source Code
                   </button>
                 </Link>

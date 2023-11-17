@@ -5,7 +5,7 @@ import TrainCardList from "../train-card-list/TrainCardList";
 
 const TrainPageClient = () => {
   return (
-    <div className="flex w-full justify-center py-4 px-4">
+    <div className="flex w-full justify-center">
       <div className="flex w-full max-w-screen-md flex-col gap-5">
         <StationPicker />
         <TrainCardList />

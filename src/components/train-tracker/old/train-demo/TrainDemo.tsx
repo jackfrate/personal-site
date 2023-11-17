@@ -51,7 +51,7 @@ const TrainDemo = () => {
   };
 
   return (
-    <div className="flex w-full max-w-screen-md flex-col gap-3">
+    <div className="flex max-w-screen-md flex-col gap-3">
       <StationSelector
         activeStation={selectedStation}
         setActiveStation={selectStation}
