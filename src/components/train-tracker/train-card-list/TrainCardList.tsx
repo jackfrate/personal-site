@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import type { CTATrainTimes } from "../../../types/train-time.type";
 import useGetBaseUrl from "../hooks/useGetBaseUrl";
-import type { Station } from "../old/station-selector/StationSelector";
+import type { Station } from "../station-picker/StationPicker";
 import TrainCard from "../train-card/TrainCard";
 
 const TRAIN_QUERY_TIME_MS = 10000;
