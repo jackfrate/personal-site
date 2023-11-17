@@ -4,7 +4,7 @@ import CoolTitle from "./cool-title/CoolTitle";
 
 const About = () => {
   return (
-    <div className="hero h-full w-screen grow rounded-md bg-base-200 p-2">
+    <div className="hero h-full w-screen grow rounded-md  p-2">
       <div className="hero-content h-full w-full flex-col">
         {/* <Image src="/images/me.png" alt="Jack Frate" width={400} height={400} /> */}
         <div className="flex flex-col items-center gap-4">
@@ -16,7 +16,7 @@ const About = () => {
               I&apos;m a fullstack engineer with 3+ years of industry
               experience. I make things for the web.
             </p>
-            <div className="card flex w-[90%] flex-col items-center gap-4 bg-neutral px-10 py-4 md:w-full md:bg-base-200">
+            <div className="card flex w-[90%] flex-col items-center gap-4 bg-neutral px-10 py-4 md:w-full md:bg-base-100">
               <h1 className="card-title">Some Personal Projects</h1>
               <div className="flex flex-col items-center gap-4 md:flex-row">
                 {demos.map((demo) => (
@@ -30,7 +30,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="card flex w-[90%] flex-col items-center gap-4 bg-neutral px-10 py-4 md:w-full md:bg-base-200">
+          <div className="card flex w-[90%] flex-col items-center gap-4 bg-neutral px-10 py-4 md:w-full md:bg-base-100">
             <h1 className="card-title">More About Me</h1>
             <div className="card-actions">
               <div className="flex flex-col items-center gap-3 md:flex-row">
