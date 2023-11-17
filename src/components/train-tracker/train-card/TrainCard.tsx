@@ -42,14 +42,10 @@ const getTimeUntilArrival = (trainEta: TrainEta): [string, boolean] => {
   ];
 };
 
+const blackTextColors = ["Yellow", "Y", "Pink"];
+
 const getTextColor = (ctaRouteName: string | undefined) => {
-  if (ctaRouteName === undefined) {
-    return "white";
-  } else if (ctaRouteName === "Yellow") {
-    return "black";
-  } else {
-    return "white";
-  }
+  return blackTextColors.includes(ctaRouteName ?? "") ? "black" : "white";
 };
 
 const TrainCard = ({ trainEta }: TrainCardProps) => {
