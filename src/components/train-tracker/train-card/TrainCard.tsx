@@ -38,10 +38,14 @@ const getTimeUntilArrival = (trainEta: TrainEta) => {
   return convertMsToTime(timeUntilArrivalMs);
 };
 
-const blackTextColors = ["Yellow"];
-
 const getTextColor = (ctaRouteName: string | undefined) => {
-  return blackTextColors.includes(ctaRouteName ?? "yeet") ? "black" : "white";
+  if (ctaRouteName === undefined) {
+    return "white";
+  } else if (ctaRouteName === "Yellow") {
+    return "black";
+  } else {
+    return "white";
+  }
 };
 
 const TrainCard = ({ trainEta }: TrainCardProps) => {
@@ -49,35 +53,39 @@ const TrainCard = ({ trainEta }: TrainCardProps) => {
 
   const backgroundColorStyle =
     ctaColorMap[trainEta.abbreviatedRouteName] ?? "#565b5d";
-
   const textColorStyle = getTextColor(trainEta.abbreviatedRouteName);
 
   const etaBasedOnSchedule = trainEta.isBasedOnSchedule;
 
   return (
-    <div className="flex w-full rounded-md bg-base-300 ">
-      <div className="flex w-full">
-        <div className="flex flex-col">
-          <p className="text-sm">Train Towards</p>
-          <h2>{trainEta.destinationStationName}</h2>
-          <p className="text-xs">Train ID: {trainEta.trainRunNumber}</p>
-        </div>
-
-        <div className="flex flex-grow"></div>
-
-        <div className="flex flex-col">
-          <div>
-            <p className="text-sm">Arrives in</p>
+    <div className="card card-compact w-full">
+      <div
+        className="card-body rounded-lg"
+        style={{
+          backgroundColor: backgroundColorStyle,
+          color: textColorStyle,
+        }}
+      >
+        <div className="card-title flex justify-between">
+          <div className="inline-flex flex-col">
+            <p className="text-sm">Train towards</p>
+            <h2>{trainEta.destinationStationName}</h2>
+            <p className="text-xs">Train ID: {trainEta.trainRunNumber}</p>
           </div>
-          <div className="flex flex-row items-center gap-4">
-            <h2>{timeUntilArrival}</h2>
-            <div
-              className="tooltip"
-              data-tip={`ETA based on ${
-                etaBasedOnSchedule ? "schedule" : "real time tracking"
-              }`}
-            >
-              {etaBasedOnSchedule ? <AiFillClockCircle /> : <MdGpsFixed />}
+          <div className="inline-flex flex-col">
+            <div>
+              <p className="text-sm">Arrives in</p>
+            </div>
+            <div className="flex flex-row items-center gap-4">
+              <h2>{timeUntilArrival}</h2>
+              <div
+                className="tooltip"
+                data-tip={`ETA based on ${
+                  etaBasedOnSchedule ? "schedule" : "real time tracking"
+                }`}
+              >
+                {etaBasedOnSchedule ? <AiFillClockCircle /> : <MdGpsFixed />}
+              </div>
             </div>
           </div>
         </div>

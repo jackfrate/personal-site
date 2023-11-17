@@ -1,44 +1,35 @@
-import { useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import type { CTATrainTimes } from "../../../types/train-time.type";
 import useGetBaseUrl from "../hooks/useGetBaseUrl";
 import type { Station } from "../old/station-selector/StationSelector";
-import TrainCard from "../old/train-card/TrainCard";
+import TrainCard from "../train-card/TrainCard";
 
 const TRAIN_QUERY_TIME_MS = 10000;
 
-const TrainCardList = () => {
+type TrainCardListProps = {
+  activeStation: Station;
+  // setSelectedStation: (station: Station) => void;
+};
+
+const TrainCardList = ({
+  activeStation, // setSelectedStation,
+}: TrainCardListProps) => {
   const baseUrl = useGetBaseUrl();
 
-  const queryClient = useQueryClient();
-
-  const [selectedStation, setSelectedStation] = useState<Station>({
-    id: "40320",
-    station_name: "Division",
-  });
-
-  // TODO: this is bad lol, fix it
-  const url = `${baseUrl}/api/trainTimes/timesAtStop/${selectedStation.id}`;
+  const url = `${baseUrl}/api/trainTimes/timesAtStop/${activeStation.id}`;
 
   const { isLoading, isError, isSuccess, data } = useQuery({
-    queryKey: [`train-times-${selectedStation.id}`],
+    queryKey: [`train-times-${activeStation.id}`],
     queryFn: async (): Promise<CTATrainTimes> => {
       const response = await fetch(url);
       const loadedData = await response.json();
       console.table(loadedData);
       return loadedData as CTATrainTimes;
     },
-    enabled: !!selectedStation,
+    enabled: !!activeStation,
     refetchInterval: TRAIN_QUERY_TIME_MS,
     cacheTime: 0,
   });
-
-  const selectStation = (station: Station) => {
-    setSelectedStation(station);
-    queryClient.invalidateQueries({
-      queryKey: [`train-times`, selectedStation.id],
-    });
-  };
 
   return (
     <div className="flex w-full flex-col items-center gap-2 px-4">
