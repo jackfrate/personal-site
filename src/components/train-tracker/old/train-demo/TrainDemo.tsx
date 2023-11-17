@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { env } from "../../../env/client.mjs";
-import type { CTATrainTimes, TrainEta } from "../../../types/train-time.type";
+import { env } from "../../../../env/client.mjs";
+import type {
+  CTATrainTimes,
+  TrainEta,
+} from "../../../../types/train-time.type";
 import type { Station } from "../station-selector/StationSelector";
 import StationSelector from "../station-selector/StationSelector";
-import TrainListing from "../train-listing/TrainListing";
+import TrainCard from "../train-card/TrainCard";
 
 const TRAIN_QUERY_TIME = 10000;
 
@@ -58,7 +61,7 @@ const TrainDemo = () => {
       {isSuccess &&
         data?.etaList?.length > 0 &&
         data.etaList.map((trainEta: TrainEta, index) => (
-          <TrainListing key={index} trainEta={trainEta} />
+          <TrainCard key={index} trainEta={trainEta} />
         ))}
       {isSuccess && data?.etaList?.length === 0 && (
         <div>No Trains At This Time</div>

@@ -1,10 +1,10 @@
 "use-client";
 import { AiFillClockCircle } from "react-icons/ai";
 import { MdGpsFixed } from "react-icons/md";
-import type { TrainEta } from "../../../types/train-time.type";
-import { ctaColorMap } from "../util/cta-color-map";
+import type { TrainEta } from "../../../../types/train-time.type";
+import { ctaColorMap } from "../../util/cta-color-map";
 
-type TrainListingProps = {
+type TrainCardProps = {
   trainEta: TrainEta;
 };
 
@@ -48,7 +48,7 @@ const getTextColor = (ctaRouteName: string | undefined) => {
   }
 };
 
-const TrainListing = ({ trainEta }: TrainListingProps) => {
+const TrainCard = ({ trainEta }: TrainCardProps) => {
   const timeUntilArrival = getTimeUntilArrival(trainEta);
 
   const backgroundColorStyle =
@@ -58,32 +58,34 @@ const TrainListing = ({ trainEta }: TrainListingProps) => {
   const etaBasedOnSchedule = trainEta.isBasedOnSchedule;
 
   return (
-    <div
-      className="card-body rounded-lg"
-      style={{
-        backgroundColor: backgroundColorStyle,
-        color: textColorStyle,
-      }}
-    >
-      <div className="card-title flex justify-between">
-        <div className="flex flex-col">
-          <p className="text-sm">Train towards</p>
-          <h2>{trainEta.destinationStationName}</h2>
-          <p className="text-xs">Train ID: {trainEta.trainRunNumber}</p>
-        </div>
-        <div className="flex flex-col">
-          <div>
-            <p className="text-sm">Arrives in</p>
+    <div className="card card-compact w-full">
+      <div
+        className="card-body rounded-lg"
+        style={{
+          backgroundColor: backgroundColorStyle,
+          color: textColorStyle,
+        }}
+      >
+        <div className="card-title flex justify-between">
+          <div className="flex flex-col">
+            <p className="text-sm">Train towards</p>
+            <h2>{trainEta.destinationStationName}</h2>
+            <p className="text-xs">Train ID: {trainEta.trainRunNumber}</p>
           </div>
-          <div className="flex flex-row items-center gap-4">
-            <h2>{timeUntilArrival}</h2>
-            <div
-              className="tooltip"
-              data-tip={`ETA based on ${
-                etaBasedOnSchedule ? "schedule" : "real time tracking"
-              }`}
-            >
-              {etaBasedOnSchedule ? <AiFillClockCircle /> : <MdGpsFixed />}
+          <div className="flex flex-col">
+            <div>
+              <p className="text-sm">Arrives in</p>
+            </div>
+            <div className="flex flex-row items-center gap-4">
+              <h2>{timeUntilArrival}</h2>
+              <div
+                className="tooltip"
+                data-tip={`ETA based on ${
+                  etaBasedOnSchedule ? "schedule" : "real time tracking"
+                }`}
+              >
+                {etaBasedOnSchedule ? <AiFillClockCircle /> : <MdGpsFixed />}
+              </div>
             </div>
           </div>
         </div>
@@ -92,4 +94,4 @@ const TrainListing = ({ trainEta }: TrainListingProps) => {
   );
 };
 
-export default TrainListing;
+export default TrainCard;

@@ -1,7 +1,7 @@
 "use-client";
 
 import { useQuery } from "react-query";
-import { env } from "../../../env/client.mjs";
+import { env } from "../../../../env/client.mjs";
 
 export type Station = {
   station_name: string;
