@@ -3,7 +3,7 @@ import ScreenRecorder from "../../tech-demo/recorders/screen-recorder/ScreenReco
 import WebcamRecorder from "../../tech-demo/recorders/webcam-recorder/WebcamRecorder";
 import RecordingSettings from "../../tech-demo/recording-settings/RecordingSettings";
 import useMediaRecorder from "../hooks/useMediaRecorder";
-import { RecordingType } from "../util/strategies";
+import type { RecordingType } from "../util/strategies";
 
 export type RecorderProps = {
   mediaStream: MediaStream | undefined;
@@ -29,6 +29,8 @@ const Landing = () => {
     startRecording,
     onConstraintsChange,
   } = useMediaRecorder();
+
+  console.log(recordingType);
 
   const RecorderComponent = RecorderMap[recordingType];
 

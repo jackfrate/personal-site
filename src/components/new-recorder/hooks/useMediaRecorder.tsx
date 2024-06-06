@@ -47,12 +47,15 @@ export default function useMediaRecorder() {
     _constraints: MediaStreamConstraints | undefined
   ) => {
     if (!_constraints) {
+      console.log("no restraints");
       setConstraints(_constraints);
       return;
     }
 
     if (JSON.stringify(_constraints) !== JSON.stringify(constraints)) {
       setConstraints(_constraints);
+    } else {
+      console.log("same constraints");
     }
   };
 
@@ -71,13 +74,14 @@ export default function useMediaRecorder() {
     };
   }, [mediaRecorder]);
 
+  // recreate the media stream on new recording type or constraints
   useEffect(() => {
     if (!constraints) {
       return;
     }
     setupMediaStream(constraints, setMediaStream, setMediaRecorder);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [constraints]);
+  }, [constraints, recordingType]);
 
   useEffect(() => {
     return () => {
