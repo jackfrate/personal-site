@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import RecordingSettings from "../../tech-demo/recording-settings/RecordingSettings";
 import ScreenRecorder from "../components/recorders/screen-recorder/ScreenRecorder";
 import WebcamRecorder from "../components/recorders/webcam-recorder/WebcamRecorder";
-import useMediaRecorder from "../hooks/useMediaRecorder";
+import {
+  RecorderContext,
+  RecorderContextProvider,
+} from "../context/RecorderContext";
 import type { RecordingType } from "../util/strategies";
 
 export type RecorderProps = {
@@ -20,7 +23,7 @@ const RecorderMap: Record<RecordingType, React.FC<RecorderProps>> = {
   webcam: WebcamRecorder,
 };
 
-const Landing = () => {
+const LandingInner = () => {
   const {
     recordingType,
     isRecording,
@@ -28,7 +31,7 @@ const Landing = () => {
     stopRecording,
     startRecording,
     onConstraintsChange,
-  } = useMediaRecorder();
+  } = useContext(RecorderContext);
 
   const RecorderComponent = RecorderMap[recordingType];
 
@@ -43,6 +46,14 @@ const Landing = () => {
 
       <RecordingSettings onConstraintsChange={onConstraintsChange} />
     </div>
+  );
+};
+
+const Landing = () => {
+  return (
+    <RecorderContextProvider>
+      <LandingInner />
+    </RecorderContextProvider>
   );
 };
 

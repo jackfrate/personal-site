@@ -15,8 +15,10 @@ export default function useMediaRecorder() {
     "webcam"
   );
 
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
-  const [mediaStream, setMediaStream] = useState<MediaStream>();
+  const [mediaRecorder, setMediaRecorder] = useState<
+    MediaRecorder | undefined
+  >();
+  const [mediaStream, setMediaStream] = useState<MediaStream | undefined>();
   const [isRecording, setIsRecording] = useState(false);
 
   const [completedRecording, setCompletedRecording] = useState<Blob>();
@@ -47,7 +49,6 @@ export default function useMediaRecorder() {
     _constraints: MediaStreamConstraints | undefined
   ) => {
     if (!_constraints) {
-      console.log("no restraints");
       setConstraints(_constraints);
       return;
     }
@@ -55,7 +56,6 @@ export default function useMediaRecorder() {
     if (JSON.stringify(_constraints) !== JSON.stringify(constraints)) {
       setConstraints(_constraints);
     } else {
-      console.log("same constraints");
     }
   };
 
