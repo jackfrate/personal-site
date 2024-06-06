@@ -1,6 +1,7 @@
 import React from "react";
 import ScreenRecorder from "../../tech-demo/recorders/screen-recorder/ScreenRecorder";
 import WebcamRecorder from "../../tech-demo/recorders/webcam-recorder/WebcamRecorder";
+import RecordingSettings from "../../tech-demo/recording-settings/RecordingSettings";
 import useMediaRecorder from "../hooks/useMediaRecorder";
 import { RecordingType } from "../util/strategies";
 
@@ -22,11 +23,11 @@ const RecorderMap: Record<RecordingType, React.FC<RecorderProps>> = {
 const Landing = () => {
   const {
     recordingType,
-    setRecordingType,
     isRecording,
     mediaStream,
     stopRecording,
     startRecording,
+    onConstraintsChange,
   } = useMediaRecorder();
 
   const RecorderComponent = RecorderMap[recordingType];
@@ -39,6 +40,8 @@ const Landing = () => {
         onStart={startRecording}
         onStop={stopRecording}
       />
+
+      <RecordingSettings onConstraintsChange={onConstraintsChange} />
     </div>
   );
 };

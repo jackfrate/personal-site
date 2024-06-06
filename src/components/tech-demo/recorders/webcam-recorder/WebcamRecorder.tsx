@@ -1,5 +1,6 @@
 "use-client";
 
+import { noSSR } from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import type { RecorderProps } from "../../../new-recorder/landing/Landing";
 
@@ -26,6 +27,7 @@ const WebcamRecorder = ({
 
     videoRef.current.srcObject = mediaStream;
   }, [mediaStream, setReadyToRecord]);
+  noSSR
 
   return (
     <div className="relative flex h-full w-full flex-col items-center gap-4 pt-4">

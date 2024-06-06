@@ -16,7 +16,7 @@ export const DemoContainer = () => {
 
   const [recordingMode, setRecordingMode] = useLocalStorage<
     "screen" | "webcam"
-  >("RECORDING_MODE", "webcam");
+  >("RECORDING_TYPE", "webcam");
 
   useEffect(() => {
     if (mediaRecorder) {

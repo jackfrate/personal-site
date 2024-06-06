@@ -19,7 +19,7 @@ type RecordingSettingsProps = {
 const RecordingSettings = ({ onConstraintsChange }: RecordingSettingsProps) => {
   const [recordingMode, setRecordingMode] = useLocalStorage<
     "screen" | "webcam"
-  >("RECORDING_MODE", "webcam");
+  >("RECORDING_TYPE", "webcam");
 
   const [audioDevices, setAudioDevices] = useState<MediaDeviceInfo[]>();
   const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>();

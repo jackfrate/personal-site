@@ -1,10 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
-import type { RecordingType } from "../util/strategies";
-import { MediaStreamStrategyMap } from "../util/strategies";
+import { useEffect, useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
+import { MediaStreamStrategyMap, RecordingType } from "../util/strategies";
 
+// type UseMediaRecorderProps = {
+//   recordingType: RecordingType;
+// };
+
+// export default function useMediaRecorder({
+//   recordingType,
+// }: UseMediaRecorderProps) {
 export default function useMediaRecorder() {
-  // TODO: use local storage for this at some point
-  const [recordingType, setRecordingType] = useState<RecordingType>("webcam");
+  const [recordingType] = useLocalStorage<RecordingType>(
+    "RECORDING_TYPE",
+    "webcam"
+  );
 
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
   const [mediaStream, setMediaStream] = useState<MediaStream>();
@@ -13,10 +22,7 @@ export default function useMediaRecorder() {
   const [completedRecording, setCompletedRecording] = useState<Blob>();
   const [constraints, setConstraints] = useState<MediaStreamConstraints>();
 
-  // TODO: do we need use memo?
-  const setupMediaStream = useMemo(() => {
-    return MediaStreamStrategyMap[recordingType];
-  }, [recordingType]);
+  const setupMediaStream = MediaStreamStrategyMap[recordingType];
 
   const startRecording = () => {
     if (!mediaRecorder) {
@@ -87,7 +93,6 @@ export default function useMediaRecorder() {
 
   return {
     recordingType,
-    setRecordingType,
     isRecording,
     constraints,
     mediaStream,
