@@ -1,7 +1,7 @@
 "use-client";
 
 import { useEffect, useState } from "react";
-import WebcamRecorder from "../recorders/webcam-recorder/WebcamRecorder";
+import WebcamRecorder from "../../new-recorder/components/recorders/webcam-recorder/WebcamRecorder";
 import type { RecordingContainerProps } from "./recording-container-props";
 
 const WebcamRecordingContainer = ({

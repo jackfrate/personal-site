@@ -1,7 +1,7 @@
 import React from "react";
-import ScreenRecorder from "../../tech-demo/recorders/screen-recorder/ScreenRecorder";
-import WebcamRecorder from "../../tech-demo/recorders/webcam-recorder/WebcamRecorder";
 import RecordingSettings from "../../tech-demo/recording-settings/RecordingSettings";
+import ScreenRecorder from "../components/recorders/screen-recorder/ScreenRecorder";
+import WebcamRecorder from "../components/recorders/webcam-recorder/WebcamRecorder";
 import useMediaRecorder from "../hooks/useMediaRecorder";
 import type { RecordingType } from "../util/strategies";
 
@@ -30,12 +30,10 @@ const Landing = () => {
     onConstraintsChange,
   } = useMediaRecorder();
 
-  console.log(recordingType);
-
   const RecorderComponent = RecorderMap[recordingType];
 
   return (
-    <div>
+    <div className="flex h-screen w-full flex-col gap-3 p-4 md:flex-row">
       <RecorderComponent
         mediaStream={mediaStream}
         isRecording={isRecording}

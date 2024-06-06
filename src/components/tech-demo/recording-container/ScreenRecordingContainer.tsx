@@ -1,7 +1,7 @@
 "use-client";
 
 import { useEffect, useState } from "react";
-import ScreenRecorder from "../recorders/screen-recorder/ScreenRecorder";
+import ScreenRecorder from "../../new-recorder/components/recorders/screen-recorder/ScreenRecorder";
 import type { RecordingContainerProps } from "./recording-container-props";
 
 export const ScreenRecordingContainer = ({

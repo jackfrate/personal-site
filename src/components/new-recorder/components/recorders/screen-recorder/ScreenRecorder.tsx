@@ -1,10 +1,9 @@
 "use-client";
 
-import { noSSR } from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import type { RecorderProps } from "../../../new-recorder/landing/Landing";
+import type { RecorderProps } from "../../../landing/Landing";
 
-const WebcamRecorder = ({
+const ScreenRecorder = ({
   mediaStream,
   isRecording,
   onStart,
@@ -18,7 +17,7 @@ const WebcamRecorder = ({
     if (!mediaStream || !videoRef.current) {
       return;
     }
-    // setReadyToRecord(false);
+    setReadyToRecord(false);
     // TODO: handle browsers that don't support srcObject
     // has to be before src is set
     videoRef.current.onloadedmetadata = () => {
@@ -27,7 +26,6 @@ const WebcamRecorder = ({
 
     videoRef.current.srcObject = mediaStream;
   }, [mediaStream, setReadyToRecord]);
-  noSSR
 
   return (
     <div className="relative flex h-full w-full flex-col items-center gap-4 pt-4">
@@ -42,11 +40,7 @@ const WebcamRecorder = ({
       </div>
       <div className="inline-flex flex-row ">
         {!isRecording && (
-          <button
-            className="btn-error btn"
-            onClick={onStart}
-            disabled={!readyToRecord}
-          >
+          <button className="btn-error btn" onClick={onStart}>
             Start Recording
           </button>
         )}
@@ -61,4 +55,4 @@ const WebcamRecorder = ({
   );
 };
 
-export default WebcamRecorder;
+export default ScreenRecorder;

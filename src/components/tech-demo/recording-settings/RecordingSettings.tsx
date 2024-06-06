@@ -79,10 +79,11 @@ const RecordingSettings = ({ onConstraintsChange }: RecordingSettingsProps) => {
   }, [selectedAudioDevice?.deviceId, selectedVideoDevice?.deviceId]);
 
   return (
-    <div className="card  bg-neutral text-neutral-content">
+    <div className="card bg-neutral text-neutral-content">
       <div className="card-body items-center text-center">
         <h2 className="card-title">Recording Settings</h2>
-        <div className="flex flex-col md:flex-row">
+        {/* <div className="flex flex-col md:flex-row"> */}
+        <div className="flex flex-col ">
           {/* recording mode */}
           <div className="flex flex-col md:min-w-[200px] md:px-6">
             Recording Mode
