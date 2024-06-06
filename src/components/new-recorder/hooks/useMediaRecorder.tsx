@@ -4,7 +4,7 @@ import { MediaStreamStrategyMap } from "../util/strategies";
 
 export default function useMediaRecorder() {
   // TODO: use local storage for this at some point
-  const [recordingType, setRecordingType] = useState<RecordingType>("screen");
+  const [recordingType, setRecordingType] = useState<RecordingType>("webcam");
 
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
   const [mediaStream, setMediaStream] = useState<MediaStream>();
@@ -90,6 +90,7 @@ export default function useMediaRecorder() {
     setRecordingType,
     isRecording,
     constraints,
+    mediaStream,
     setConstraints,
     startRecording,
     stopRecording,

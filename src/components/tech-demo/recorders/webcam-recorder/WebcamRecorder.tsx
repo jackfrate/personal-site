@@ -1,23 +1,14 @@
 "use-client";
 
 import { useEffect, useRef, useState } from "react";
-
-type WebcamRecorderProps = {
-  mediaStream: MediaStream | undefined;
-  // readyToRecord: boolean;
-  isRecording: boolean;
-  onStart: () => void;
-  onStop: () => void;
-  // onPause: () => void;
-  // onCancel: () => void;
-};
+import type { RecorderProps } from "../../../new-recorder/landing/Landing";
 
 const WebcamRecorder = ({
   mediaStream,
   isRecording,
   onStart,
   onStop,
-}: WebcamRecorderProps) => {
+}: RecorderProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [readyToRecord, setReadyToRecord] = useState(false);
@@ -26,7 +17,7 @@ const WebcamRecorder = ({
     if (!mediaStream || !videoRef.current) {
       return;
     }
-    setReadyToRecord(false);
+    // setReadyToRecord(false);
     // TODO: handle browsers that don't support srcObject
     // has to be before src is set
     videoRef.current.onloadedmetadata = () => {

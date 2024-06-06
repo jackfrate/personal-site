@@ -1,23 +1,14 @@
 "use-client";
 
 import { useEffect, useRef, useState } from "react";
-
-type ScreenRecorderProps = {
-  mediaStream: MediaStream | undefined;
-  // readyToRecord: boolean;
-  isRecording: boolean;
-  onStart: () => void;
-  onStop: () => void;
-  // onPause: () => void;
-  // onCancel: () => void;
-};
+import type { RecorderProps } from "../../../new-recorder/landing/Landing";
 
 const ScreenRecorder = ({
   mediaStream,
   isRecording,
   onStart,
   onStop,
-}: ScreenRecorderProps) => {
+}: RecorderProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [readyToRecord, setReadyToRecord] = useState(false);
