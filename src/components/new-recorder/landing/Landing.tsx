@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Playback from "../../tech-demo/playback/Playback";
 import RecordingSettings from "../../tech-demo/recording-settings/RecordingSettings";
 import ScreenRecorder from "../components/recorders/screen-recorder/ScreenRecorder";
 import WebcamRecorder from "../components/recorders/webcam-recorder/WebcamRecorder";
@@ -28,12 +29,23 @@ const LandingInner = () => {
     recordingType,
     isRecording,
     mediaStream,
+    completedRecording,
     stopRecording,
     startRecording,
     onConstraintsChange,
+    resetRecorder,
   } = useContext(RecorderContext);
 
   const RecorderComponent = RecorderMap[recordingType];
+
+  if (completedRecording) {
+    return (
+      <Playback
+        finishedVideo={completedRecording}
+        recordAnotherVideo={resetRecorder}
+      />
+    );
+  }
 
   return (
     <div className="flex h-screen w-full flex-col gap-3 p-4 md:flex-row">

@@ -15,6 +15,7 @@ export type RecorderContextType = {
   onConstraintsChange: (
     constraints: MediaStreamConstraints | undefined
   ) => void;
+  resetRecorder: () => void;
 };
 
 export const RecorderContext = createContext<RecorderContextType>({
@@ -27,6 +28,7 @@ export const RecorderContext = createContext<RecorderContextType>({
   startRecording: () => {},
   stopRecording: () => {},
   onConstraintsChange: (constraints: MediaStreamConstraints | undefined) => {},
+  resetRecorder: () => {},
 });
 
 export const RecorderContextProvider = ({
@@ -38,12 +40,12 @@ export const RecorderContextProvider = ({
     recordingType,
     isRecording,
     mediaStream,
+    completedRecording,
+    constraints,
     stopRecording,
     startRecording,
     onConstraintsChange,
-    completedRecording,
     resetRecorder,
-    constraints,
     setConstraints,
   } = useMediaRecorder();
 
