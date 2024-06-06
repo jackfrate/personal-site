@@ -1,10 +1,10 @@
 import BaseLayout from "../../../components/base-layout";
-import PrivacyNotice from "../../../components/tech-demo/privacy-notice/PrivacyNotice";
+import Landing from "../../../components/new-recorder/landing/Landing";
 
 const Demo = () => (
   <BaseLayout activeTab="demo">
     <div className="hero">
-      <PrivacyNotice />
+      <Landing />
     </div>
   </BaseLayout>
 );

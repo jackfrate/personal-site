@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import Playback from "../../tech-demo/playback/Playback";
-import RecordingSettings from "../../tech-demo/recording-settings/RecordingSettings";
+import Playback from "../components/playback/Playback";
 import ScreenRecorder from "../components/recorders/screen-recorder/ScreenRecorder";
 import WebcamRecorder from "../components/recorders/webcam-recorder/WebcamRecorder";
+import RecordingSettings from "../components/recording-settings/RecordingSettings";
 import {
   RecorderContext,
   RecorderContextProvider,

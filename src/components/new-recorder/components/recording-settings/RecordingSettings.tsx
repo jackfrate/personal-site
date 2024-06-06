@@ -8,7 +8,7 @@ import {
   getAudioDevices,
   getVideoDevices,
   handlePermissions,
-} from "../utils/utils";
+} from "../../util/permissions/utils";
 
 type RecordingSettingsProps = {
   onConstraintsChange: (
