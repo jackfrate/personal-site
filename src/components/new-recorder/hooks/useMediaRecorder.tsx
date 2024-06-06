@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { MediaStreamStrategyMap, RecordingType } from "../util/strategies";
+import type { RecordingType } from "../util/strategies";
+import { MediaStreamStrategyMap } from "../util/strategies";
 
-// type UseMediaRecorderProps = {
-//   recordingType: RecordingType;
-// };
-
-// export default function useMediaRecorder({
-//   recordingType,
-// }: UseMediaRecorderProps) {
 export default function useMediaRecorder() {
   const [recordingType] = useLocalStorage<RecordingType>(
     "RECORDING_TYPE",

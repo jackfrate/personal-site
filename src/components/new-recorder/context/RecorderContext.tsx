@@ -1,8 +1,8 @@
-// TODO: make this context that consumes the hooks
-
-import { createContext, ReactElement } from "react";
+/* eslint-disable @typescript-eslint/no-empty-function */
+import type { ReactElement } from "react";
+import { createContext } from "react";
 import useMediaRecorder from "../hooks/useMediaRecorder";
-import { RecordingType } from "../util/strategies";
+import type { RecordingType } from "../util/strategies";
 
 export type RecorderContextType = {
   recordingType: RecordingType;
@@ -27,7 +27,7 @@ export const RecorderContext = createContext<RecorderContextType>({
 
   startRecording: () => {},
   stopRecording: () => {},
-  onConstraintsChange: (constraints: MediaStreamConstraints | undefined) => {},
+  onConstraintsChange: (_constraints: MediaStreamConstraints | undefined) => {},
   resetRecorder: () => {},
 });
 

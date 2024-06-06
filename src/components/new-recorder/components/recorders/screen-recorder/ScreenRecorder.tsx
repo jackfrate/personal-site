@@ -11,6 +11,7 @@ const ScreenRecorder = ({
 }: RecorderProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // TODO: eventually make a loading state with this
   const [readyToRecord, setReadyToRecord] = useState(false);
 
   useEffect(() => {
